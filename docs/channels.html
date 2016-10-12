@@ -1,0 +1,39 @@
+---
+title:  "Yt::Models::Channel"
+h2: "Channels"
+---
+
+<p>
+  <code>Yt::Models::Channel</code> represents a YouTube channel.
+  Initialize using either the YouTube ID:
+</p>
+
+{% highlight ruby %}
+channel = Yt::Models::Channel.new id: 'UCxO1tY8h1AhOz0T4ENwmpow'
+# => #<Yt::Models::Channel:0x... @id="UCxO1tY8h1AhOz0T4ENwmpow">
+{% endhighlight %}
+
+<hr />
+<h4>Authentication</h4>
+
+<p>
+  <code>Yt::Models::Channel</code> <strong>retrieves public data</strong> from YouTube (e.g.: fetch a channel’s title and videos).<br />
+  You only need to <a href="https://github.com/Fullscreen/yt#apps-that-do-not-require-user-interactions">get a Server API key from Google</a> and configure:
+</p>
+
+{% highlight ruby %}
+ENV['YT_API_KEY'] = "<your api key>"                             ## use your API key
+
+channel = Yt::Models::Channel.new id: 'UCxO1tY8h1AhOz0T4ENwmpow' ## use any channel ID
+channel.title # => "Fullscreen"
+{% endhighlight %}
+
+<hr />
+<h4>List of <code>Yt::Models::Channel</code> methods</h4>
+<dl>
+
+  {% include dt.html title="Channel’s Snippet" %}
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html link="Models/Channel#title" %}{% include example.html object='channel' method='title' result='"Fullscreen"' %}</pre>
+  </div></dd>
+</dl>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Yt · The reliable YouTube API Ruby client">
+  <meta name="keywords" content="YouTube, Rails, youtube_it, API, V3, Ruby, client, video, channel, OAuth">
+  <meta name="author" content="Claudio B.">
+  <title>Yt · The reliable YouTube API Ruby client · Yt::Models::Channel</title>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/yt/css/yt.css">
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <link href="/yt/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed">
+  <link href="/yt/favicon.ico" rel="icon">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="navbar-brand" href="/yt/">
+        <img alt="Yt" src="/yt/images/robot.png">
+        Yt<span class="hidden-xs"> · The reliable YouTube API Ruby client</span>
+      </a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right visible-xs-block">
+        
+          <li><a href="/yt/index.html">Installing Yt</a></li>
+        
+        
+          <li class="active"><a href="/yt/channels.html">Channels</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="hidden-xs hidden-print col-sm-3" role="complementary">
+            <ol start="0" class="sidebar" data-spy="affix">
+              
+                <li><a href="/yt/index.html">Installing Yt</a></li>
+              
+              
+                <li><a href="/yt/channels.html" class="active">Channels</a></li>
+              
+            </ol>
+
+          </div>
+          <div class="col-xs-12 col-sm-9" role="main">
+            <h2>Channels</h2>
+            <p>
+  <code>Yt::Models::Channel</code> represents a YouTube channel.
+  Initialize using either the YouTube ID:
+</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">channel</span> <span class="o">=</span> <span class="no">Yt</span><span class="o">::</span><span class="no">Models</span><span class="o">::</span><span class="no">Channel</span><span class="p">.</span><span class="nf">new</span> <span class="ss">id: </span><span class="s1">'UCxO1tY8h1AhOz0T4ENwmpow'</span>
+<span class="c1"># =&gt; #&lt;Yt::Models::Channel:0x... @id="UCxO1tY8h1AhOz0T4ENwmpow"&gt;</span></code></pre></figure>
+
+<hr />
+<h4>Authentication</h4>
+
+<p>
+  <code>Yt::Models::Channel</code> <strong>retrieves public data</strong> from YouTube (e.g.: fetch a channel’s title and videos).<br />
+  You only need to <a href="https://github.com/Fullscreen/yt#apps-that-do-not-require-user-interactions">get a Server API key from Google</a> and configure:
+</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">ENV</span><span class="p">[</span><span class="s1">'YT_API_KEY'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"&lt;your api key&gt;"</span>                             <span class="c1">## use your API key</span>
+
+<span class="n">channel</span> <span class="o">=</span> <span class="no">Yt</span><span class="o">::</span><span class="no">Models</span><span class="o">::</span><span class="no">Channel</span><span class="p">.</span><span class="nf">new</span> <span class="ss">id: </span><span class="s1">'UCxO1tY8h1AhOz0T4ENwmpow'</span> <span class="c1">## use any channel ID</span>
+<span class="n">channel</span><span class="p">.</span><span class="nf">title</span> <span class="c1"># =&gt; "Fullscreen"</span></code></pre></figure>
+
+<hr />
+<h4>List of <code>Yt::Models::Channel</code> methods</h4>
+<dl>
+
+  <dt>
+  <span class="label label- pull-right"></span>
+  Channel’s Snippet
+</dt>
+
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+<a href="http://www.rubydoc.info/gems/yt/Yt/Models/Channel#title-instance_method" class="pull-right"><strong>&rarr; Yt docs</strong></a><code class="language-ruby" data-lang="ruby"><span class="n">channel</span><span class="o">.</span><span class="n">title</span> <span class="c1"># =&gt; "Fullscreen"</span></code></pre>
+  </div></dd>
+</dl>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
+
+  </body>
+</html>

@@ -1,0 +1,943 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Yt::Models::ContentOwner
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!Yt/Models/ContentOwner.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Yt.html" title="Yt (module)">Yt</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Models.html" title="Yt::Models (module)">Models</a></span></span>
+     &raquo; 
+    <span class="title">ContentOwner</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Yt::Models::ContentOwner
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Account.html" title="Yt::Models::Account (class)">Account</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="Yt::Models::Base (class)">Base</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="Account.html" title="Yt::Models::Account (class)">Account</a></span></li>
+          
+            <li class="next">Yt::Models::ContentOwner</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/yt/models/content_owner.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Provides methods to interact with YouTube CMS accounts.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="https://cms.youtube.com" target="_parent" title="https://cms.youtube.com">https://cms.youtube.com</a></li>
+    
+      <li><a href="https://developers.google.com/youtube/analytics/v1/content_owner_reports" target="_parent" title="https://developers.google.com/youtube/analytics/v1/content_owner_reports">https://developers.google.com/youtube/analytics/v1/content_owner_reports</a></li>
+    
+  </ul>
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#assets-instance_method" title="#assets (instance method)">- (Yt::Collection::Assets) <strong>assets</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The assets administered by the content owner.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#claims-instance_method" title="#claims (instance method)">- (Yt::Collections::Claims) <strong>claims</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The claims administered by the content owner.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#partnered_channels-instance_method" title="#partnered_channels (instance method)">- (Yt::Collections::PartneredChannels) <strong>partnered_channels</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The channels managed by the CMS account.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#policies-instance_method" title="#policies (instance method)">- (Yt::Collections::Policies) <strong>policies</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The policies saved by the content owner.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#references-instance_method" title="#references (instance method)">- (Yt::Collections::References) <strong>references</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The references administered by the content owner.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Account.html" title="Yt::Models::Account (class)">Account</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Account.html#channel-instance_method" title="Yt::Models::Account#channel (method)">#channel</a></span>, <span class='object_link'><a href="Account.html#content_owners-instance_method" title="Yt::Models::Account#content_owners (method)">#content_owners</a></span>, <span class='object_link'><a href="Account.html#owner_name-instance_method" title="Yt::Models::Account#owner_name (method)">#owner_name</a></span>, <span class='object_link'><a href="Account.html#playlists-instance_method" title="Yt::Models::Account#playlists (method)">#playlists</a></span>, <span class='object_link'><a href="Account.html#resumable_sessions-instance_method" title="Yt::Models::Account#resumable_sessions (method)">#resumable_sessions</a></span>, <span class='object_link'><a href="Account.html#subscribers-instance_method" title="Yt::Models::Account#subscribers (method)">#subscribers</a></span>, <span class='object_link'><a href="Account.html#user_info-instance_method" title="Yt::Models::Account#user_info (method)">#user_info</a></span>, <span class='object_link'><a href="Account.html#videos-instance_method" title="Yt::Models::Account#videos (method)">#videos</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_asset-instance_method" title="#create_asset (instance method)">- (Object) <strong>create_asset</strong>(params = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_claim-instance_method" title="#create_claim (instance method)">- (Object) <strong>create_claim</strong>(params = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_reference-instance_method" title="#create_reference (instance method)">- (Object) <strong>create_reference</strong>(params = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (ContentOwner) <strong>initialize</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of ContentOwner.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Account.html" title="Yt::Models::Account (class)">Account</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Account.html#create_playlist-instance_method" title="Yt::Models::Account#create_playlist (method)">#create_playlist</a></span>, <span class='object_link'><a href="Account.html#upload_video-instance_method" title="Yt::Models::Account#upload_video (method)">#upload_video</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Associations/HasAuthentication.html" title="Yt::Associations::HasAuthentication (module)">Associations::HasAuthentication</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Associations/HasAuthentication.html#has_authentication-instance_method" title="Yt::Associations::HasAuthentication#has_authentication (method)">#has_authentication</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Associations/HasMany.html" title="Yt::Associations::HasMany (module)">Associations::HasMany</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Associations/HasMany.html#has_many-instance_method" title="Yt::Associations::HasMany#has_many (method)">#has_many</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Associations/HasOne.html" title="Yt::Associations::HasOne (module)">Associations::HasOne</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Associations/HasOne.html#has_one-instance_method" title="Yt::Associations::HasOne#has_one (method)">#has_one</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Associations/HasViewerPercentages.html" title="Yt::Associations::HasViewerPercentages (module)">Associations::HasViewerPercentages</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Associations/HasViewerPercentages.html#has_viewer_percentages-instance_method" title="Yt::Associations::HasViewerPercentages#has_viewer_percentages (method)">#has_viewer_percentages</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Associations/HasReports.html" title="Yt::Associations::HasReports (module)">Associations::HasReports</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Associations/HasReports.html#has_report-instance_method" title="Yt::Associations::HasReports#has_report (method)">#has_report</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Yt::Models::ContentOwner (class)">ContentOwner</a></span></tt>) <strong>initialize</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of ContentOwner</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+30
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 30</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>super</span> <span class='id identifier rubyid_options'>options</span>
+  <span class='ivar'>@owner_name</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:owner_name</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="assets-instance_method">
+  
+    - (<tt>Yt::Collection::Assets</tt>) <strong>assets</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the assets administered by the content owner.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Yt::Collection::Assets</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the assets administered by the content owner.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 20</span>
+
+<span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:assets</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="claims-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Collections/Claims.html" title="Yt::Collections::Claims (class)">Yt::Collections::Claims</a></span></tt>) <strong>claims</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the claims administered by the content owner.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Collections/Claims.html" title="Yt::Collections::Claims (class)">Yt::Collections::Claims</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the claims administered by the content owner.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 16</span>
+
+<span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:claims</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="partnered_channels-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Collections/PartneredChannels.html" title="Yt::Collections::PartneredChannels (class)">Yt::Collections::PartneredChannels</a></span></tt>) <strong>partnered_channels</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the channels managed by the CMS account.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Collections/PartneredChannels.html" title="Yt::Collections::PartneredChannels (class)">Yt::Collections::PartneredChannels</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the channels managed by the CMS account.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 12</span>
+
+<span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:partnered_channels</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="policies-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Collections/Policies.html" title="Yt::Collections::Policies (class)">Yt::Collections::Policies</a></span></tt>) <strong>policies</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the policies saved by the content owner.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Collections/Policies.html" title="Yt::Collections::Policies (class)">Yt::Collections::Policies</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the policies saved by the content owner.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 28</span>
+
+<span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:policies</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="references-instance_method">
+  
+    - (<tt><span class='object_link'><a href="../Collections/References.html" title="Yt::Collections::References (class)">Yt::Collections::References</a></span></tt>) <strong>references</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the references administered by the content owner.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Collections/References.html" title="Yt::Collections::References (class)">Yt::Collections::References</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the references administered by the content owner.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 24</span>
+
+<span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:references</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="create_asset-instance_method">
+  
+    - (<tt>Object</tt>) <strong>create_asset</strong>(params = {}) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_asset'>create_asset</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_assets'>assets</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span> <span class='id identifier rubyid_params'>params</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_claim-instance_method">
+  
+    - (<tt>Object</tt>) <strong>create_claim</strong>(params = {}) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_claim'>create_claim</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_claims'>claims</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span> <span class='id identifier rubyid_params'>params</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create_reference-instance_method">
+  
+    - (<tt>Object</tt>) <strong>create_reference</strong>(params = {}) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/yt/models/content_owner.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create_reference'>create_reference</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_references'>references</span><span class='period'>.</span><span class='id identifier rubyid_insert'>insert</span> <span class='id identifier rubyid_params'>params</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Apr 28 20:53:07 2015 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.2.2).
+</div>
+
+  </body>
+</html>

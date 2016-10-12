@@ -1,0 +1,3 @@
+--non-transitive-tag private
+--no-private
+lib/**/*.rb
