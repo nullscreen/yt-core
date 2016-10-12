@@ -43,7 +43,7 @@ Available resources
 Yt::Channel
 -----------
 
-Check [fullscreen.github.io/yt](http://fullscreen.github.io/yt/channels.html) for the list of methods available for `Yt::Channel`.
+Check [claudiob.github.io/yt](http://claudiob.github.io/yt/channels.html) for the list of methods available for `Yt::Channel`.
 
 
 Configuring your app
