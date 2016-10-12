@@ -1,8 +1,0 @@
-_site
-.sass-cache
-Gemfile.lock
-coverage/
-.yardoc/
-doc/
-pkg/
-TODO.md
