@@ -9,8 +9,8 @@ h2: "Channels"
 </p>
 
 {% highlight ruby %}
-channel = Yt::Models::Channel.new id: 'UCxO1tY8h1AhOz0T4ENwmpow'
-# => #<Yt::Models::Channel:0x... @id="UCxO1tY8h1AhOz0T4ENwmpow">
+channel = Yt::Models::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
+# => #<Yt::Models::Channel:0x... @id="UCwCnUcLcb9-eSrHa_RQGkQQ">
 {% endhighlight %}
 
 <hr />
@@ -24,8 +24,8 @@ channel = Yt::Models::Channel.new id: 'UCxO1tY8h1AhOz0T4ENwmpow'
 {% highlight ruby %}
 ENV['YT_API_KEY'] = "<your api key>"                             ## use your API key
 
-channel = Yt::Models::Channel.new id: 'UCxO1tY8h1AhOz0T4ENwmpow' ## use any channel ID
-channel.title # => "Fullscreen"
+channel = Yt::Models::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ' ## use any channel ID
+channel.title # => "Yt Test"
 {% endhighlight %}
 
 <hr />
@@ -34,6 +34,7 @@ channel.title # => "Fullscreen"
 
   {% include dt.html title="Channel’s Snippet" %}
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
-{% include doc.html link="Models/Channel#title" %}{% include example.html object='channel' method='title' result='"Fullscreen"' %}</pre>
+{% include doc.html link="Models/Channel#title" %}{% include example.html object='channel' method='title' result='"Yt Test"' %}
+{% include doc.html link="Models/Channel#title" %}{% include example.html object='channel' method='title' result='"A test channel."' %}</pre>
   </div></dd>
 </dl>

@@ -8,10 +8,15 @@ module Yt
       def initialize(options = {})
         @id = options[:id]
       end
-      
+
       # @return [String] the channel’s title.
       def title
         response.body['items'].first['snippet']['title']
+      end
+
+      # @return [String] the channel’s description.
+      def description
+        response.body['items'].first['snippet']['description']
       end
 
     private
@@ -24,7 +29,7 @@ module Yt
 
       def request
         query = {key: ENV['YT_API_KEY'], id: @id, part: 'snippet'}.to_param
-        
+
         Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
           request.initialize_http_header 'Content-Type' => 'application/json'
         end

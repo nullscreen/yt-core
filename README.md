@@ -15,8 +15,8 @@ The **source code** is available on [GitHub](https://github.com/claudiob/yt) and
 After [registering your app](#configuring-your-app), you can run commands like:
 
 ```ruby
-channel = Yt::Channel.new id: 'UCxO1tY8h1AhOz0T4ENwmpow'
-channel.title #=> "Fullscreen"
+channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
+channel.title #=> "Yt Test"
 ```
 
 The **full documentation** is available at [rubydoc.info](http://www.rubydoc.info/gems/yt/frames).
