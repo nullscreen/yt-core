@@ -1,0 +1,11 @@
+language: ruby
+notifications:
+  email: true
+rvm:
+  - 2.2.2
+script:
+  - bundle exec rspec
+  - bundle exec yard stats | grep "100.00% documented"
+env:
+  matrix:
+    secure: Rq829XAL6eNv0p0eaYDSc5RHA7nHJFnT8FOa6cV2FogfWgisMSo1fpmKMh1LW2FERTOqioK/A+mKh8DWdEE6/4A9yV/XkmL4TA3AUTmPAHkHMMh6N664sKcHOSVVcyeJxSzT763eD0qnpssud5u/ZAhs1pnQU4/glS1KV4BP+jY/NLUEHfPG1TiBFtV6DdvxjZGXRzxG+o74eYmRhiCW8zpyIxZoWos88dUaud04RODXe8tVCKpT8JoaIEgeoI6vGqxytUQ/juFUwwUG18pFKbHfK3+amrksLSWwmoHv/0f/O1PmYkmuMNelqgTqzO2sAI5Y7oi0p3TMtUDYbyyBOH1gIRfLd05ZDumsGWGJdTyvmFYLCD95AgFZfiiIh3G68h2WSJD8zyLLVXRiYC/oACYaWZ8UTPzEu2d0i1FoVhp9rhv3onhLlGUDP/1vdSIpV7Lw1B6yyrllvgmyViDxF2u008/1UKG/V6SQDFNNpWN/bttil6R5gqDbN04ybVCykKdWI3FOvsHPJ7TR9JawoyYxy6VTc1G1cLMrJScVhaZCqDjjmOCWPO0pEDpxmSadcPC5hP0HhGWqlfFLE+8lOYI+RyPU++wNWKz8qnPhPBAzidUYx7uCw+rVQgAYuFTVKtIEcEyXfGq1o+kBmKdEXZclwdBXNoBHVkGFa7pw42Q=

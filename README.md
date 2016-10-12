@@ -135,5 +135,9 @@ How to contribute
 Contribute to the code by forking the project, adding the missing code,
 writing the appropriate tests and submitting a pull request.
 
-You can also contribute to the guides: run `jekyll s -s docs`, check what
-methods are not documented and follow the same steps above.
+In order for a PR to be approved, all the tests need to pass and all the public
+methods need to be documented and listed in the guides. Remember:
+
+- to run all tests locally: `bundle exec rspec`
+- to generate the docs locally: `bundle exec yard`
+- to launch the guides locally: `bundle exec jekyll s -s docs`
