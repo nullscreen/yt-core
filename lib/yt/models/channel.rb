@@ -11,15 +11,19 @@ module Yt
 
       # @return [String] the channel’s title.
       def title
-        response.body['items'].first['snippet']['title']
+        snippet['title']
       end
 
       # @return [String] the channel’s description.
       def description
-        response.body['items'].first['snippet']['description']
+        snippet['description']
       end
 
     private
+
+      def snippet
+        @snippet ||= response.body['items'].first['snippet']
+      end
 
       def response
         Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
