@@ -19,6 +19,21 @@ module Yt
         snippet['description']
       end
 
+      # Returns the URL of the channel’s thumbnail.
+      # @param [Symbol, String] size The size of the channel’s thumbnail.
+      # @return [String] if +size+ is +default+, the URL of a 88x88px image.
+      # @return [String] if +size+ is +medium+, the URL of a 240x240px image.
+      # @return [String] if +size+ is +high+, the URL of a 800x800px image.
+      # @return [nil] if the +size+ is not +default+, +medium+ or +high+.
+      def thumbnail_url(size = :default)
+        snippet['thumbnails'].fetch(size.to_s, {})['url']
+      end
+
+      # @return [Time] the date and time that the channel was created.
+      def published_at
+        Time.parse snippet['publishedAt']
+      end
+
     private
 
       def snippet

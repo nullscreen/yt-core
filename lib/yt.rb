@@ -6,7 +6,7 @@ require 'yt/models/channel'
 
 # An object-oriented Ruby client for YouTube.
 # Helps creating applications that need to interact with YouTube objects.
-# Inclused methods to access YouTube Data API V3 resources (channels, ...).
+# Includes methods to access YouTube Data API V3 resources (channels, ...).
 module Yt
   # A namespace for all the YouTube models.
   module Models
