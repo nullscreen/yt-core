@@ -37,16 +37,20 @@ module Yt
     private
 
       def snippet
-        @snippet ||= response.body['items'].first['snippet']
+        @snippet ||= if (items = snippet_response.body['items']).any?
+          items.first['snippet']
+        else
+          raise Errors::NoItems
+        end
       end
 
-      def response
+      def snippet_response
         Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-          http.request request
+          http.request snippet_request
         end.tap{|response| response.body = JSON response.body}
       end
 
-      def request
+      def snippet_request
         query = {key: ENV['YT_API_KEY'], id: @id, part: 'snippet'}.to_param
 
         Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|

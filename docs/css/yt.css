@@ -21,9 +21,9 @@ dt                            {margin-bottom: 3px}
 @font-face                    {font-family: 'seconda_round_bold';    font-weight: normal; font-style: normal; src: url('../fonts/SecondaRound-Bold.eot');     src: url('../fonts/SecondaRound-Bold.eot?#iefix')     format('embedded-opentype'), url('../fonts/SecondaRound-Bold.woff') format('woff'),        url('../fonts/SecondaRound-Bold.ttf') format('truetype'),          url('../fonts/SecondaRound-Bold.svg#SecondaRound-Bold') format('svg'); }
 @font-face                    {font-family: 'seconda_round_regular'; font-weight: normal; font-style: normal; src: url('../fonts/SecondaRound-Regular.eot');  src: url('../fonts/SecondaRound-Regular.eot?#iefix')  format('embedded-opentype'), url('../fonts/SecondaRound-Regular.woff') format('woff'),     url('../fonts/SecondaRound-Regular.ttf') format('truetype'),          url('../fonts/SecondaRound-Regular.svg#SecondaRound-Regular') format('svg'); }
 body                          {font-family: 'seconda_round_regular',Helvetica,Arial,sans-serif}
-h1, h2, .bold                 {font-family: 'seconda_round_bold',Helvetica,Arial,sans-serif; font-weight: normal; font-style: normal}
+h1, h2, .bold, .active        {font-family: 'seconda_round_bold',Helvetica,Arial,sans-serif; font-weight: normal; font-style: normal}
 pre, .sidebar                 {line-height: 1.8em}
-nav.navbar, h2, h1 { -webkit-font-smoothing: antialiased;}
+nav.navbar, h2, h1            {-webkit-font-smoothing: antialiased}
 
 .sidebar                      {font-size: 1.3em}
 dt                            {font-size: 1.1em}

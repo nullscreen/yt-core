@@ -1,0 +1,28 @@
+---
+title:  "Yt::Errors"
+h2: "Errors"
+---
+
+<p>
+  <code>Yt::Errors</code> define error classes that are raised when something goes wrong.
+</p>
+
+{% highlight ruby %}
+channel = Yt::Models::Channel.new id: 'this-id-does-not-exist'
+channel.title # => raise Yt::Errors::NoItems
+{% endhighlight %}
+
+<hr />
+<h4>List of errors</h4>
+<dl>
+
+  {% include dt.html title="No Items" %}
+  <p>
+    <code>Yt::Errors::NoItems</code> is raised when items are expected from YouTube but none are returned.
+  </p>
+
+{% highlight ruby %}
+channel = Yt::Models::Channel.new id: 'this-id-does-not-exist'
+channel.title # => raise Yt::Errors::NoItems
+{% endhighlight %}
+</dl>
