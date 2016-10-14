@@ -7,7 +7,10 @@ module Yt
       # @option options [String] :id The unique ID of a YouTube channel.
       def initialize(options = {})
         @id = options[:id]
+        @auth = options[:auth]
       end
+
+    ### DATA
 
       # @return [String] the channel’s title.
       def title
@@ -34,6 +37,13 @@ module Yt
         Time.parse snippet['publishedAt']
       end
 
+    ### ANALYTICS
+
+      # @return [Hash<Symbol, Integer>] the total channel’s views.
+      def views
+        @views ||= {total: analytics_response.body['rows'].first.first.to_i}
+      end
+
     private
 
       def snippet
@@ -55,6 +65,22 @@ module Yt
 
         Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
           request.initialize_http_header 'Content-Type' => 'application/json'
+        end
+      end
+
+      def analytics_response
+        Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
+          http.request analytics_request
+        end.tap{|response| response.body = JSON response.body}
+      end
+
+
+      def analytics_request
+        query = {'metrics' => 'views', 'end-date' => Date.today.to_s, 'start-date' => '2005-02-01', 'ids' => "channel==#{@id}"}.to_param
+
+        Net::HTTP::Get.new("/youtube/analytics/v1/reports?#{query}").tap do |request|
+          request.initialize_http_header 'Content-Type' => 'application/json'
+          request.add_field 'Authorization', "Bearer #{@auth.access_token}"
         end
       end
     end

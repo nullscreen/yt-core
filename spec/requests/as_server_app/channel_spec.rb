@@ -6,7 +6,9 @@ describe Yt::Models::Channel do
   context 'given an existing channel ID' do
     let(:attrs) { {id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'} }
 
-    it 'returns valid data' do
+    it 'returns valid data limiting the number of HTTP requests' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
       expect(channel.title).to eq 'Yt Test'
       expect(channel.description).to eq 'A YouTube channel to test the yt gem.'
       expect(channel.thumbnail_url).to include 'photo.jpg'

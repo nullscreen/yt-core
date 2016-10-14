@@ -17,8 +17,8 @@ channel = Yt::Models::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
 <h4>Authentication</h4>
 
 <p>
-  <code>Yt::Models::Channel</code> <strong>retrieves public data</strong> from YouTube (e.g.: fetch a channel’s title and videos).<br />
-  You only need to <a href="https://github.com/claudiob/yt#apps-that-do-not-require-user-interactions">get a Server API key from Google</a> and configure:
+  Most methods of <code>Yt::Models::Channel</code> <strong>retrieve public data</strong> from YouTube (e.g.: fetch a channel’s title).<br />
+  To use these methods (marked with <span class="label label-success">&nbsp;</span> below), you only need to <a href="https://github.com/Fullscreen/yt#apps-that-do-not-require-user-interactions">obtain a Server API key</a> and configure:
 </p>
 
 {% highlight ruby %}
@@ -28,15 +28,45 @@ channel = Yt::Models::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ' ## use any chan
 channel.title # => "Yt Test"
 {% endhighlight %}
 
+<p>
+  Other methods <strong>acts on behalf of YouTube accounts</strong> (e.g.: access the analytics of a channel).<br />
+  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain an API Client ID/Secret</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain an access or refresh token</a> from the account you want to act as, and pass the account as the <code>:auth</code> parameter:
+</p>
+
+{% highlight ruby %}
+ENV['YT_CLIENT_ID'] = "<your ID>"                   ## replace with your client ID
+ENV['YT_CLIENT_SECRET'] = "<your secret>"           ## replace with your client secret
+auth = Yt::Models::Account.new refresh_token: "<your refresh token>"
+
+channel = Yt::Models::Channel.new id: "<your channel ID>", auth: auth
+channel.views # => {total: 123} (the total views of your channel)
+{% endhighlight %}
+
+
 <hr />
 <h4>List of <code>Yt::Models::Channel</code> methods</h4>
 <dl>
 
-  {% include dt.html title="Channel’s Snippet" %}
+  {% include dt.html title="Channel’s Snippet" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
 {% include doc.html link="Models/Channel#title" %}{% include example.html object='channel' method='title' result='"Yt Test"' %}
 {% include doc.html link="Models/Channel#description" %}{% include example.html object='channel' method='description' result='"A test channel."' %}
 {% include doc.html link="Models/Channel#published_at" %}{% include example.html object='channel' method='published_at' result='2014-05-02 20:12:57 UTC' %}
 {% include doc.html link="Models/Channel#thumbnail_url" %}{% include example.html object='channel' method='thumbnail_url' result='"https://yt3.ggpht.com/-KMnbKDBl60w/photo.jpg"' %}</pre>
+  </div></dd>
+</dl>
+
+<hr />
+<h4>List of <code>Yt::Models::Channel</code> analytics methods</h4>
+<a class="anchor" id="analytics"></a>
+<p>
+  By default, analytics methods return the total value for the lifetime of a channel (e.g., all the views of a channel).
+</p>
+
+<dl>
+  {% include dt.html title="Channel’s Analytics" label="warning" auth="must authenticate as the channel’s account or content owner" %}
+  <dd>
+<div class="highlight"><pre>
+{% include doc.html link="Models/Channel#views" %}{% include example.html object='channel' method='views' result='{total: 345}' %}</pre>
   </div></dd>
 </dl>
