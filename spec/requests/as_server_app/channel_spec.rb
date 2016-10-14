@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Yt::Models::Channel do
-  subject(:channel) { Yt::Models::Channel.new attrs }
+describe Yt::Channel do
+  subject(:channel) { Yt::Channel.new attrs }
 
   context 'given an existing channel ID' do
     let(:attrs) { {id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'} }
@@ -19,7 +19,7 @@ describe Yt::Models::Channel do
   context 'given an unknown channel ID' do
     let(:attrs) { {id: 'UC-not-a-valid-id-_RQGkQQ'} }
 
-    specify 'accessing its data raises Yt::Errors::NoItems' do
+    specify 'raises Yt::Errors::NoItems upon accessing its data' do
       expect{channel.title}.to raise_error Yt::Errors::NoItems
     end
   end

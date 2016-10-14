@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Yt::Models::Channel do
-  subject(:channel) { Yt::Models::Channel.new attrs }
-  let(:auth) { Yt::Models::Account.new refresh_token: ENV['YT_ACCOUNT_REFRESH_TOKEN']}
+describe Yt::Channel do
+  subject(:channel) { Yt::Channel.new attrs }
+  let(:auth) { Yt::Account.new refresh_token: ENV['YT_ACCOUNT_REFRESH_TOKEN']}
 
   context 'given my own channel' do
     let(:attrs) { {id: ENV['YT_ACCOUNT_CHANNEL_ID'], auth: auth} }

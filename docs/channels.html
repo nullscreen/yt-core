@@ -1,30 +1,30 @@
 ---
-title:  "Yt::Models::Channel"
+title:  "Yt::Channel"
 h2: "Channels"
 ---
 
 <p>
-  <code>Yt::Models::Channel</code> represents a YouTube channel.
+  <code>Yt::Channel</code> represents a YouTube channel.
   Initialize using either the YouTube ID:
 </p>
 
 {% highlight ruby %}
-channel = Yt::Models::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
-# => #<Yt::Models::Channel:0x... @id="UCwCnUcLcb9-eSrHa_RQGkQQ">
+channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
+# => #<Yt::Channel:0x... @id="UCwCnUcLcb9-eSrHa_RQGkQQ">
 {% endhighlight %}
 
 <hr />
 <h4>Authentication</h4>
 
 <p>
-  Most methods of <code>Yt::Models::Channel</code> <strong>retrieve public data</strong> from YouTube (e.g.: fetch a channel’s title).<br />
+  Most methods of <code>Yt::Channel</code> <strong>retrieve public data</strong> from YouTube (e.g.: fetch a channel’s title).<br />
   To use these methods (marked with <span class="label label-success">&nbsp;</span> below), you only need to <a href="https://github.com/Fullscreen/yt#apps-that-do-not-require-user-interactions">obtain a Server API key</a> and configure:
 </p>
 
 {% highlight ruby %}
 ENV['YT_API_KEY'] = "<your api key>"                             ## use your API key
 
-channel = Yt::Models::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ' ## use any channel ID
+channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'         ## use any channel ID
 channel.title # => "Yt Test"
 {% endhighlight %}
 
@@ -36,15 +36,15 @@ channel.title # => "Yt Test"
 {% highlight ruby %}
 ENV['YT_CLIENT_ID'] = "<your ID>"                   ## replace with your client ID
 ENV['YT_CLIENT_SECRET'] = "<your secret>"           ## replace with your client secret
-auth = Yt::Models::Account.new refresh_token: "<your refresh token>"
+auth = Yt::Account.new refresh_token: "<your refresh token>"
 
-channel = Yt::Models::Channel.new id: "<your channel ID>", auth: auth
+channel = Yt::Channel.new id: "<your channel ID>", auth: auth
 channel.views # => {total: 123} (the total views of your channel)
 {% endhighlight %}
 
 
 <hr />
-<h4>List of <code>Yt::Models::Channel</code> methods</h4>
+<h4>List of <code>Yt::Channel</code> methods</h4>
 <dl>
 
   {% include dt.html title="Channel’s Snippet" label="success" auth="any authentication works" %}
@@ -57,7 +57,7 @@ channel.views # => {total: 123} (the total views of your channel)
 </dl>
 
 <hr />
-<h4>List of <code>Yt::Models::Channel</code> analytics methods</h4>
+<h4>List of <code>Yt::Channel</code> analytics methods</h4>
 <a class="anchor" id="analytics"></a>
 <p>
   By default, analytics methods return the total value for the lifetime of a channel (e.g., all the views of a channel).

@@ -8,7 +8,7 @@ h2: "Errors"
 </p>
 
 {% highlight ruby %}
-channel = Yt::Models::Channel.new id: 'this-id-does-not-exist'
+channel = Yt::Channel.new id: 'this-id-does-not-exist'
 channel.title # => raise Yt::Errors::NoItems
 {% endhighlight %}
 
@@ -22,7 +22,7 @@ channel.title # => raise Yt::Errors::NoItems
   </p>
 
 {% highlight ruby %}
-channel = Yt::Models::Channel.new id: 'this-id-does-not-exist'
+channel = Yt::Channel.new id: 'this-id-does-not-exist'
 channel.title # => raise Yt::Errors::NoItems
 {% endhighlight %}
 </dl>

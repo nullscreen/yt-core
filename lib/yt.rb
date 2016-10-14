@@ -19,4 +19,8 @@ module Yt
   # A namespace for all the errors.
   module Errors
   end
+
+  # By including Models in the main namespace, models can be initialized with
+  # the shorter notation Yt::Video.new, rather than Yt::Models::Video.new.
+  include Models
 end
