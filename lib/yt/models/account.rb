@@ -10,9 +10,17 @@ module Yt
         @refresh_token = options[:refresh_token]
       end
 
+    ### AUTHENTICATION
+
       # @return [String] the OAuth2 Google access token.
       def access_token
         access_token_response.body['access_token']
+      end
+
+    ### OTHERS
+
+      def inspect
+        "#<#{self.class} @id=#{@id}>"
       end
 
     private

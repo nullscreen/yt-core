@@ -44,6 +44,12 @@ module Yt
         @views ||= {total: analytics_response.body['rows'].first.first.to_i}
       end
 
+    ### OTHERS
+
+      def inspect
+        "#<#{self.class} @id=#{@id}>"
+      end
+
     private
 
       def snippet
