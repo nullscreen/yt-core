@@ -1,7 +1,10 @@
 require 'active_support' # does not load anything by default
 require 'active_support/core_ext/object/to_query' # for Hash.to_param
+require 'active_support/core_ext/hash/transform_values' # for Hash#transform_values
+
 require 'json' # for JSON.parse
 
+require 'yt/models/account'
 require 'yt/models/channel'
 require 'yt/errors/no_items'
 
