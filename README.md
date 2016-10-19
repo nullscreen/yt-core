@@ -45,6 +45,11 @@ Yt::Channel
 
 Check [claudiob.github.io/yt](http://claudiob.github.io/yt/channels.html) for the list of methods available for `Yt::Channel`.
 
+Yt::ContentOwner
+----------------
+
+Check [claudiob.github.io/yt](http://claudiob.github.io/yt/content_owners.html) for the list of methods available for `Yt::ContentOwner`.
+
 
 Configuring your app
 ====================
@@ -128,7 +133,7 @@ These are the environment variables required to run the tests in `spec/requests/
 
 - `YT_PARTNER_CLIENT_ID`: OAuth 2.0 client ID of a Google app with access to the YouTube Data API v3, the YouTube Analytics API, and the YouTube Content ID API
 - `YT_PARTNER_CLIENT_SECRET`: OAuth 2.0 client secret for the previous ID
-- `YT_PARTNER_REFRESH_TOKEN`: refresh token for a YouTube partner who granted permission to that app with scopes: yt-analytics.readonly, yt-analytics-monetary.readonly, youtubepartner.
+- `YT_PARTNER_REFRESH_TOKEN`: refresh token for a YouTube partner who granted permission to that app with scopes: yt-analytics.readonly, yt-analytics-monetary.readonly, youtubepartner and with access to the following CMS features: 'Channels', 'Analytics & Reports'.
 - `YT_PARTNER_ID`: ID of the YouTube partner (CMS) that granted the previous refresh token
 - `YT_PARTNER_CHANNEL_ID`: ID of a YouTube channel managed by the previous partner
 
