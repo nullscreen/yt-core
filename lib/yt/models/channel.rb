@@ -10,7 +10,7 @@ module Yt
         @auth = options[:auth]
       end
 
-    ### DATA
+    ### SNIPPET
 
       # @return [String] the channel’s title.
       def title
@@ -20,6 +20,13 @@ module Yt
       # @return [String] the channel’s description.
       def description
         snippet['description']
+      end
+
+      # def custom_url # not yet implemented, need 100 subs to test
+
+      # @return [Time] the date and time that the channel was created.
+      def published_at
+        Time.parse snippet['publishedAt']
       end
 
       # Returns the URL of the channel’s thumbnail.
@@ -32,17 +39,43 @@ module Yt
         snippet['thumbnails'].fetch(size.to_s, {})['url']
       end
 
-      # @return [Time] the date and time that the channel was created.
-      def published_at
-        Time.parse snippet['publishedAt']
+      # def default_language # not yet implemented, not sure how to set to test
+
+      # def localized # not yet implemented
+
+      # def country # not yet implemented, not sure how to set to test
+
+    ### STATUS
+
+      # @return [String] the privacy status of the channel. Valid values are:
+      #   +private+, +public+, +unlisted+.
+      def privacy_status
+        status['privacyStatus']
       end
 
-    ### ANALYTICS
+      # @return [Boolean] whether the channel data identifies a user that is
+      #   already linked to either a YouTube username or a Google+ account.
+      def is_linked
+        status['isLinked']
+      end
+
+      # @return [String] whether the channel is eligible to upload videos that
+      #   are more than 15 minutes long. Valid values are: +allowed+,
+      #   +disallowed+, +eligible+, +longUploadsUnspecified+.
+      # @note +longUploadsUnspecified+ is not documented by the YouTube API.
+      # @see https://developers.google.com/youtube/v3/docs/channels#status.longUploadsStatus
+      def long_upload_status
+        status['longUploadsStatus']
+      end
+
+    ### CHANNEL ANALYTICS
 
       # @return [Hash<Symbol, Integer>] the total channel’s views.
       def views
         @views ||= {total: views_response.body['rows'].first.first.to_i}
       end
+
+    ### CONTENT OWNER ANALYTICS
 
       # @return [Hash<Symbol, Integer>] the total channel’s impressions.
       def ad_impressions
@@ -51,40 +84,70 @@ module Yt
 
     ### OTHERS
 
+      # Specifies which parts of the channel to fetch when hitting the data API.
+      # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
+      #   are: +snippet+, +status+.
+      # @return [Yt::Channel] itself.
+      def select(*parts)
+        @selected_data_parts = parts
+        self
+      end
+
+      # @return [String] a representation of the Yt::Channel instance.
       def inspect
         "#<#{self.class} @id=#{@id}>"
       end
 
     private
 
+    ### DATA
+
       def snippet
-        @snippet ||= if (items = snippet_response.body['items']).any?
-          items.first['snippet']
+        data_part 'snippet'
+      end
+
+      def status
+        data_part 'status'
+      end
+
+      def data_part(part)
+        @data ||= HashWithIndifferentAccess.new
+        @data[part] || fetch_data(part)
+      end
+
+      def fetch_data(part)
+        parts = @selected_data_parts || [part]
+
+        if (items = data_response(parts).body['items']).any?
+          parts.each{|part| @data[part] = items.first[part.to_s]}
+          @data[part]
         else
           raise Errors::NoItems
         end
       end
 
-      def snippet_response
+      def data_response(parts)
         Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-          http.request snippet_request
+          http.request data_request(parts)
         end.tap{|response| response.body = JSON response.body}
       end
 
-      def snippet_request
-        query = {key: ENV['YT_API_KEY'], id: @id, part: 'snippet'}.to_param
+      def data_request(parts)
+        part = parts.join ','
+        query = {key: ENV['YT_API_KEY'], id: @id, part: part}.to_param
 
         Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
           request.initialize_http_header 'Content-Type' => 'application/json'
         end
       end
 
+    ### CHANNEL ANALYTICS
+
       def views_response
         Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
           http.request views_request
         end.tap{|response| response.body = JSON response.body}
       end
-
 
       def views_request
         query = {'metrics' => 'views', 'end-date' => Date.today.to_s, 'start-date' => '2005-02-01', 'ids' => "channel==#{@id}"}.to_param
@@ -95,12 +158,13 @@ module Yt
         end
       end
 
+    ### CONTENT OWNER ANALYTICS
+
       def ad_impressions_response
         Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
           http.request ad_impressions_request
         end.tap{|response| response.body = JSON response.body}
       end
-
 
       def ad_impressions_request
         query = {'metrics' => 'adImpressions', 'end-date' => Date.today.to_s, 'start-date' => '2005-02-01', 'ids' => "contentOwner==#{@auth.id}", 'filters' => "channel==#{@id}"}.to_param

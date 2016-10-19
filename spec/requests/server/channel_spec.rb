@@ -12,13 +12,28 @@ describe Yt::Channel do
   context 'given an existing channel ID' do
     let(:attrs) { {id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'} }
 
-    it 'returns valid data limiting the number of HTTP requests' do
+    specify 'snippet data can be fetched with one HTTP call' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
       expect(channel.title).to eq 'Yt Test'
       expect(channel.description).to eq 'A YouTube channel to test the yt gem.'
-      expect(channel.thumbnail_url).to include 'photo.jpg'
       expect(channel.published_at).to eq Time.parse('2014-05-02 20:12:57 UTC')
+      expect(channel.thumbnail_url).to include 'photo.jpg'
+    end
+
+    specify 'status data can be fetched with one HTTP call' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      expect(channel.privacy_status).to eq 'public'
+      expect(channel.is_linked).to be true
+      expect(channel.long_upload_status).to eq 'longUploadsUnspecified'
+    end
+
+    specify 'multiple data can be fetched with one HTTP call using select' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      expect(channel.select(:snippet, :status).title).to be
+      expect(channel.select(:snippet, :status).privacy_status).to be
     end
   end
 

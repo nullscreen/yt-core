@@ -10,7 +10,7 @@ body                          {padding-top: 70px}
 h4, .sidebar                  {margin-top: 20px}
 h5                            {margin-top: 15px}
 pre                           {margin-bottom: 25px}
-dl                            {margin-top: 30px}
+dt                            {margin-top: 30px}
 dt                            {margin-bottom: 3px}
 
 .sidebar                      {padding-left: 20px}
