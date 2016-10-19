@@ -20,7 +20,7 @@ module Yt
     ### OTHERS
 
       def inspect
-        "#<#{self.class} @id=#{@id}>"
+        "#<#{self.class} @refresh_token=#{@refresh_token[0..2]}...>"
       end
 
     private
