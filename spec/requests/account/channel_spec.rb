@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Yt::Channel do
+  before(:all) do
+    ENV['YT_API_KEY'] = ''
+    ENV['YT_CLIENT_ID'] = ENV['YT_ACCOUNT_CLIENT_ID']
+    ENV['YT_CLIENT_SECRET'] = ENV['YT_ACCOUNT_CLIENT_SECRET']
+  end
+
   subject(:channel) { Yt::Channel.new attrs }
   let(:auth) { Yt::Account.new refresh_token: ENV['YT_ACCOUNT_REFRESH_TOKEN']}
 

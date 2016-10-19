@@ -39,12 +39,26 @@ ENV['YT_CLIENT_SECRET'] = "<your secret>"           ## replace with your client 
 auth = Yt::Account.new refresh_token: "<your refresh token>"
 
 channel = Yt::Channel.new id: "<your channel ID>", auth: auth
-channel.views # => {total: 123} (the total views of your channel)
+channel.views # => {total: 345} (the total views of your channel)
 {% endhighlight %}
 
 
+<p>
+  Lastly, some methods <strong>acts on behalf of YouTube content owners</strong> (e.g.: fetch the earnings of a channel).<br />
+  To use these methods (marked with  <span class="label label-danger">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">get an API Client ID/Secret from Google</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain an access or refresh token</a> from the content owner, and pass the content owner as the <code>:auth</code> parameter:
+</p>
+
+{% highlight ruby %}
+ENV['YT_CLIENT_ID'] = "<your ID>"                   ## replace with your client ID
+ENV['YT_CLIENT_SECRET'] = "<your secret>"           ## replace with your client secret
+auth = Yt::ContentOwner.new id: "<your content owner ID>", refresh_token: "<token>"
+
+channel = Yt::Channel.new id: "<your channel ID>", auth: auth
+channel.ad_impressions # => {total: 123} (the total ad impressions of your channel)
+{% endhighlight %}
+
 <hr />
-<h4>List of <code>Yt::Channel</code> methods</h4>
+<h4>List of <code>Yt::Channel</code> data methods</h4>
 <dl>
 
   {% include dt.html title="Channel’s Snippet" label="success" auth="any authentication works" %}
@@ -60,7 +74,7 @@ channel.views # => {total: 123} (the total views of your channel)
 <h4>List of <code>Yt::Channel</code> analytics methods</h4>
 <a class="anchor" id="analytics"></a>
 <p>
-  By default, analytics methods return the total value for the lifetime of a channel (e.g., all the views of a channel).
+  Analytics methods return the total value for the lifetime of a channel.
 </p>
 
 <dl>
@@ -68,5 +82,10 @@ channel.views # => {total: 123} (the total views of your channel)
   <dd>
 <div class="highlight"><pre>
 {% include doc.html link="Models/Channel#views" %}{% include example.html object='channel' method='views' result='{total: 345}' %}</pre>
+  </div></dd>
+
+  {% include dt.html title="Channel’s Monetization" label="danger" auth="must authenticate as the channel’s content owner" %}
+  <dd><a class="anchor" id="monetization"></a><div class="highlight"><pre>
+{% include doc.html link="Models/Channel#ad_impressions" %}{% include example.html object='channel' method='ad_impressions' result='{total: 123}' %}</pre>
   </div></dd>
 </dl>

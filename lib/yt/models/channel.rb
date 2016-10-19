@@ -41,7 +41,18 @@ module Yt
 
       # @return [Hash<Symbol, Integer>] the total channel’s views.
       def views
-        @views ||= {total: analytics_response.body['rows'].first.first.to_i}
+        @views ||= {total: views_response.body['rows'].first.first.to_i}
+      end
+
+      # @return [Hash<Symbol, Integer>] the total channel’s impressions.
+      def ad_impressions
+        @ad_impressions ||= {total: ad_impressions_response.body['rows'].first.first.to_i}
+      end
+
+    ### OTHERS
+
+      def inspect
+        "#<#{self.class} @id=#{@id}>"
       end
 
     private
@@ -68,15 +79,31 @@ module Yt
         end
       end
 
-      def analytics_response
+      def views_response
         Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-          http.request analytics_request
+          http.request views_request
         end.tap{|response| response.body = JSON response.body}
       end
 
 
-      def analytics_request
+      def views_request
         query = {'metrics' => 'views', 'end-date' => Date.today.to_s, 'start-date' => '2005-02-01', 'ids' => "channel==#{@id}"}.to_param
+
+        Net::HTTP::Get.new("/youtube/analytics/v1/reports?#{query}").tap do |request|
+          request.initialize_http_header 'Content-Type' => 'application/json'
+          request.add_field 'Authorization', "Bearer #{@auth.access_token}"
+        end
+      end
+
+      def ad_impressions_response
+        Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
+          http.request ad_impressions_request
+        end.tap{|response| response.body = JSON response.body}
+      end
+
+
+      def ad_impressions_request
+        query = {'metrics' => 'adImpressions', 'end-date' => Date.today.to_s, 'start-date' => '2005-02-01', 'ids' => "contentOwner==#{@auth.id}", 'filters' => "channel==#{@id}"}.to_param
 
         Net::HTTP::Get.new("/youtube/analytics/v1/reports?#{query}").tap do |request|
           request.initialize_http_header 'Content-Type' => 'application/json'

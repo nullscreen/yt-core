@@ -6,6 +6,7 @@ require 'json' # for JSON.parse
 
 require 'yt/models/account'
 require 'yt/models/channel'
+require 'yt/models/content_owner'
 require 'yt/errors/no_items'
 
 # An object-oriented Ruby client for YouTube.
