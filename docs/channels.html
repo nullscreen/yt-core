@@ -4,7 +4,7 @@ h2: "Channels"
 ---
 
 <p>
-  <code>Yt::Channel</code> represents a YouTube channel.
+  <code>Yt::Channel</code> represents a <a href="https://developers.google.com/youtube/v3/docs/channels">YouTube channel</a>.
   Initialize using either the YouTube ID:
 </p>
 
@@ -29,8 +29,8 @@ channel.title # => "Yt Test"
 {% endhighlight %}
 
 <p>
-  Other methods <strong>acts on behalf of YouTube accounts</strong> (e.g.: access the analytics of a channel).<br />
-  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain an API Client ID/Secret</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain an access or refresh token</a> from the account you want to act as, and pass the account as the <code>:auth</code> parameter:
+  Other methods <strong>act on behalf of YouTube accounts</strong> (e.g.: access the analytics of a channel).<br />
+  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain an API Client ID/Secret</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain a refresh token</a> from the account you want to act as, and pass the account as the <code>:auth</code> parameter:
 </p>
 
 {% highlight ruby %}
@@ -44,8 +44,8 @@ channel.views # => {total: 345} (the total views of your channel)
 
 
 <p>
-  Lastly, some methods <strong>acts on behalf of YouTube content owners</strong> (e.g.: fetch the earnings of a channel).<br />
-  To use these methods (marked with  <span class="label label-danger">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">get an API Client ID/Secret from Google</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain an access or refresh token</a> from the content owner, and pass the content owner as the <code>:auth</code> parameter:
+  Lastly, some methods <strong>act on behalf of YouTube content owners</strong> (e.g.: fetch the earnings of a channel).<br />
+  To use these methods (marked with  <span class="label label-danger">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">get an API Client ID/Secret from Google</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain a refresh token</a> from the content owner, and pass the content owner as the <code>:auth</code> parameter:
 </p>
 
 {% highlight ruby %}
@@ -60,7 +60,7 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 <hr />
 <h4>List of <code>Yt::Channel</code> data methods</h4>
 <dl>
-  {% include dt.html title="Channel’s Snippet" label="success" auth="any authentication works" %}
+  {% include dt.html title="Channel’s snippet" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
 {% include doc.html link="Models/Channel#title" %}{% include example.html object='channel' method='title' result='"Yt Test"' %}
 {% include doc.html link="Models/Channel#description" %}{% include example.html object='channel' method='description' result='"A test channel."' %}
@@ -68,7 +68,7 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include doc.html link="Models/Channel#thumbnail_url" %}{% include example.html object='channel' method='thumbnail_url' result='"https://yt3.ggpht.com/-KMnbKDBl60w/photo.jpg"' %}</pre>
   </div></dd>
 
-  {% include dt.html title="Channel’s Status" label="success" auth="any authentication works" %}
+  {% include dt.html title="Channel’s status" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="status"></a><div class="highlight"><pre>
 {% include doc.html link="Models/Channel#privacy_status" %}{% include example.html object='channel' method='privacy_status' result='"public"' %}
 {% include doc.html link="Models/Channel#is_linked" %}{% include example.html object='channel' method='is_linked' result='true' %}

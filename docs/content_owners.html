@@ -1,0 +1,42 @@
+---
+title:  "Yt::ContentOwner"
+h2: "Content Owners"
+---
+
+<p>
+  <code>Yt::ContentOwner</code> represents a <a href="https://developers.google.com/youtube/partner/docs/v1/contentOwners">YouTube content owner</a>
+  (an entity that administers content on YouTube).
+</p>
+
+<hr />
+<h4>Authentication</h4>
+
+<p>
+  To use any of the methods of <code>Yt::ContentOwner</code>, you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">get an API Client ID/Secret from Google</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain a refresh token</a> from the content owner, and initialize the object using its unique ID and refresh token:
+</p>
+
+{% highlight ruby %}
+ENV['YT_CLIENT_ID'] = "<your ID>"                   ## replace with your client ID
+ENV['YT_CLIENT_SECRET'] = "<your secret>"           ## replace with your client secret
+content_owner = Yt::ContentOwner.new id: "<your ID>", refresh_token: "<your token>"
+
+content_owner.display_name # => "Your CMS" (the name of your CMS)
+{% endhighlight %}
+
+<hr />
+<h4>List of <code>Yt::ContentOwner</code> partner methods</h4>
+<dl>
+  {% include dt.html title="Content Owner’s overview" label="danger" auth="must authenticate as a content owner" %}
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html link="Models/ContentOwner#display_name" %}{% include example.html object='content_owner' method='display_name' result='"Your CMS Name"' %}</pre>
+  </div></dd>
+</dl>
+
+<hr />
+<h4>List of <code>Yt::ContentOwner</code> data methods</h4>
+<dl>
+  {% include dt.html title="Content Owner’s partnered channels" label="danger" auth="must authenticate as a content owner" %}
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html link="Models/ContentOwner#partnered_channels" %}{% include example.html object='content_owner' method='partnered_channels' result='[#&lt;Yt::Channel @id=UC&hellip;&gt;, &hellip;]' %}</pre>
+  </div></dd>
+</dl>
