@@ -60,13 +60,33 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 <hr />
 <h4>List of <code>Yt::Channel</code> data methods</h4>
 <dl>
-
   {% include dt.html title="Channel’s Snippet" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
 {% include doc.html link="Models/Channel#title" %}{% include example.html object='channel' method='title' result='"Yt Test"' %}
 {% include doc.html link="Models/Channel#description" %}{% include example.html object='channel' method='description' result='"A test channel."' %}
 {% include doc.html link="Models/Channel#published_at" %}{% include example.html object='channel' method='published_at' result='2014-05-02 20:12:57 UTC' %}
 {% include doc.html link="Models/Channel#thumbnail_url" %}{% include example.html object='channel' method='thumbnail_url' result='"https://yt3.ggpht.com/-KMnbKDBl60w/photo.jpg"' %}</pre>
+  </div></dd>
+
+  {% include dt.html title="Channel’s Status" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="status"></a><div class="highlight"><pre>
+{% include doc.html link="Models/Channel#privacy_status" %}{% include example.html object='channel' method='privacy_status' result='"public"' %}
+{% include doc.html link="Models/Channel#is_linked" %}{% include example.html object='channel' method='is_linked' result='true' %}
+{% include doc.html link="Models/Channel#long_upload_status" %}{% include example.html object='channel' method='long_upload_status' result='"longUploadsUnspecified"' %}</pre>
+  </div></dd>
+</dl>
+<p>
+  To limit the number of HTTP requests, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/channels/list#part">parts</a> of the channel’s data to load:
+</p>
+<dl>
+  <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
+{% include example.html object='slow = channel' result='without select: 2 HTTP requests' %}
+{% include example.html object='slow' method='title' result='one HTTP request to fetch the channel’s snippet' %}
+{% include example.html object='slow' method='privacy_status' result='=> another HTTP request to fetch the channel’s status' %}
+
+{% include doc.html link="Models/Channel#select" %}{% include example.html object='fast = channel' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
+{% include example.html object='fast' method='title' result='one HTTP request to fetch both the channel’s snippet and status' %}
+{% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
   </div></dd>
 </dl>
 
