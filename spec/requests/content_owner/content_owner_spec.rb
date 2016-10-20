@@ -14,8 +14,10 @@ describe Yt::ContentOwner do
       expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
       expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
 
-      expect(content_owner.display_name).to be_present
-      expect(content_owner.display_name).to be_a(String)
+      display_name = content_owner.display_name
+
+      expect(display_name).to be_present
+      expect(display_name).to be_a(String)
     end
   end
 
@@ -24,8 +26,21 @@ describe Yt::ContentOwner do
       expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
       expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
 
-      expect(content_owner.partnered_channels).to be_present
-      expect(content_owner.partnered_channels).to all( be_a Yt::Channel )
+      channels = content_owner.partnered_channels
+
+      expect(channels).to be_present
+      expect(channels).to all( be_a Yt::Channel )
+    end
+
+    specify 'accepts .select to fetch multiple parts with one HTTP call' do
+      expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
+      expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
+
+      channels = content_owner.partnered_channels.select :status, :snippet
+
+      expect(channels).to be_present
+      expect(channels.map &:title).to be
+      expect(channels.map &:privacy_status).to be
     end
   end
 end
