@@ -12,6 +12,8 @@ require 'yt/relation'
 require 'yt/models/account'
 require 'yt/models/channel'
 require 'yt/models/content_owner'
+require 'yt/models/video'
+
 require 'yt/errors/no_items'
 
 # An object-oriented Ruby client for YouTube.

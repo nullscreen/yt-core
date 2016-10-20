@@ -34,10 +34,10 @@ module Yt
 
       # Returns the URL of the channel’s thumbnail.
       # @param [Symbol, String] size The size of the channel’s thumbnail.
-      # @return [String] if +size+ is +default+, the URL of a 88x88px image.
-      # @return [String] if +size+ is +medium+, the URL of a 240x240px image.
-      # @return [String] if +size+ is +high+, the URL of a 800x800px image.
-      # @return [nil] if the +size+ is not +default+, +medium+ or +high+.
+      # @return [String] if +size+ is +:default+, the URL of a 88x88px image.
+      # @return [String] if +size+ is +:medium+, the URL of a 240x240px image.
+      # @return [String] if +size+ is +:high+, the URL of a 800x800px image.
+      # @return [nil] if the +size+ is none of the above.
       def thumbnail_url(size = :default)
         snippet['thumbnails'].fetch(size.to_s, {})['url']
       end
@@ -69,6 +69,20 @@ module Yt
       # @see https://developers.google.com/youtube/v3/docs/channels#status.longUploadsStatus
       def long_upload_status
         status['longUploadsStatus']
+      end
+
+    ### ASSOCIATIONS
+
+      # @return [Yt::Relation<Yt::Video>] the videos of the channel.
+      def videos
+        Yt::Relation.new do |videos, options = {}|
+          parts = (options[:parts] || []) + [:id]
+          @videos_items ||= videos_response(parts).body['items']
+          @videos_items.each do |item|
+            item['id'] = item['id']['videoId']
+            videos << Yt::Video.new(item.symbolize_keys.slice(*parts))
+          end
+        end
       end
 
     ### CHANNEL ANALYTICS
@@ -139,6 +153,23 @@ module Yt
         query = {key: ENV['YT_API_KEY'], id: @id, part: part}.to_param
 
         Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
+          request.initialize_http_header 'Content-Type' => 'application/json'
+        end
+      end
+
+    ### ASSOCIATIONS
+
+      def videos_response(parts)
+        Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
+          http.request videos_request(parts)
+        end.tap{|response| response.body = JSON response.body}
+      end
+
+      def videos_request(parts)
+        part = parts.join ','
+        query = {key: ENV['YT_API_KEY'], type: :video, part: part}.to_param
+
+        Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
           request.initialize_http_header 'Content-Type' => 'application/json'
         end
       end

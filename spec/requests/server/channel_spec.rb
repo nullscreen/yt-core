@@ -18,7 +18,7 @@ describe Yt::Channel do
       expect(channel.title).to eq 'Yt Test'
       expect(channel.description).to eq 'A YouTube channel to test the yt gem.'
       expect(channel.published_at).to eq Time.parse('2014-05-02 20:12:57 UTC')
-      expect(channel.thumbnail_url).to include 'photo.jpg'
+      expect(channel.thumbnail_url).to be_a String
     end
 
     specify 'status data can be fetched with one HTTP call' do
@@ -34,6 +34,26 @@ describe Yt::Channel do
 
       expect(channel.select(:snippet, :status).title).to be
       expect(channel.select(:snippet, :status).privacy_status).to be
+    end
+
+    describe '#videos' do
+      it 'returns the list of videos limiting the number of HTTP requests' do
+        expect(Net::HTTP).to receive(:start).once.and_call_original
+
+        videos = channel.videos
+
+        expect(videos).to be_present
+        expect(videos).to all( be_a Yt::Video )
+      end
+
+      specify 'accepts .select to fetch multiple parts with one HTTP call' do
+        expect(Net::HTTP).to receive(:start).once.and_call_original
+
+        videos = channel.videos.select :snippet
+
+        expect(videos).to be_present
+        expect(videos.map &:title).to be
+      end
     end
   end
 

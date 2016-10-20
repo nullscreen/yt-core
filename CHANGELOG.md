@@ -1,0 +1,1 @@
+* content_owner.partnered_channels does not default to include :snippet anymore, only :id

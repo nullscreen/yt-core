@@ -1,0 +1,47 @@
+---
+title:  "Yt::Video"
+h2: "Videos"
+---
+
+<p>
+  <code>Yt::Video</code> represents a <a href="https://developers.google.com/youtube/v3/docs/videos">YouTube video</a>.
+  Initialize using its YouTube ID:
+</p>
+
+{% highlight ruby %}
+video = Yt::Video.new id: 'gknzFj_0vvY'
+# => #<Yt::Video:0x... @id="gknzFj_0vvY">
+{% endhighlight %}
+
+<hr />
+<h4>Authentication</h4>
+
+<p>
+  Most methods of <code>Yt::Video</code> <strong>retrieve public data</strong> from YouTube (e.g.: fetch a video’s title).<br />
+  To use these methods (marked with <span class="label label-success">&nbsp;</span> below), you only need to <a href="https://github.com/Fullscreen/yt#apps-that-do-not-require-user-interactions">obtain a Server API key</a> and configure:
+</p>
+
+{% highlight ruby %}
+ENV['YT_API_KEY'] = "<your api key>"                             ## use your API key
+
+video = Yt::Video.new id: 'gknzFj_0vvY'                          ## use any video ID
+video.title # => "A public video"
+{% endhighlight %}
+
+<hr />
+<h4>List of <code>Yt::Video</code> data methods</h4>
+<dl>
+  {% include dt.html title="Video’s snippet" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html link="Models/Video#title" %}{% include example.html object='video' method='title' result='"A public video"' %}
+{% include doc.html link="Models/Video#description" %}{% include example.html object='video' method='description' result='"A YouTube video to test the yt gem."' %}
+{% include doc.html link="Models/Video#published_at" %}{% include example.html object='video' method='published_at' result='2016-10-20 02:19:05 UTC' %}
+{% include doc.html link="Models/Video#thumbnail_url" %}{% include example.html object='video' method='thumbnail_url' result='"https://i.ytimg.com/vi/gknzFj_0vvY/default.jpg"' %}
+{% include doc.html link="Models/Video#channel_id" %}{% include example.html object='video' method='channel_id' result='"UCwCnUcLcb9-eSrHa_RQGkQQ"' %}
+{% include doc.html link="Models/Video#channel_title" %}{% include example.html object='video' method='channel_title' result='"Yt Test"' %}
+{% include doc.html link="Models/Video#tags" %}{% include example.html object='video' method='tags' result='["yt", "test", "tag"]' %}
+{% include doc.html link="Models/Video#category_id" %}{% include example.html object='video' method='category_id' result='22' %}
+{% include doc.html link="Models/Video#live_broadcast_content" %}{% include example.html object='video' method='live_broadcast_content' result='"none"' %}</pre>
+  </div></dd>
+</dl>
+

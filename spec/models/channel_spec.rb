@@ -4,10 +4,10 @@ describe Yt::Channel do
   subject(:channel) { Yt::Channel.new attrs }
 
   context 'given any channel ID' do
-    let(:attrs) { {id: '123'} }
+    let(:attrs) { {id: 'UC1234567890abcdefghij'} }
 
     specify 'prints out a compact version of the object' do
-      expect(channel.inspect).to eq '#<Yt::Models::Channel @id=123>'
+      expect(channel.inspect).to eq '#<Yt::Models::Channel @id=UC1234567890abcdefghij>'
     end
   end
 end

@@ -6,15 +6,14 @@ module Yt
       super
     end
     # Specifies which parts of the channel to fetch when hitting the data API.
-    # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
-    #   are: +snippet+, +status+.
+    # @param [Array<Symbol, String>] parts The parts to fetch.
     # @return [Yt::Relation] itself.
     def select(*parts)
       @options.merge! parts: parts
       self
     end
 
-    def each(&block)
+    def each
       super @options
     end
 
