@@ -89,6 +89,22 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
   </div></dd>
 </dl>
+<dl>
+  {% include dt.html title="Channel’s (public) videos" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="videos"></a><div class="highlight"><pre>
+{% include doc.html link="Models/Channel#videos" %}{% include example.html object='channel' method='videos' %}
+{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=oO6W...&gt;, ...]&gt;' %}</pre>
+  </div></dd>
+</dl>
+<p>
+  Before iterating through the videos, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/videos/list#part">parts</a> of each video’s data to load:
+</p>
+<dl>
+  <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
+{% include doc.html link="Models/Relation#select" %}{% include example.html object='videos = channel.videos' method='select' params=' <span class="ss">:snippet</span>' %}
+{% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["A public video", "Another public video", ...]' %}</pre>
+  </div></dd>
+</dl>
 
 <hr />
 <h4>List of <code>Yt::Channel</code> analytics methods</h4>

@@ -94,7 +94,6 @@ module Yt
 
       def fetch_data(part)
         parts = @selected_data_parts || [part]
-
         if (items = data_response(parts).body['items']).any?
           parts.each{|part| @data[part] = items.first[part.to_s]}
           @data[part]

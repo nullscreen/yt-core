@@ -8,7 +8,7 @@ describe Yt::Channel do
   end
 
   subject(:channel) { Yt::Channel.new attrs }
-  let(:auth) { Yt::Account.new refresh_token: ENV['YT_ACCOUNT_REFRESH_TOKEN']}
+  let(:auth) { Yt::Account.new refresh_token: ENV['YT_ACCOUNT_REFRESH_TOKEN'] }
 
   context 'given my own channel' do
     let(:attrs) { {id: ENV['YT_ACCOUNT_CHANNEL_ID'], auth: auth} }
