@@ -31,7 +31,7 @@ module Yt
 
     ### ASSOCIATIONS
 
-      # @return [Array<Yt::Channel>] the channels partnered with the YouTube
+      # @return [Yt::Relation<Yt::Channel>] the channels partnered with the YouTube
       #   content owner.
       def partnered_channels
         Yt::Relation.new do |channels, options = {}|
