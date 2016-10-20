@@ -7,6 +7,8 @@ require 'active_support/core_ext/hash/indifferent_access' # for a bug in Rails
 
 require 'json' # for JSON.parse
 
+require 'yt/relation'
+
 require 'yt/models/account'
 require 'yt/models/channel'
 require 'yt/models/content_owner'

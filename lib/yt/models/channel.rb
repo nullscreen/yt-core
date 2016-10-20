@@ -8,6 +8,9 @@ module Yt
       def initialize(options = {})
         @id = options[:id]
         @auth = options[:auth]
+        @data = HashWithIndifferentAccess.new
+        @data[:status] = options[:status] if options[:status]
+        @data[:snippet] = options[:snippet] if options[:snippet]
       end
 
     ### SNIPPET
@@ -111,7 +114,6 @@ module Yt
       end
 
       def data_part(part)
-        @data ||= HashWithIndifferentAccess.new
         @data[part] || fetch_data(part)
       end
 

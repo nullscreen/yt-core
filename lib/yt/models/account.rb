@@ -19,6 +19,7 @@ module Yt
 
     ### OTHERS
 
+      # @return [String] a representation of the Yt::Account instance.
       def inspect
         "#<#{self.class} @refresh_token=#{@refresh_token[0..2]}...>"
       end
