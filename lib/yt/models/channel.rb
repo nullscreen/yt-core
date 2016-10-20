@@ -150,7 +150,7 @@ module Yt
 
       def data_request(parts)
         part = parts.join ','
-        query = {key: ENV['YT_API_KEY'], id: @id, part: part}.to_param
+        query = {key: Yt.configuration.api_key, id: @id, part: part}.to_param
 
         Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
           request.initialize_http_header 'Content-Type' => 'application/json'
@@ -167,7 +167,7 @@ module Yt
 
       def videos_request(parts)
         part = parts.join ','
-        query = {key: ENV['YT_API_KEY'], type: :video, channelId: @id, part: part}.to_param
+        query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: part}.to_param
 
         Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
           request.initialize_http_header 'Content-Type' => 'application/json'

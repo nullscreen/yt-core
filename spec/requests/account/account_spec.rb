@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Yt::Account do
   before(:all) do
-    ENV['YT_API_KEY'] = ''
-    ENV['YT_CLIENT_ID'] = ENV['YT_ACCOUNT_CLIENT_ID']
-    ENV['YT_CLIENT_SECRET'] = ENV['YT_ACCOUNT_CLIENT_SECRET']
+    Yt.configuration.api_key = ''
+    Yt.configuration.client_id = ENV['YT_ACCOUNT_CLIENT_ID']
+    Yt.configuration.client_secret = ENV['YT_ACCOUNT_CLIENT_SECRET']
   end
 
   subject(:account) { Yt::Account.new refresh_token: ENV['YT_ACCOUNT_REFRESH_TOKEN'] }

@@ -50,7 +50,7 @@ module Yt
 
       def access_token_request
         Net::HTTP::Post.new("/o/oauth2/token").tap do |request|
-          request.set_form_data client_id: ENV['YT_CLIENT_ID'], client_secret: ENV['YT_CLIENT_SECRET'], refresh_token: @refresh_token, grant_type: 'refresh_token'
+          request.set_form_data client_id: Yt.configuration.client_id, client_secret: Yt.configuration.client_secret, refresh_token: @refresh_token, grant_type: 'refresh_token'
           request.initialize_http_header 'Content-Type' => 'application/x-www-form-urlencoded'
         end
       end

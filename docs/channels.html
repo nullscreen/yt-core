@@ -22,7 +22,7 @@ channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
 </p>
 
 {% highlight ruby %}
-ENV['YT_API_KEY'] = "<your api key>"                             ## use your API key
+Yt.configuration.api_key = "<your api key>"                      ## use your API key
 
 channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'         ## use any channel ID
 channel.title # => "Yt Test"
@@ -34,8 +34,8 @@ channel.title # => "Yt Test"
 </p>
 
 {% highlight ruby %}
-ENV['YT_CLIENT_ID'] = "<your ID>"                   ## replace with your client ID
-ENV['YT_CLIENT_SECRET'] = "<your secret>"           ## replace with your client secret
+Yt.configuration.client_id = "<your ID>"            ## replace with your client ID
+Yt.configuration.client_secret = "<your secret>"    ## replace with your client secret
 auth = Yt::Account.new refresh_token: "<your refresh token>"
 
 channel = Yt::Channel.new id: "<your channel ID>", auth: auth
@@ -49,8 +49,8 @@ channel.views # => {total: 345} (the total views of your channel)
 </p>
 
 {% highlight ruby %}
-ENV['YT_CLIENT_ID'] = "<your ID>"                   ## replace with your client ID
-ENV['YT_CLIENT_SECRET'] = "<your secret>"           ## replace with your client secret
+Yt.configuration.client_id = "<your ID>"            ## replace with your client ID
+Yt.configuration.client_secret = "<your secret>"    ## replace with your client secret
 auth = Yt::ContentOwner.new id: "<your content owner ID>", refresh_token: "<token>"
 
 channel = Yt::Channel.new id: "<your channel ID>", auth: auth

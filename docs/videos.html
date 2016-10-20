@@ -22,9 +22,9 @@ video = Yt::Video.new id: 'gknzFj_0vvY'
 </p>
 
 {% highlight ruby %}
-ENV['YT_API_KEY'] = "<your api key>"                             ## use your API key
+Yt.configuration.api_key = "<your api key>"                        ## use your API key
 
-video = Yt::Video.new id: 'gknzFj_0vvY'                          ## use any video ID
+video = Yt::Video.new id: 'gknzFj_0vvY'                            ## use any video ID
 video.title # => "A public video"
 {% endhighlight %}
 
