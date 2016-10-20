@@ -29,7 +29,7 @@ account.videos
 <dl>
   {% include dt.html title="Account’s (private and public) videos" label="warning" auth="must authenticate as a YouTube account" %}
   <dd><a class="anchor" id="videos"></a><div class="highlight"><pre>
-{% include doc.html link="Models/Account#videos" %}{% include example.html object='account' method='videos' %}
+{% include doc.html link="Account#videos" %}{% include example.html object='account' method='videos' %}
 {% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=oO6W...&gt;, ...]&gt;' %}</pre>
   </div></dd>
 </dl>
@@ -38,7 +38,7 @@ account.videos
 </p>
 <dl>
   <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
-{% include doc.html link="Models/Relation#select" %}{% include example.html object='videos = account.videos' method='select' params=' <span class="ss">:snippet</span>' %}
+{% include doc.html link="Relation#select" %}{% include example.html object='videos = account.videos' method='select' params=' <span class="ss">:snippet</span>' %}
 {% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["A public video", "A private video", ...]' %}</pre>
   </div></dd>
 </dl>

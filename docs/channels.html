@@ -62,17 +62,17 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 <dl>
   {% include dt.html title="Channel’s snippet" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
-{% include doc.html link="Models/Channel#title" %}{% include example.html object='channel' method='title' result='"Yt Test"' %}
-{% include doc.html link="Models/Channel#description" %}{% include example.html object='channel' method='description' result='"A test channel."' %}
-{% include doc.html link="Models/Channel#published_at" %}{% include example.html object='channel' method='published_at' result='2014-05-02 20:12:57 UTC' %}
-{% include doc.html link="Models/Channel#thumbnail_url" %}{% include example.html object='channel' method='thumbnail_url' result='"https://yt3.ggpht.com/-KMnbKDBl60w/photo.jpg"' %}</pre>
+{% include doc.html link="Channel#title" %}{% include example.html object='channel' method='title' result='"Yt Test"' %}
+{% include doc.html link="Channel#description" %}{% include example.html object='channel' method='description' result='"A test channel."' %}
+{% include doc.html link="Channel#published_at" %}{% include example.html object='channel' method='published_at' result='2014-05-02 20:12:57 UTC' %}
+{% include doc.html link="Channel#thumbnail_url" %}{% include example.html object='channel' method='thumbnail_url' result='"https://yt3.ggpht.com/-KMnbKDBl60w/photo.jpg"' %}</pre>
   </div></dd>
 
   {% include dt.html title="Channel’s status" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="status"></a><div class="highlight"><pre>
-{% include doc.html link="Models/Channel#privacy_status" %}{% include example.html object='channel' method='privacy_status' result='"public"' %}
-{% include doc.html link="Models/Channel#is_linked" %}{% include example.html object='channel' method='is_linked' result='true' %}
-{% include doc.html link="Models/Channel#long_upload_status" %}{% include example.html object='channel' method='long_upload_status' result='"longUploadsUnspecified"' %}</pre>
+{% include doc.html link="Channel#privacy_status" %}{% include example.html object='channel' method='privacy_status' result='"public"' %}
+{% include doc.html link="Channel#is_linked" %}{% include example.html object='channel' method='is_linked' result='true' %}
+{% include doc.html link="Channel#long_upload_status" %}{% include example.html object='channel' method='long_upload_status' result='"longUploadsUnspecified"' %}</pre>
   </div></dd>
 </dl>
 <p>
@@ -84,7 +84,7 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include example.html object='slow' method='title' result='one HTTP request to fetch the channel’s snippet' %}
 {% include example.html object='slow' method='privacy_status' result='=> another HTTP request to fetch the channel’s status' %}
 
-{% include doc.html link="Models/Channel#select" %}{% include example.html object='fast = channel' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
+{% include doc.html link="Channel#select" %}{% include example.html object='fast = channel' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
 {% include example.html object='fast' method='title' result='one HTTP request to fetch both the channel’s snippet and status' %}
 {% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
   </div></dd>
@@ -92,7 +92,7 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 <dl>
   {% include dt.html title="Channel’s (public) videos" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="videos"></a><div class="highlight"><pre>
-{% include doc.html link="Models/Channel#videos" %}{% include example.html object='channel' method='videos' %}
+{% include doc.html link="Channel#videos" %}{% include example.html object='channel' method='videos' %}
 {% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=oO6W...&gt;, ...]&gt;' %}</pre>
   </div></dd>
 </dl>
@@ -101,7 +101,7 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 </p>
 <dl>
   <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
-{% include doc.html link="Models/Relation#select" %}{% include example.html object='videos = channel.videos' method='select' params=' <span class="ss">:snippet</span>' %}
+{% include doc.html link="Relation#select" %}{% include example.html object='videos = channel.videos' method='select' params=' <span class="ss">:snippet</span>' %}
 {% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["A public video", "Another public video", ...]' %}</pre>
   </div></dd>
 </dl>
@@ -117,11 +117,11 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
   {% include dt.html title="Channel’s Analytics" label="warning" auth="must authenticate as the channel’s account or content owner" %}
   <dd>
 <div class="highlight"><pre>
-{% include doc.html link="Models/Channel#views" %}{% include example.html object='channel' method='views' result='{total: 345}' %}</pre>
+{% include doc.html link="Channel#views" %}{% include example.html object='channel' method='views' result='{total: 345}' %}</pre>
   </div></dd>
 
   {% include dt.html title="Channel’s Monetization" label="danger" auth="must authenticate as the channel’s content owner" %}
   <dd><a class="anchor" id="monetization"></a><div class="highlight"><pre>
-{% include doc.html link="Models/Channel#ad_impressions" %}{% include example.html object='channel' method='ad_impressions' result='{total: 123}' %}</pre>
+{% include doc.html link="Channel#ad_impressions" %}{% include example.html object='channel' method='ad_impressions' result='{total: 123}' %}</pre>
   </div></dd>
 </dl>
