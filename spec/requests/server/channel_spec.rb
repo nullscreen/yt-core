@@ -37,7 +37,7 @@ describe Yt::Channel do
     end
 
     describe '#videos' do
-      it 'returns the list of videos limiting the number of HTTP requests' do
+      it 'returns the list of *public* videos limiting the number of HTTP requests' do
         expect(Net::HTTP).to receive(:start).once.and_call_original
 
         videos = channel.videos
@@ -46,7 +46,7 @@ describe Yt::Channel do
         expect(videos).to all( be_a Yt::Video )
       end
 
-      specify 'accepts .select to fetch multiple parts with one HTTP call' do
+      it 'accepts .select to fetch multiple parts with one HTTP call' do
         expect(Net::HTTP).to receive(:start).once.and_call_original
 
         videos = channel.videos.select :snippet

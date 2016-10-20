@@ -1,0 +1,44 @@
+---
+title:  "Yt::Account"
+h2: "Accounts"
+---
+
+<p>
+  <code>Yt::Account</code> represents a YouTube account.
+</p>
+
+<hr />
+<h4>Authentication</h4>
+
+<p>
+  All methods of <code>Yt::Account</code> <strong>act on behalf of YouTube accounts</strong> (e.g.: list an account’s videos).<br />
+  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">get an API Client ID/Secret from Google</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain a refresh token</a> from the account you want to act as and initialize the object with the refresh token:
+</p>
+
+{% highlight ruby %}
+ENV['YT_CLIENT_ID'] = "<your ID>"                   ## replace with your client ID
+ENV['YT_CLIENT_SECRET'] = "<your secret>"           ## replace with your client secret
+account = Yt::Account.new refresh_token: "<token>"  ## use the account’s refresh token
+
+account.videos
+# => #<Yt::Relation [#<Yt::Video @id=gknz...>, #<Yt::Video @id=oO6W...>, ...]>
+{% endhighlight %}
+
+<hr />
+<h4>List of <code>Yt::Account</code> data methods</h4>
+<dl>
+  {% include dt.html title="Account’s (private and public) videos" label="warning" auth="must authenticate as a YouTube account" %}
+  <dd><a class="anchor" id="videos"></a><div class="highlight"><pre>
+{% include doc.html link="Models/Account#videos" %}{% include example.html object='account' method='videos' %}
+{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=oO6W...&gt;, ...]&gt;' %}</pre>
+  </div></dd>
+</dl>
+<p>
+  Before iterating through the videos, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/videos/list#part">parts</a> of each video’s data to load:
+</p>
+<dl>
+  <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
+{% include doc.html link="Models/Relation#select" %}{% include example.html object='videos = account.videos' method='select' params=' <span class="ss">:snippet</span>' %}
+{% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["A public video", "A private video", ...]' %}</pre>
+  </div></dd>
+</dl>

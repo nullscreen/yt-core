@@ -31,6 +31,11 @@
         {% else %}
           <li><a href="{{ site.baseurl }}/videos.html">Videos</a></li>
         {% endif %}
+        {% if page.url == '/accounts.html' %}
+          <li class="active"><a href="{{ site.baseurl }}/accounts.html">Accounts</a></li>
+        {% else %}
+          <li><a href="{{ site.baseurl }}/accounts.html">Accounts</a></li>
+        {% endif %}
         {% if page.url == '/content_owners.html' %}
           <li class="active"><a href="{{ site.baseurl }}/content_owners.html">Content Owners</a></li>
         {% else %}

@@ -79,8 +79,8 @@ module Yt
           parts = (options[:parts] || []) + [:id]
           @videos_items ||= videos_response(parts).body['items']
           @videos_items.each do |item|
-            item['id'] = item['id']['videoId']
-            videos << Yt::Video.new(item.symbolize_keys.slice(*parts))
+            options = item.symbolize_keys.slice(*parts).merge id: item['id']['videoId']
+            videos << Yt::Video.new(options)
           end
         end
       end
@@ -167,7 +167,7 @@ module Yt
 
       def videos_request(parts)
         part = parts.join ','
-        query = {key: ENV['YT_API_KEY'], type: :video, part: part}.to_param
+        query = {key: ENV['YT_API_KEY'], type: :video, channelId: @id, part: part}.to_param
 
         Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
           request.initialize_http_header 'Content-Type' => 'application/json'
