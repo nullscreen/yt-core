@@ -127,6 +127,7 @@ variables. Setting the following environment variables:
 export YT_CLIENT_ID="1234567890.apps.googleusercontent.com"
 export YT_CLIENT_SECRET="1234567890"
 export YT_API_KEY="123456789012345678901234567890"
+export YT_LOG_LEVEL="debug"
 ```
 
 is equivalent to configuring your app with the initializer:
@@ -136,6 +137,7 @@ Yt.configure do |config|
   config.client_id = '1234567890.apps.googleusercontent.com'
   config.client_secret = '1234567890'
   config.api_key = '123456789012345678901234567890'
+  config.log_level = 'debug'
 end
 ```
 

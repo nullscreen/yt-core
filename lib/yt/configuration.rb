@@ -17,12 +17,16 @@ module Yt
     # @see https://console.developers.google.com Google Developers Console
     attr_accessor :api_key
 
+    # @return [String] the level of output to print for debugging purposes.
+    attr_accessor :log_level
+
     # Initialize the global configuration settings, using the values of
     # the specified following environment variables by default.
     def initialize
       @client_id = ENV['YT_CLIENT_ID']
       @client_secret = ENV['YT_CLIENT_SECRET']
       @api_key = ENV['YT_API_KEY']
+      @log_level = ENV['YT_LOG_LEVEL']
     end
   end
 
