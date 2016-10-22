@@ -29,8 +29,8 @@ nav.navbar, h2, h1            {-webkit-font-smoothing: antialiased}
 dt                            {font-size: 1.1em}
 
 /* COLORS */
-.navbar-default .navbar-brand {color: #434a30}
-.navbar-default               {border-color: #434a30; background-color: #fff}
+.navbar-default .navbar-brand {color: #10a17c}
+.navbar-default               {border-color: #10a17c; background-color: #fff}
 .label.label-success          {background-color: #10a17c;}
 .label.label-warning          {background-color: #c066b6;}
 .label.label-danger           {background-color: #ebd55d; color: #333}

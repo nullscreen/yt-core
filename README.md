@@ -81,13 +81,41 @@ Once the key for server application is created, copy the API key and add it
 to your code with the following snippet of code (replacing with your own key):
 
 ```ruby
-ENV['YT_API_KEY'] = '123456789012345678901234567890'
+Yt.configure do |config|
+  config.api_key = '123456789012345678901234567890'
+end
 ```
 
 Remember: this kind of app is not allowed to perform any destructive operation,
 so you won’t be able to like a video, subscribe to a channel or delete a
 playlist from a specific account. You will only be able to retrieve read-only
 data.
+
+Web apps that require user interactions
+---------------------------------------
+
+If you are building a web app that acts on behalf of YouTube accounts, you need
+the owner of each account to authorize your app.
+
+If you already have the account’s **refresh token**, go to the
+[Google Developers Console](https://console.developers.google.com),
+find the web application that was used to obtain the refresh token, copy the
+Client ID and Client secret and add them to your app with the following snippet
+of code (replacing with your own keys):
+
+```ruby
+Yt.configure do |config|
+  config.client_id = '1234567890.apps.googleusercontent.com'
+  config.client_secret = '1234567890'
+end
+```
+Then you can act as a YouTube account by passing the refresh token to the
+account initializer:
+
+```ruby
+account = Yt::Account.new refresh_token: '1/1234567890'
+account.videos #=> (lists the videos of an account)
+```
 
 Configuring with environment variables
 --------------------------------------
@@ -96,14 +124,26 @@ As an alternative to the approach above, you can configure your app with
 variables. Setting the following environment variables:
 
 ```bash
+export YT_CLIENT_ID="1234567890.apps.googleusercontent.com"
+export YT_CLIENT_SECRET="1234567890"
 export YT_API_KEY="123456789012345678901234567890"
+export YT_LOG_LEVEL="debug"
 ```
 
 is equivalent to configuring your app with the initializer:
 
 ```ruby
-ENV['YT_API_KEY'] = '123456789012345678901234567890'
+Yt.configure do |config|
+  config.client_id = '1234567890.apps.googleusercontent.com'
+  config.client_secret = '1234567890'
+  config.api_key = '123456789012345678901234567890'
+  config.log_level = 'debug'
+end
 ```
+
+so use the approach that you prefer.
+If a variable is set in both places, then `Yt.configure` takes precedence.
+
 
 How to test
 ===========

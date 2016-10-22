@@ -7,7 +7,7 @@ describe Yt::Account do
     let(:attrs) { {refresh_token: '1234567890'} }
 
     specify 'prints out a compact version of the object' do
-      expect(account.inspect).to eq '#<Yt::Models::Account @refresh_token=123...>'
+      expect(account.inspect).to eq '#<Yt::Account @refresh_token=123...>'
     end
   end
 end

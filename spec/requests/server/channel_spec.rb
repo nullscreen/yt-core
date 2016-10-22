@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Yt::Channel do
   before(:all) do
-    ENV['YT_API_KEY'] = ENV['YT_SERVER_API_KEY']
-    ENV['YT_CLIENT_ID'] = ''
-    ENV['YT_CLIENT_SECRET'] = ''
+    Yt.configuration.api_key = ENV['YT_SERVER_API_KEY']
+    Yt.configuration.client_id = ''
+    Yt.configuration.client_secret = ''
   end
 
   subject(:channel) { Yt::Channel.new attrs }

@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Yt::ContentOwner do
   before(:all) do
-    ENV['YT_API_KEY'] = ''
-    ENV['YT_CLIENT_ID'] = ENV['YT_PARTNER_CLIENT_ID']
-    ENV['YT_CLIENT_SECRET'] = ENV['YT_PARTNER_CLIENT_SECRET']
+    Yt.configuration.api_key = ''
+    Yt.configuration.client_id = ENV['YT_PARTNER_CLIENT_ID']
+    Yt.configuration.client_secret = ENV['YT_PARTNER_CLIENT_SECRET']
   end
 
   subject(:content_owner) { Yt::ContentOwner.new id: ENV['YT_PARTNER_ID'], refresh_token: ENV['YT_PARTNER_REFRESH_TOKEN'] }
