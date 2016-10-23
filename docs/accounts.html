@@ -20,8 +20,7 @@ Yt.configuration.client_id = "<your ID>"            ## replace with your client 
 Yt.configuration.client_secret = "<your secret>"    ## replace with your client secret
 account = Yt::Account.new refresh_token: "<token>"  ## use the account’s refresh token
 
-account.videos
-# => #<Yt::Relation [#<Yt::Video @id=gknz...>, #<Yt::Video @id=oO6W...>, ...]>
+account.email # => "user@example.com"
 {% endhighlight %}
 
 <hr />
