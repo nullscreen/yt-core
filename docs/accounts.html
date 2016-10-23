@@ -25,6 +25,23 @@ account.videos
 {% endhighlight %}
 
 <hr />
+<h4>List of <code>Yt::Account</code> user info methods</h4>
+<dl>
+  {% include dt.html title="Account’s user info" label="warning" auth="must authenticate as a YouTube account" %}
+  <dd><a class="anchor" id="user_info"></a><div class="highlight"><pre>
+{% include doc.html link="Account#id" %}{% include example.html object='account' method='id' result='"1234"' %}
+{% include doc.html link="Account#email" %}{% include example.html object='account' method='email' result='"user@example.com"' %}
+{% include doc.html link="Account#verified_email" %}{% include example.html object='account' method='verified_email' result='true' %}
+{% include doc.html link="Account#name" %}{% include example.html object='account' method='name' result='"Example User"' %}
+{% include doc.html link="Account#given_name" %}{% include example.html object='account' method='given_name' result='"Example"' %}
+{% include doc.html link="Account#family_name" %}{% include example.html object='account' method='family_name' result='"User"' %}
+{% include doc.html link="Account#avatar_url" %}{% include example.html object='account' method='avatar_url' result='"https://lh3.googleusercontent.com/photo.jpg"' %}
+{% include doc.html link="Account#locale" %}{% include example.html object='account' method='locale' result='"en"' %}
+{% include doc.html link="Account#hd" %}{% include example.html object='account' method='hd' result='"example.com"' %}</pre>
+  </div></dd>
+</dl>
+
+<hr />
 <h4>List of <code>Yt::Account</code> data methods</h4>
 <dl>
   {% include dt.html title="Account’s (private and public) videos" label="warning" auth="must authenticate as a YouTube account" %}
