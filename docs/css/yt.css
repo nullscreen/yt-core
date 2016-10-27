@@ -35,9 +35,7 @@ dt                            {font-size: 1.1em}
 .label.label-warning          {background-color: #c066b6;}
 .label.label-danger           {background-color: #ebd55d; color: #333}
 .o                            {color: #555555}
-.no                           {color: #10a17c}
-.s1                           {color: #306636}
-.s2                           {color: #306636}
-.ss                           {color: #10a17c}
+.no, .ss                      {color: #10a17c}
+.s1, .s2                      {color: #306636}
 .c1                           {color: #999999}
 .mi                           {color: #ab650d}

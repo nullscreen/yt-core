@@ -21,6 +21,17 @@ channel.title #=> "Yt Test"
 
 The **full documentation** is available at [rubydoc.info](http://www.rubydoc.info/gems/yt/frames).
 
+
+A comprehensive guide to Yt
+===========================
+
+All the classes and methods available are detailed on the [Yt homepage](https://claudiob.github.io/yt/):
+
+[![Yt homepage](https://cloud.githubusercontent.com/assets/10076/19788369/b61d7756-9c5c-11e6-8bd8-05f8d67aef4e.png)](https://claudiob.github.io/yt/)
+
+Please proceed to [https://claudiob.github.io/yt/](https://claudiob.github.io/yt) for more details and examples.
+
+
 How to install
 ==============
 
@@ -36,114 +47,6 @@ Since the gem follows [Semantic Versioning](http://semver.org),
 indicating the full version in your Gemfile (~> *major*.*minor*.*patch*)
 guarantees that your project won’t occur in any error when you `bundle update`
 and a new version of Yt is released.
-
-Available resources
-===================
-
-Yt::Channel
------------
-
-Check [claudiob.github.io/yt](http://claudiob.github.io/yt/channels.html) for the list of methods available for `Yt::Channel`.
-
-Yt::ContentOwner
-----------------
-
-Check [claudiob.github.io/yt](http://claudiob.github.io/yt/content_owners.html) for the list of methods available for `Yt::ContentOwner`.
-
-
-Configuring your app
-====================
-
-In order to use Yt you must register your app in the [Google Developers Console](https://console.developers.google.com).
-
-If you don’t have a registered app, browse to the console and select "Create Project":
-![01-create-project](https://cloud.githubusercontent.com/assets/7408595/3373043/4224c894-fbb0-11e3-9f8a-4d96bddce136.png)
-
-When your project is ready, select APIs & Auth in the menu and individually enable Google+, YouTube Analytics and YouTube Data API:
-![02-select-api](https://cloud.githubusercontent.com/assets/4453997/8442701/5d0f77f4-1f35-11e5-93d8-07d4459186b5.png)
-![02a-enable google api](https://cloud.githubusercontent.com/assets/4453997/8442306/0f714cb8-1f33-11e5-99b3-f17a4b1230fe.png)
-![02b-enable youtube api](https://cloud.githubusercontent.com/assets/4453997/8442304/0f6fd0e0-1f33-11e5-981a-acf90ccd7409.png)
-![02c-enable youtube analytics api](https://cloud.githubusercontent.com/assets/4453997/8442305/0f71240e-1f33-11e5-9b60-4ecea02da9be.png)
-
-The next step is to create an API key. Depending on the nature of your app, you should pick one of the following strategies.
-
-Apps that do not require user interactions
-------------------------------------------
-
-If you are building a read-only app that fetches public data from YouTube, then
-all you need is a **Public API access**.
-
-Click on "Create new Key" in the Public API section and select "Server Key":
-![03-create-key](https://cloud.githubusercontent.com/assets/7408595/3373045/42258fcc-fbb0-11e3-821c-699c8a3ce7bc.png)
-![04-create-server-key](https://cloud.githubusercontent.com/assets/7408595/3373044/42251db2-fbb0-11e3-93f9-8f06f8390b4e.png)
-
-Once the key for server application is created, copy the API key and add it
-to your code with the following snippet of code (replacing with your own key):
-
-```ruby
-Yt.configure do |config|
-  config.api_key = '123456789012345678901234567890'
-end
-```
-
-Remember: this kind of app is not allowed to perform any destructive operation,
-so you won’t be able to like a video, subscribe to a channel or delete a
-playlist from a specific account. You will only be able to retrieve read-only
-data.
-
-Web apps that require user interactions
----------------------------------------
-
-If you are building a web app that acts on behalf of YouTube accounts, you need
-the owner of each account to authorize your app.
-
-If you already have the account’s **refresh token**, go to the
-[Google Developers Console](https://console.developers.google.com),
-find the web application that was used to obtain the refresh token, copy the
-Client ID and Client secret and add them to your app with the following snippet
-of code (replacing with your own keys):
-
-```ruby
-Yt.configure do |config|
-  config.client_id = '1234567890.apps.googleusercontent.com'
-  config.client_secret = '1234567890'
-end
-```
-Then you can act as a YouTube account by passing the refresh token to the
-account initializer:
-
-```ruby
-account = Yt::Account.new refresh_token: '1/1234567890'
-account.videos #=> (lists the videos of an account)
-```
-
-Configuring with environment variables
---------------------------------------
-
-As an alternative to the approach above, you can configure your app with
-variables. Setting the following environment variables:
-
-```bash
-export YT_CLIENT_ID="1234567890.apps.googleusercontent.com"
-export YT_CLIENT_SECRET="1234567890"
-export YT_API_KEY="123456789012345678901234567890"
-export YT_LOG_LEVEL="debug"
-```
-
-is equivalent to configuring your app with the initializer:
-
-```ruby
-Yt.configure do |config|
-  config.client_id = '1234567890.apps.googleusercontent.com'
-  config.client_secret = '1234567890'
-  config.api_key = '123456789012345678901234567890'
-  config.log_level = 'debug'
-end
-```
-
-so use the approach that you prefer.
-If a variable is set in both places, then `Yt.configure` takes precedence.
-
 
 How to test
 ===========

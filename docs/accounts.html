@@ -12,7 +12,7 @@ h2: "Accounts"
 
 <p>
   All methods of <code>Yt::Account</code> <strong>act on behalf of YouTube accounts</strong> (e.g.: get the account’s email address).<br />
-  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">get an API Client ID/Secret from Google</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain a refresh token</a> from the account you want to act as, and initialize the object with the refresh token:
+  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to you need to <a href="{{ site.baseurl }}/#oauth_client">generate an OAuth client</a>, <a href="{{ site.baseurl }}/#refresh_token">obtain a refresh token</a> from the account you want to act as, and initialize the object with the refresh token:
 </p>
 
 {% highlight ruby %}

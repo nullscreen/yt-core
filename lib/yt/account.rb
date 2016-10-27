@@ -6,6 +6,7 @@ module Yt
     # @option options [String] :refresh_token The refresh token to interact
     #   with the YouTube API on behalf of a YouTube account.
     def initialize(options = {})
+      @access_token = options[:access_token]
       @refresh_token = options[:refresh_token]
     end
 

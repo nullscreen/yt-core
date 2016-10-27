@@ -18,7 +18,7 @@ channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
 
 <p>
   Most methods of <code>Yt::Channel</code> <strong>retrieve public data</strong> from YouTube (e.g.: fetch a channel’s title).<br />
-  To use these methods (marked with <span class="label label-success">&nbsp;</span> below), you only need to <a href="https://github.com/Fullscreen/yt#apps-that-do-not-require-user-interactions">obtain a Server API key</a> and configure:
+  To use these methods (marked with <span class="label label-success">&nbsp;</span> below), you only need to <a href="{{ site.baseurl }}/#api_key">generate an API key</a> and configure:
 </p>
 
 {% highlight ruby %}
@@ -30,7 +30,7 @@ channel.title # => "Yt Test"
 
 <p>
   Other methods <strong>act on behalf of YouTube accounts</strong> (e.g.: access the analytics of a channel).<br />
-  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain an API Client ID/Secret</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain a refresh token</a> from the account you want to act as, and pass the account as the <code>:auth</code> parameter:
+  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="{{ site.baseurl }}/#oauth_client">generate an OAuth client</a>, <a href="{{ site.baseurl }}/#refresh_token">obtain a refresh token</a> from the account you want to act as, and pass the account as the <code>:auth</code> parameter:
 </p>
 
 {% highlight ruby %}
@@ -45,7 +45,7 @@ channel.views # => {total: 345} (the total views of your channel)
 
 <p>
   Lastly, some methods <strong>act on behalf of YouTube content owners</strong> (e.g.: fetch the earnings of a channel).<br />
-  To use these methods (marked with  <span class="label label-danger">&nbsp;</span> below), you need to <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">get an API Client ID/Secret from Google</a>, <a href="https://github.com/Fullscreen/yt#web-apps-that-require-user-interactions">obtain a refresh token</a> from the content owner, and pass the content owner as the <code>:auth</code> parameter:
+  To use these methods (marked with  <span class="label label-danger">&nbsp;</span> below), you need to you need to <a href="{{ site.baseurl }}/#oauth_client">generate an OAuth client</a>, <a href="{{ site.baseurl }}/#refresh_token">obtain a refresh token</a> from the content owner, and pass the content owner as the <code>:auth</code> parameter:
 </p>
 
 {% highlight ruby %}
