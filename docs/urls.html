@@ -1,0 +1,56 @@
+---
+title:  "Yt::URL"
+h2: "URLs"
+---
+
+<p>
+  <code>Yt::URL</code> is a convenience class to identify the kind of a YouTube resource based on its URL:
+</p>
+
+<dl>
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html link="URL#initialize" %}{% include example.html object='url = <span class="no">Yt</span><span class="o">::</span><span class="no">URL</span>' method='new' params=' <span class="s1">"youtu.be/gknzFj_0vvY"</span>' %}
+{% include doc.html link="URL#kind" %}{% include example.html object='url' method='kind' result=':video' %}
+{% include doc.html link="URL#id" %}{% include example.html object='url' method='id' result='"gknzFj_0vvY"' %}</pre>
+  </div></dd>
+</dl>
+
+<dl>
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html link="URL#initialize" %}{% include example.html object='url = <span class="no">Yt</span><span class="o">::</span><span class="no">URL</span>' method='new' params=' <span class="s1">"https://www.youtube.com/Fullscreen"</span>' %}
+{% include doc.html link="URL#kind" %}{% include example.html object='url' method='kind' result=':channel' %}
+{% include doc.html link="URL#username" %}{% include example.html object='url' method='username' result='"Fullscreen"' %}</pre>
+  </div></dd>
+</dl>
+
+<hr />
+<h4>Authentication</h4>
+
+<p>
+  Using <code>Yt::URL</code> does not require authentication since it is based on matching a set of hard-coded patterns:
+</p>
+
+{% highlight ruby %}
+Yt::URL::PLAYLIST_PATTERNS # => [
+#   "^(?:https?://)?(?:www.)?youtube\\.com/playlist\\?list=(?<id>[a-zA-Z0-9_-]+)"]
+# ]
+
+Yt::URL::SUBSCRIPTION_PATTERNS # => [
+#   "^(?:https?://)?(?:www.)?youtube\\.com/subscription_center\\?add_user=(?:[a-zA-Z0-9&_=-]*)",
+#   "^(?:https?://)?(?:www.)?youtube\\.com/subscribe_widget\\?p=(?:[a-zA-Z0-9&_=-]*)",
+#   "^(?:https?://)?(?:www.)?youtube\\.com/channel/(?:[a-zA-Z0-9&_=-]*)\\?sub_confirmation=1"
+# ]
+
+Yt::URL::VIDEO_PATTERNS # => [
+#   "^(?:https?://)?(?:www.)?youtube\\.com/watch\\?v=(?<id>[a-zA-Z0-9_-]+)",
+#   "^(?:https?://)?(?:www.)?youtu\\.be/(?<id>[a-zA-Z0-9_-]+)(?:|/)",
+#   "^(?:https?://)?(?:www.)?youtube\\.com/embed/(?<id>[a-zA-Z0-9_-]+)(?:|/)",
+#   "^(?:https?://)?(?:www.)?youtube\\.com/v/(?<id>[a-zA-Z0-9_-]+)(?:|/)"
+# ]
+
+Yt::URL::CHANNEL_PATTERNS # => [
+#   "^(?:https?://)?(?:www.)?youtube\\.com/channel/(?<id>[a-zA-Z0-9_-]+)(?:|/)",
+#   "^(?:https?://)?(?:www.)?youtube\\.com/user/(?<username>[a-zA-Z0-9_-]+)(?:|/)",
+#   "^(?:https?://)?(?:www.)?youtube\\.com/(?<username>[a-zA-Z0-9_-]+)(?:|/)"
+# ]
+{% endhighlight %}

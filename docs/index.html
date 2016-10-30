@@ -71,14 +71,14 @@ end{% endhighlight %}
     </p-->
     <p>
       Then, create an instance of <code>Yt::Authentication</code> with the scopes and the redirect URI specified above:</p><pre>
-{% include doc.html link="Authentication#new" %}{% include example.html object='auth = Yt::Authentication' method='new' params=' <span class="ss">redirect_uri:</span> redirect_uri<span class="p">,</span> <span class="ss">scopes:</span> scopes' %}</pre>
+{% include doc.html link="Authentication#initialize" %}{% include example.html object='auth = Yt::Authentication' method='new' params=' <span class="ss">redirect_uri:</span> redirect_uri<span class="p">,</span> <span class="ss">scopes:</span> scopes' %}</pre>
     <p>
       Next, ask users to click on a link to authorize your app. The URL for the link can be obtained with:</p><pre>
 {% include doc.html link="Authentication#url" %}{% include example.html object='auth' method='url' result='"https://accounts.google.com/o/oauth2/auth?access_type=..."' %}</pre>
     <p>
       Once the users authorize your app, they will be redirected to the URI you specified.<br />
       The extra query parameter <code>?code=...</code> at the end of the URI is what you need to obtain the refresh token:</p><pre>
-{% include doc.html link="Authentication#new" %}{% include example.html object='auth = Yt::Authentication' method='new' params=' <span class="ss">redirect_uri:</span> redirect_uri<span class="p">,</span> <span class="ss">code:</span> code' %}
+{% include doc.html link="Authentication#initialize" %}{% include example.html object='auth = Yt::Authentication' method='new' params=' <span class="ss">redirect_uri:</span> redirect_uri<span class="p">,</span> <span class="ss">code:</span> code' %}
 {% include doc.html link="Authentication#tokens" %}{% include example.html object='auth' method='tokens' result='{access_token: "ya29.CjS...", refresh_token: "1/Flk6..."}' %}</pre>
     <p>
       You can now perform actions on YouTube on behalf of the authorized account, for instance:</p>
