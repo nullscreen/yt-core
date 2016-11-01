@@ -11,7 +11,8 @@ h2: "URLs"
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
 {% include doc.html link="URL#initialize" %}{% include example.html object='url = <span class="no">Yt</span><span class="o">::</span><span class="no">URL</span>' method='new' params=' <span class="s1">"youtu.be/gknzFj_0vvY"</span>' %}
 {% include doc.html link="URL#kind" %}{% include example.html object='url' method='kind' result=':video' %}
-{% include doc.html link="URL#id" %}{% include example.html object='url' method='id' result='"gknzFj_0vvY"' %}</pre>
+{% include doc.html link="URL#id" %}{% include example.html object='url' method='id' result='"gknzFj_0vvY"' %}
+{% include doc.html link="URL#canonical" %}{% include example.html object='url' method='canonical' result='"https://www.youtube.com/watch?v=gknzFj_0vvY"' %}</pre>
   </div></dd>
 </dl>
 
@@ -19,7 +20,8 @@ h2: "URLs"
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
 {% include doc.html link="URL#initialize" %}{% include example.html object='url = <span class="no">Yt</span><span class="o">::</span><span class="no">URL</span>' method='new' params=' <span class="s1">"https://www.youtube.com/Fullscreen"</span>' %}
 {% include doc.html link="URL#kind" %}{% include example.html object='url' method='kind' result=':channel' %}
-{% include doc.html link="URL#username" %}{% include example.html object='url' method='username' result='"Fullscreen"' %}</pre>
+{% include doc.html link="URL#username" %}{% include example.html object='url' method='username' result='"Fullscreen"' %}
+{% include doc.html link="URL#canonical" %}{% include example.html object='url' method='canonical' result='"https://www.youtube.com/user/Fullscreen"' %}</pre>
   </div></dd>
 </dl>
 
@@ -33,12 +35,6 @@ h2: "URLs"
 {% highlight ruby %}
 Yt::URL::PLAYLIST_PATTERNS # => [
 #   "^(?:https?://)?(?:www.)?youtube\\.com/playlist\\?list=(?<id>[a-zA-Z0-9_-]+)"]
-# ]
-
-Yt::URL::SUBSCRIPTION_PATTERNS # => [
-#   "^(?:https?://)?(?:www.)?youtube\\.com/subscription_center\\?add_user=(?:[a-zA-Z0-9&_=-]*)",
-#   "^(?:https?://)?(?:www.)?youtube\\.com/subscribe_widget\\?p=(?:[a-zA-Z0-9&_=-]*)",
-#   "^(?:https?://)?(?:www.)?youtube\\.com/channel/(?:[a-zA-Z0-9&_=-]*)\\?sub_confirmation=1"
 # ]
 
 Yt::URL::VIDEO_PATTERNS # => [
