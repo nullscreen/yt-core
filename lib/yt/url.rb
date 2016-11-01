@@ -7,7 +7,7 @@ module Yt
   class URL
     # @param [String] url the canonical URL of a YouTube resource to identify.
     def initialize(url)
-      @url = url
+      @url = url.to_s.strip
       @match = find_pattern_match
     end
 
@@ -15,7 +15,7 @@ module Yt
 
     # @return [Symbol] the kind of YouTube resource matching the URL.
     # Possible values are: +:playlist+, +:subscription+, +:video+,
-    # and +:channel+.
+    # +:channel+, and +:unknown:.
     def kind
       @match[:kind]
     end
@@ -36,13 +36,6 @@ module Yt
       ^(?:https?://)?(?:www\.)?youtube\\.com/playlist\\?list=(?<id>[a-zA-Z0-9_-]+)
     }
 
-    # @return [Array<Regexp>] patterns matching URLs of YouTube subscriptions.
-    SUBSCRIPTION_PATTERNS = %W{
-      ^(?:https?://)?(?:www\.)?youtube\\.com/subscription_center\\?add_user=(?:[a-zA-Z0-9&_=-]*)
-      ^(?:https?://)?(?:www\.)?youtube\\.com/subscribe_widget\\?p=(?:[a-zA-Z0-9&_=-]*)
-      ^(?:https?://)?(?:www\.)?youtube\\.com/channel/(?:[a-zA-Z0-9&_=-]*)\\?sub_confirmation=1
-    }
-
     # @return [Array<Regexp>] patterns matching URLs of YouTube videos.
     VIDEO_PATTERNS = %W{
       ^(?:https?://)?(?:www\.)?youtube\\.com/watch\\?v=(?<id>[a-zA-Z0-9_-]+)
@@ -58,6 +51,22 @@ module Yt
       ^(?:https?://)?(?:www\.)?youtube\\.com/(?<username>[a-zA-Z0-9_-]+)(?:|/)
     }
 
+  ### CANONICAL FORMS
+
+    # @return [String] the canonical form of the URL based on the resource kind.
+    def canonical
+      case kind
+      when :playlist
+        "https://www.youtube.com/playlist?list=#{id}"
+      when :channel
+        "https://www.youtube.com/#{id ? "channel/#{id}" : "user/#{username}"}"
+      when :video
+        "https://www.youtube.com/watch?v=#{id}"
+      when :unknown
+        @url
+      end
+    end
+
   ### OTHERS
 
     # @return [String] a representation of the Yt::URL instance.
@@ -70,7 +79,7 @@ module Yt
   ### PATTERN MATCHING
 
     def find_pattern_match
-      patterns.each do |kind, regex|
+      patterns.find(-> {{kind: :unknown}}) do |kind, regex|
         if data = @url.match(regex)
           # Note: With Ruby 2.4, the following is data.named_captures
           match = data.names.zip(data.captures).to_h.with_indifferent_access
@@ -84,7 +93,6 @@ module Yt
       # remaining patterns. In short, don't change the following order.
       Enumerator.new do |patterns|
         PLAYLIST_PATTERNS.each {|regex| patterns << [:playlist, regex]}
-        SUBSCRIPTION_PATTERNS.each {|regex| patterns << [:subscription, regex]}
         VIDEO_PATTERNS.each {|regex| patterns << [:video, regex]}
         CHANNEL_PATTERNS.each {|regex| patterns << [:channel, regex]}
       end
