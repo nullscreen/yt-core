@@ -33,24 +33,24 @@ video.title # => "A public video"
 <dl>
   {% include dt.html title="Video’s snippet" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
-{% include doc.html link="Video#title" %}{% include example.html object='video' method='title' result='"A public video"' %}
-{% include doc.html link="Video#description" %}{% include example.html object='video' method='description' result='"A YouTube video to test the yt gem."' %}
-{% include doc.html link="Video#published_at" %}{% include example.html object='video' method='published_at' result='2016-10-20 02:19:05 UTC' %}
-{% include doc.html link="Video#thumbnail_url" %}{% include example.html object='video' method='thumbnail_url' result='"https://i.ytimg.com/vi/gknzFj_0vvY/default.jpg"' %}
-{% include doc.html link="Video#channel_id" %}{% include example.html object='video' method='channel_id' result='"UCwCnUcLcb9-eSrHa_RQGkQQ"' %}
-{% include doc.html link="Video#channel_title" %}{% include example.html object='video' method='channel_title' result='"Yt Test"' %}
-{% include doc.html link="Video#tags" %}{% include example.html object='video' method='tags' result='["yt", "test", "tag"]' %}
-{% include doc.html link="Video#category_id" %}{% include example.html object='video' method='category_id' result='22' %}
-{% include doc.html link="Video#live_broadcast_content" %}{% include example.html object='video' method='live_broadcast_content' result='"none"' %}</pre>
+{% include doc.html instance="Video#title" %}{% include example.html object='video' method='title' result='"A public video"' %}
+{% include doc.html instance="Video#description" %}{% include example.html object='video' method='description' result='"A YouTube video to test the yt gem."' %}
+{% include doc.html instance="Video#published_at" %}{% include example.html object='video' method='published_at' result='2016-10-20 02:19:05 UTC' %}
+{% include doc.html instance="Video#thumbnail_url" %}{% include example.html object='video' method='thumbnail_url' result='"https://i.ytimg.com/vi/gknzFj_0vvY/default.jpg"' %}
+{% include doc.html instance="Video#channel_id" %}{% include example.html object='video' method='channel_id' result='"UCwCnUcLcb9-eSrHa_RQGkQQ"' %}
+{% include doc.html instance="Video#channel_title" %}{% include example.html object='video' method='channel_title' result='"Yt Test"' %}
+{% include doc.html instance="Video#tags" %}{% include example.html object='video' method='tags' result='["yt", "test", "tag"]' %}
+{% include doc.html instance="Video#category_id" %}{% include example.html object='video' method='category_id' result='22' %}
+{% include doc.html instance="Video#live_broadcast_content" %}{% include example.html object='video' method='live_broadcast_content' result='"none"' %}</pre>
   </div></dd>
 
   {% include dt.html title="Video’s status" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="status"></a><div class="highlight"><pre>
-{% include doc.html link="Video#privacy_status" %}{% include example.html object='video' method='privacy_status' result='"public"' %}
-{% include doc.html link="Video#upload_status" %}{% include example.html object='video' method='upload_status' result='"processed"' %}
-{% include doc.html link="Video#license" %}{% include example.html object='video' method='license' result='"creative_common"' %}
-{% include doc.html link="Video#embeddable" %}{% include example.html object='video' method='embeddable' result='true' %}
-{% include doc.html link="Video#public_stats_viewable" %}{% include example.html object='video' method='public_stats_viewable' result='false' %}</pre>
+{% include doc.html instance="Video#privacy_status" %}{% include example.html object='video' method='privacy_status' result='"public"' %}
+{% include doc.html instance="Video#upload_status" %}{% include example.html object='video' method='upload_status' result='"processed"' %}
+{% include doc.html instance="Video#license" %}{% include example.html object='video' method='license' result='"creative_common"' %}
+{% include doc.html instance="Video#embeddable" %}{% include example.html object='video' method='embeddable' result='true' %}
+{% include doc.html instance="Video#public_stats_viewable" %}{% include example.html object='video' method='public_stats_viewable' result='false' %}</pre>
   </div></dd>
 </dl>
 <p>
@@ -62,7 +62,7 @@ video.title # => "A public video"
 {% include example.html object='slow' method='title' result='one HTTP request to fetch the video’s snippet' %}
 {% include example.html object='slow' method='privacy_status' result='=> another HTTP request to fetch the video’s status' %}
 
-{% include doc.html link="Video#select" %}{% include example.html object='fast = video' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
+{% include doc.html instance="Video#select" %}{% include example.html object='fast = video' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
 {% include example.html object='fast' method='title' result='one HTTP request to fetch both the video’s snippet and status' %}
 {% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
   </div></dd>
