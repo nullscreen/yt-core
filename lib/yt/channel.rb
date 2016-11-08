@@ -12,6 +12,27 @@ module Yt
       @data[:snippet] = options[:snippet] if options[:snippet]
     end
 
+  ### COLLECTION
+
+    # @return [Yt::Relation<Yt::Channel>] the channels matching the conditions.
+    def self.where(conditions = {})
+      Yt::Relation.new do |channels, options = {}|
+        parts = (options[:parts] || []) + [:id]
+        items = where_response(conditions.fetch(:id, []), parts).body['items']
+        items.each do |item|
+          options = item.symbolize_keys.slice(*parts)
+          channels << Yt::Channel.new(options)
+        end
+      end
+    end
+
+  ### ID
+
+    # @return [String] the channel’s ID.
+    def id
+      @id
+    end
+
   ### SNIPPET
 
     # @return [String] the channel’s title.
@@ -149,6 +170,24 @@ module Yt
     def data_request(parts)
       part = parts.join ','
       query = {key: Yt.configuration.api_key, id: @id, part: part}.to_param
+
+      Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
+        request.initialize_http_header 'Content-Type' => 'application/json'
+      end
+    end
+
+  ### COLLECTION
+
+    def self.where_response(ids, parts)
+      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
+        http.request where_request(ids, parts)
+      end.tap{|response| response.body = JSON response.body}
+    end
+
+    def self.where_request(ids, parts)
+      part = parts.join ','
+      id = ids.join ','
+      query = {key: Yt.configuration.api_key, id: id, part: part}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'

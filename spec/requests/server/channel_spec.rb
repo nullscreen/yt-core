@@ -7,10 +7,12 @@ describe Yt::Channel do
     Yt.configuration.client_secret = ''
   end
 
-  subject(:channel) { Yt::Channel.new attrs }
+  let(:existing_id)    { 'UCwCnUcLcb9-eSrHa_RQGkQQ' }
+  let(:unknown_id)     { 'UC-not-a-valid-id-_RQGkQ' }
+  let(:terminated_id)  { 'UCKe_0fJtkT1dYnznt_HaTrA' }
 
   context 'given an existing channel ID' do
-    let(:attrs) { {id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'} }
+    subject(:channel) { Yt::Channel.new id: existing_id }
 
     specify 'snippet data can be fetched with one HTTP call' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
@@ -58,10 +60,42 @@ describe Yt::Channel do
   end
 
   context 'given an unknown channel ID' do
-    let(:attrs) { {id: 'UC-not-a-valid-id-_RQGkQQ'} }
+    subject(:channel) { Yt::Channel.new id: unknown_id }
 
     specify 'raises Yt::Errors::NoItems upon accessing its data' do
       expect{channel.title}.to raise_error Yt::Errors::NoItems
+    end
+  end
+
+  context 'given multiple channel IDs' do
+    let(:ids) { [existing_id, unknown_id, terminated_id] }
+    subject(:relation) { Yt::Channel.where id: ids }
+
+    it 'returns a list of channels limiting the number of HTTP requests' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      channels = relation
+
+      expect(channels).to be_present
+      expect(channels).to all( be_a Yt::Channel )
+    end
+
+    it 'only includes existing channels, ignoring the other :id' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      channels = relation
+
+      expect(channels).to be_present
+      expect(channels.map &:id).to eq [existing_id]
+    end
+
+    it 'accepts .select to fetch multiple parts with one HTTP call' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      channels = relation.select :snippet
+
+      expect(channels).to be_present
+      expect(channels.map &:title).to be
     end
   end
 end

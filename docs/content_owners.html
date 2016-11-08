@@ -28,7 +28,7 @@ content_owner.display_name # => "Your CMS" (the name of your CMS)
 <dl>
   {% include dt.html title="Content Owner’s overview" label="danger" auth="must authenticate as a content owner" %}
   <dd><a class="anchor" id="overview"></a><div class="highlight"><pre>
-{% include doc.html link="ContentOwner#display_name" %}{% include example.html object='content_owner' method='display_name' result='"Your CMS Name"' %}</pre>
+{% include doc.html instance="ContentOwner#display_name" %}{% include example.html object='content_owner' method='display_name' result='"Your CMS Name"' %}</pre>
   </div></dd>
 </dl>
 
@@ -37,7 +37,7 @@ content_owner.display_name # => "Your CMS" (the name of your CMS)
 <dl>
   {% include dt.html title="Content Owner’s partnered channels" label="danger" auth="must authenticate as a content owner" %}
   <dd><a class="anchor" id="partnered_channels"></a><div class="highlight"><pre>
-{% include doc.html link="ContentOwner#partnered_channels" %}{% include example.html object='content_owner' method='partnered_channels' %}
+{% include doc.html instance="ContentOwner#partnered_channels" %}{% include example.html object='content_owner' method='partnered_channels' %}
 {% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Channel @id=UCuP...&gt;, #&lt;Yt::Channel @id=UC-o...&gt;, ...]&gt;' %}</pre>
   </div></dd>
 </dl>
@@ -46,7 +46,7 @@ content_owner.display_name # => "Your CMS" (the name of your CMS)
 </p>
 <dl>
   <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
-{% include doc.html link="Relation#select" %}{% include example.html object='channels = content_owner.partnered_channels' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' %}
+{% include doc.html instance="Relation#select" %}{% include example.html object='channels = content_owner.partnered_channels' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' %}
 {% include example.html object='channels' method='map <span class="ss">&amp;:title</span>' result='["Test 1", "Test 2", ...]' %}
 {% include example.html object='channels' method='map <span class="ss">&amp;:privacy_status</span>' result='["public", "unlisted", ...]' %}</pre>
   </div></dd>

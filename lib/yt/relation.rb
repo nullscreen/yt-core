@@ -5,7 +5,8 @@ module Yt
       @options = {}
       super
     end
-    # Specifies which parts of the channel to fetch when hitting the data API.
+
+    # Specifies which parts of the resource to fetch when hitting the data API.
     # @param [Array<Symbol, String>] parts The parts to fetch.
     # @return [Yt::Relation] itself.
     def select(*parts)
