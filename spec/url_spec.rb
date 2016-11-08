@@ -102,5 +102,6 @@ describe Yt::URL do
   context 'given a non-YouTube URL' do
     let(:text) { 'any-string' }
     it {expect(url.kind).to eq :unknown }
+    it {expect(url.canonical).to eq text }
   end
 end

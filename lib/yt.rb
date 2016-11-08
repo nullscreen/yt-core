@@ -2,8 +2,7 @@ require 'active_support' # does not load anything by default
 require 'active_support/core_ext/object/to_query' # for Hash.to_param
 require 'active_support/core_ext/hash/transform_values' # for Hash#transform_values
 require 'active_support/core_ext/object/blank' # for Object#presence
-require 'active_support/hash_with_indifferent_access' # for HashWithIndifferentAccess#new
-require 'active_support/core_ext/hash/indifferent_access' # for a bug in Rails
+require 'active_support/core_ext/hash/indifferent_access' # for HashWithIndifferentAccess
 
 require 'json' # for JSON.parse
 

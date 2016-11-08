@@ -33,9 +33,9 @@ module Yt
     #   after they authorize an app to access YouTube on their behalf.
     # @option options [Array<String, Symbol>] :scopes The permission scopes that
     #   the app needs to access on behalf of the user. Valid values are any
-    #   combination of +'youtube'+, +'youtubepartner', +'youtube.readonly',
-    #   +'yt-analytics.readonly'+, +'yt-analytics-monetary.readonly'+,
-    #   +'userinfo.email'+, and +'userinfo.profile'+.
+    #   combination of +"youtube"+, +"youtubepartner", +"youtube.readonly",
+    #   +"yt-analytics.readonly"+, +"yt-analytics-monetary.readonly"+,
+    #   +"userinfo.email"+, and +"userinfo.profile"+.
     # @option options [String] :code The authorization code returned as a query
     #   parameter of the redirect URI after a user has authorized the app.
     # @option options [Boolean] :force whether to fetch a new refresh token

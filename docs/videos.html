@@ -43,5 +43,27 @@ video.title # => "A public video"
 {% include doc.html link="Video#category_id" %}{% include example.html object='video' method='category_id' result='22' %}
 {% include doc.html link="Video#live_broadcast_content" %}{% include example.html object='video' method='live_broadcast_content' result='"none"' %}</pre>
   </div></dd>
-</dl>
 
+  {% include dt.html title="Video’s status" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="status"></a><div class="highlight"><pre>
+{% include doc.html link="Video#privacy_status" %}{% include example.html object='video' method='privacy_status' result='"public"' %}
+{% include doc.html link="Video#upload_status" %}{% include example.html object='video' method='upload_status' result='"processed"' %}
+{% include doc.html link="Video#license" %}{% include example.html object='video' method='license' result='"creative_common"' %}
+{% include doc.html link="Video#embeddable" %}{% include example.html object='video' method='embeddable' result='true' %}
+{% include doc.html link="Video#public_stats_viewable" %}{% include example.html object='video' method='public_stats_viewable' result='false' %}</pre>
+  </div></dd>
+</dl>
+<p>
+  To limit the number of HTTP requests, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/videos/list#part">parts</a> of the video’s data to load:
+</p>
+<dl>
+  <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
+{% include example.html object='slow = video' result='without select: 2 HTTP requests' %}
+{% include example.html object='slow' method='title' result='one HTTP request to fetch the video’s snippet' %}
+{% include example.html object='slow' method='privacy_status' result='=> another HTTP request to fetch the video’s status' %}
+
+{% include doc.html link="Video#select" %}{% include example.html object='fast = video' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
+{% include example.html object='fast' method='title' result='one HTTP request to fetch both the video’s snippet and status' %}
+{% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
+  </div></dd>
+</dl>

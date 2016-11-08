@@ -24,6 +24,23 @@ describe Yt::Video do
       expect(video.category_id).to eq 22
       expect(video.live_broadcast_content).to eq 'none'
     end
+
+    specify 'status data can be fetched with one HTTP call' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      expect(video.upload_status).to eq 'processed'
+      expect(video.privacy_status).to eq 'public'
+      expect(video.license).to eq 'youtube'
+      expect(video.embeddable).to be true
+      expect(video.public_stats_viewable).to be true
+    end
+
+    specify 'multiple data can be fetched with one HTTP call using select' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      expect(video.select(:snippet, :status).title).to be
+      expect(video.select(:snippet, :status).privacy_status).to be
+    end
   end
 
   context 'given an unknown video ID' do
