@@ -1,6 +1,9 @@
 module Yt
-  # @private
+  # Provides methods to iterate through collections of YouTube resources.
+  # Extends the Ruby core Enumerator class with methods like +.select+ to
+  # specify which parts of a YouTube resource to fetch.
   class Relation < Enumerator
+    # @see http://ruby-doc.org/core-2.3.1/Enumerator.html#method-c-new
     def initialize(size = nil, &block)
       @options = {}
       super
@@ -14,6 +17,7 @@ module Yt
       self
     end
 
+    # @see http://ruby-doc.org/core-2.3.1/Enumerator.html#method-i-each
     def each
       super @options
     end
