@@ -13,22 +13,29 @@ module Yt
 
   ### SNIPPET
 
-    # @return [Time] the date and time that the channel was created.
+    # @return [Time] the date and time that the video was published. Note that
+    #   this time might be different than the time that the video was uploaded.
+    #   For example, if a video is uploaded as a private video and then made
+    #   public at a later time, this property will specify the time that the
+    #   video was made public.
     def published_at
       Time.parse snippet['publishedAt']
     end
 
-    # @return [String] the ID of the video’s channel.
+    # @return [String] the ID that YouTube uses to uniquely identify the channel
+    #   that the video was uploaded to.
     def channel_id
       snippet['channelId']
     end
 
-    # @return [String] the video’s title.
+    # @return [String] the video’s title. Has a maximum length of 100 characters
+    #   and may contain all valid UTF-8 characters except < and >.
     def title
       snippet['title']
     end
 
-    # @return [String] the channel’s description.
+    # @return [String] the video’s description. Has a maximum length of 5000
+    #   bytes and may contain all valid UTF-8 characters except < and >.
     def description
       snippet['description']
     end
@@ -45,34 +52,77 @@ module Yt
       snippet['thumbnails'].fetch(size.to_s, {})['url']
     end
 
-    # @return [String] the title of the video’s channel.
+    # @return [String] the title of the channel that the video belongs to.
     def channel_title
       snippet['channelTitle']
     end
 
-    # @return [Array] the list of the video’s tags.
+    # @return [Array] the list of keyword tags associated with the video.
     def tags
       snippet['tags']
     end
 
-    # @return [Integer] the ID of the video’s category.
+    # @return [Integer] the ID of the associated YouTube video category.
+    # @see https://developers.google.com/youtube/v3/docs/videoCategories/list
     def category_id
       snippet['categoryId'].to_i
     end
 
     # @return [String] whether the video is an upcoming/active live broadcast.
-    #   Valid values are: +live+, +none+, +upcoming+.
+    #   Valid values are: +"live"+, +"none"+, +"upcoming"+.
     def live_broadcast_content
       snippet['liveBroadcastContent']
     end
 
     # def default_language # not yet implemented, not sure how to set to test
-
     # def localized # not yet implemented
-
     # def default_audio_language # not yet implemented, not sure how to set to test
 
+  ### STATUS
+
+    # @return [String] the status of the uploaded video. Valid values are:
+    #   +"deleted"+, +"failed"+, +"processed"+, +"rejected"+, and +"unlisted"+.
+    def upload_status
+      status['uploadStatus']
+    end
+
+    # @return [String] the video’s privacy status. Valid values are:
+    #   +"private"+, +"public"+, and +"unlisted"+.
+    def privacy_status
+      status['privacyStatus']
+    end
+
+    # @return [String] the video’s license. Valid values are:
+    #   +"creative_common"+ and +"youtube"+.
+    def license
+      status['license']
+    end
+
+    # @return [Boolean] whether the video can be embedded on another website.
+    def embeddable
+      status['embeddable']
+    end
+
+    # @return [Boolean] whether the extended video statistics on the video’s
+    #   watch page are publicly viewable.
+    def public_stats_viewable
+      status['publicStatsViewable']
+    end
+
+    # def failure_reason # not yet implemented
+    # def rejection_reason # not yet implemented
+    # def publish_at # not yet implemented
+
   ### OTHERS
+
+    # Specifies which parts of the video to fetch when hitting the data API.
+    # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
+    #   are: +:snippet+, +:status+.
+    # @return [Yt::Video] itself.
+    def select(*parts)
+      @selected_data_parts = parts
+      self
+    end
 
     # @return [String] a representation of the Yt::Video instance.
     def inspect
@@ -85,6 +135,10 @@ module Yt
 
     def snippet
       data_part 'snippet'
+    end
+
+    def status
+      data_part 'status'
     end
 
     def data_part(part)

@@ -50,7 +50,7 @@ module Yt
   ### STATUS
 
     # @return [String] the privacy status of the channel. Valid values are:
-    #   +private+, +public+, +unlisted+.
+    #   +"private"+, +"public"+, +"unlisted"+.
     def privacy_status
       status['privacyStatus']
     end
@@ -62,9 +62,9 @@ module Yt
     end
 
     # @return [String] whether the channel is eligible to upload videos that
-    #   are more than 15 minutes long. Valid values are: +allowed+,
-    #   +disallowed+, +eligible+, +longUploadsUnspecified+.
-    # @note +longUploadsUnspecified+ is not documented by the YouTube API.
+    #   are more than 15 minutes long. Valid values are: +"allowed"+,
+    #   +"disallowed"+, +"eligible"+, +"longUploadsUnspecified"+.
+    # @note +"longUploadsUnspecified"+ is not documented by the YouTube API.
     # @see https://developers.google.com/youtube/v3/docs/channels#status.longUploadsStatus
     def long_upload_status
       status['longUploadsStatus']
@@ -102,7 +102,7 @@ module Yt
 
     # Specifies which parts of the channel to fetch when hitting the data API.
     # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
-    #   are: +snippet+, +status+.
+    #   are: +:snippet+, +:status+.
     # @return [Yt::Channel] itself.
     def select(*parts)
       @selected_data_parts = parts
@@ -132,7 +132,6 @@ module Yt
 
     def fetch_data(part)
       parts = @selected_data_parts || [part]
-
       if (items = data_response(parts).body['items']).any?
         parts.each{|part| @data[part] = items.first[part.to_s]}
         @data[part]
