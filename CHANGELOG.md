@@ -4,3 +4,4 @@
 * removed subscribtion kind from Yt::URL
 
 * Change auth: account to as: account
+* Change statistics_set to statistics
