@@ -1,5 +1,5 @@
 Yt - a Ruby client for the YouTube API
-======================================================
+======================================
 
 Yt helps you write apps that need to interact with YouTube.
 
@@ -12,7 +12,7 @@ The **source code** is available on [GitHub](https://github.com/claudiob/yt) and
 [![Online docs](http://img.shields.io/badge/docs-✓-green.svg)](http://www.rubydoc.info/gems/yt/frames)
 [![Gem Version](http://img.shields.io/gem/v/yt.svg)](http://rubygems.org/gems/yt)
 
-After [registering your app](#configuring-your-app), you can run commands like:
+After [registering your app](https://claudiob.github.io/yt), you can run commands like:
 
 ```ruby
 channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
@@ -61,18 +61,18 @@ This will fail unless you have set up a test YouTube application and some
 tests YouTube accounts to hit the API. If you cannot run tests locally, you
 can open PR against the repo and Travis CI will run the tests for you.
 
-These are the environment variables required to run the tests in `spec/requests/as_server_app`:
+These are the environment variables required to run the tests in `spec/requests/server`:
 
 - `YT_SERVER_API_KEY`: API Key of a Google app with access to the YouTube Data API v3 and the YouTube Analytics API
 
-These are the environment variables required to run the tests in `spec/requests/as_account`:
+These are the environment variables required to run the tests in `spec/requests/account`:
 
 - `YT_ACCOUNT_CLIENT_ID`: OAuth 2.0 client ID of a Google app with access to the YouTube Data API v3 and the YouTube Analytics API
 - `YT_ACCOUNT_CLIENT_SECRET`: OAuth 2.0 client secret for the previous ID
 - `YT_ACCOUNT_REFRESH_TOKEN`: refresh token for a YouTube account who granted permission to that app with scopes: yt-analytics.readonly, youtube.
 - `YT_ACCOUNT_CHANNEL_ID`: ID of the YouTube channel owned by the previous account
 
-These are the environment variables required to run the tests in `spec/requests/as_content_owner`:
+These are the environment variables required to run the tests in `spec/requests/content_owner`:
 
 - `YT_PARTNER_CLIENT_ID`: OAuth 2.0 client ID of a Google app with access to the YouTube Data API v3, the YouTube Analytics API, and the YouTube Content ID API
 - `YT_PARTNER_CLIENT_SECRET`: OAuth 2.0 client secret for the previous ID
@@ -82,7 +82,7 @@ These are the environment variables required to run the tests in `spec/requests/
 
 Note that [The YouTube Content ID API](https://developers.google.com/apps-script/advanced/youtube-content-id) is intended for use by YouTube content partners and is not accessible to all developers or to all YouTube users.
 
-No environment variables are required to run the tests in `spec/models`.
+No environment variables are required to run the other tests.
 
 
 How to release new versions
@@ -111,4 +111,5 @@ methods need to be documented and listed in the guides. Remember:
 
 - to run all tests locally: `bundle exec rspec`
 - to generate the docs locally: `bundle exec yard`
+- to list undocumented methods: `bundle exec yard stats --no-doc`
 - to launch the guides locally: `bundle exec jekyll s -s docs`
