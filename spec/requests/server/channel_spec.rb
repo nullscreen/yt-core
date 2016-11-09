@@ -31,11 +31,22 @@ describe Yt::Channel do
       expect(channel.long_upload_status).to eq 'longUploadsUnspecified'
     end
 
+    specify 'statistics data can be fetched with one HTTP call' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      expect(channel.view_count).to be > 0
+      expect(channel.comment_count).to be_an Integer # TODO: create a comment
+      expect(channel.subscriber_count).to be > 0
+      expect(channel.hidden_subscriber_count).to be false
+      expect(channel.video_count).to be > 0
+    end
+
     specify 'multiple data can be fetched with one HTTP call using select' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
-      expect(channel.select(:snippet, :status).title).to be
-      expect(channel.select(:snippet, :status).privacy_status).to be
+      expect(channel.select(:snippet, :status, :statistics).title).to be
+      expect(channel.select(:snippet, :status, :statistics).privacy_status).to be
+      expect(channel.select(:snippet, :status, :statistics).view_count).to be
     end
 
     describe '#videos' do

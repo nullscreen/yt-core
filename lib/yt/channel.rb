@@ -8,8 +8,9 @@ module Yt
       @id = options[:id]
       @auth = options[:auth]
       @data = HashWithIndifferentAccess.new
-      @data[:status] = options[:status] if options[:status]
       @data[:snippet] = options[:snippet] if options[:snippet]
+      @data[:statistics] = options[:statistics] if options[:statistics]
+      @data[:status] = options[:status] if options[:status]
     end
 
   ### COLLECTION
@@ -91,6 +92,34 @@ module Yt
       status['longUploadsStatus']
     end
 
+  ### STATISTICS
+
+    # @return [<Integer>] the number of times the channel has been viewed.
+    def view_count
+      statistics['viewCount'].to_i
+    end
+
+    # @return [<Integer>] the number of comments for the channel.
+    def comment_count
+      statistics['commentCount'].to_i
+    end
+
+    # @return [<Integer>] the number of subscribers that the channel has.
+    def subscriber_count
+      statistics['subscriberCount'].to_i
+    end
+
+    # @return [<Boolean>] whether the channel’s subscriber count is publicly
+    #   visible.
+    def hidden_subscriber_count
+      statistics['hiddenSubscriberCount']
+    end
+
+    # @return [<Integer>] the number of videos uploaded to the channel.
+    def video_count
+      statistics['videoCount'].to_i
+    end
+
   ### ASSOCIATIONS
 
     # @return [Yt::Relation<Yt::Video>] the videos of the channel.
@@ -123,7 +152,7 @@ module Yt
 
     # Specifies which parts of the channel to fetch when hitting the data API.
     # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
-    #   are: +:snippet+, +:status+.
+    #   are: +:snippet+, +:status+, and +:statistics+.
     # @return [Yt::Channel] itself.
     def select(*parts)
       @selected_data_parts = parts
@@ -145,6 +174,10 @@ module Yt
 
     def status
       data_part 'status'
+    end
+
+    def statistics
+      data_part 'statistics'
     end
 
     def data_part(part)

@@ -77,6 +77,15 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include doc.html instance="Channel#is_linked" %}{% include example.html object='channel' method='is_linked' result='true' %}
 {% include doc.html instance="Channel#long_upload_status" %}{% include example.html object='channel' method='long_upload_status' result='"longUploadsUnspecified"' %}</pre>
   </div></dd>
+
+  {% include dt.html title="Channel’s statistics" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="statistics"></a><div class="highlight"><pre>
+{% include doc.html instance="Channel#view_count" %}{% include example.html object='channel' method='view_count' result='123' %}
+{% include doc.html instance="Channel#comment_count" %}{% include example.html object='channel' method='comment_count' result='93' %}
+{% include doc.html instance="Channel#subscriber_count" %}{% include example.html object='channel' method='subscriber_count' result='42' %}
+{% include doc.html instance="Channel#hidden_subscriber_count" %}{% include example.html object='channel' method='hidden_subscriber_count' result='false' %}
+{% include doc.html instance="Channel#video_count" %}{% include example.html object='channel' method='video_count' result='62' %}</pre>
+  </div></dd>
 </dl>
 <p>
   To limit the number of HTTP requests, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/channels/list#part">parts</a> of the channel’s data to load:

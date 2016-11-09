@@ -12,7 +12,6 @@ require 'yt/channel'
 require 'yt/configuration'
 require 'yt/content_owner'
 require 'yt/relation'
-require 'yt/url'
 require 'yt/video'
 
 require 'yt/errors/no_items'
