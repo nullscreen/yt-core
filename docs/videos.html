@@ -52,6 +52,26 @@ video.title # => "A public video"
 {% include doc.html instance="Video#embeddable" %}{% include example.html object='video' method='embeddable' result='true' %}
 {% include doc.html instance="Video#public_stats_viewable" %}{% include example.html object='video' method='public_stats_viewable' result='false' %}</pre>
   </div></dd>
+
+  {% include dt.html title="Video’s statistics" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="statistics"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#view_count" %}{% include example.html object='video' method='view_count' result='123' %}
+{% include doc.html instance="Video#like_count" %}{% include example.html object='video' method='like_count' result='93' %}
+{% include doc.html instance="Video#dislike_count" %}{% include example.html object='video' method='dislike_count' result='42' %}
+{% include doc.html instance="Video#comment_count" %}{% include example.html object='video' method='comment_count' result='62' %}</pre>
+  </div></dd>
+
+  {% include dt.html title="Video’s content details" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="content_details"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#duration" %}{% include example.html object='video' method='duration' result='"PT2S"' %}
+{% include doc.html instance="Video#seconds" %}{% include example.html object='video' method='seconds' result='2' %}
+{% include doc.html instance="Video#dimension" %}{% include example.html object='video' method='dimension' result='"2d"' %}
+{% include doc.html instance="Video#definition" %}{% include example.html object='video' method='definition' result='"sd"' %}
+{% include doc.html instance="Video#caption" %}{% include example.html object='video' method='caption' result='false' %}
+{% include doc.html instance="Video#licensed_content" %}{% include example.html object='video' method='licensed_content' result='false' %}
+{% include doc.html instance="Video#projection" %}{% include example.html object='video' method='projection' result='"rectangular"' %}</pre>
+  </div></dd>
+
 </dl>
 <p>
   To limit the number of HTTP requests, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/videos/list#part">parts</a> of the video’s data to load:
