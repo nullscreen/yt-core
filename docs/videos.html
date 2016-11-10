@@ -52,6 +52,15 @@ video.title # => "A public video"
 {% include doc.html instance="Video#embeddable" %}{% include example.html object='video' method='embeddable' result='true' %}
 {% include doc.html instance="Video#public_stats_viewable" %}{% include example.html object='video' method='public_stats_viewable' result='false' %}</pre>
   </div></dd>
+
+  {% include dt.html title="Video’s statistics" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="statistics"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#view_count" %}{% include example.html object='video' method='view_count' result='123' %}
+{% include doc.html instance="Video#like_count" %}{% include example.html object='video' method='like_count' result='93' %}
+{% include doc.html instance="Video#dislike_count" %}{% include example.html object='video' method='dislike_count' result='42' %}
+{% include doc.html instance="Video#comment_count" %}{% include example.html object='video' method='comment_count' result='62' %}</pre>
+  </div></dd>
+
 </dl>
 <p>
   To limit the number of HTTP requests, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/videos/list#part">parts</a> of the video’s data to load:

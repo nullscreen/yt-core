@@ -35,11 +35,21 @@ describe Yt::Video do
       expect(video.public_stats_viewable).to be true
     end
 
+    specify 'statistics data can be fetched with one HTTP call' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+
+      expect(video.view_count).to be > 0
+      expect(video.like_count).to be > 0
+      expect(video.dislike_count).to be > 0
+      expect(video.comment_count).to be > 0
+    end
+
     specify 'multiple data can be fetched with one HTTP call using select' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
-      expect(video.select(:snippet, :status).title).to be
-      expect(video.select(:snippet, :status).privacy_status).to be
+      expect(video.select(:snippet, :status, :statistics).title).to be
+      expect(video.select(:snippet, :status, :statistics).privacy_status).to be
+      expect(video.select(:snippet, :status, :statistics).view_count).to be
     end
   end
 

@@ -113,11 +113,38 @@ module Yt
     # def rejection_reason # not yet implemented
     # def publish_at # not yet implemented
 
+  ### STATISTICS
+
+    # @return [<Integer>] the number of times the video has been viewed.
+    def view_count
+      statistics['viewCount'].to_i
+    end
+
+    # @return [<Integer>] the number of users who have indicated that they
+    #   liked the video.
+    def like_count
+      statistics['likeCount'].to_i
+    end
+
+    # @return [<Integer>] the number of users who have indicated that they
+    #   disliked the video.
+    def dislike_count
+      statistics['dislikeCount'].to_i
+    end
+
+    # @return [<Integer>] the number of comments for the video.
+    def comment_count
+      statistics['commentCount'].to_i
+    end
+
+  ### CONTENT DETAILS
+
+
   ### OTHERS
 
     # Specifies which parts of the video to fetch when hitting the data API.
     # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
-    #   are: +:snippet+, +:status+.
+    #   are: +:snippet+, +:status+, +:statistics+, and +:content_details+.
     # @return [Yt::Video] itself.
     def select(*parts)
       @selected_data_parts = parts
@@ -139,6 +166,14 @@ module Yt
 
     def status
       data_part 'status'
+    end
+
+    def statistics
+      data_part 'statistics'
+    end
+
+    def content_details
+      data_part 'contentDetails'
     end
 
     def data_part(part)
