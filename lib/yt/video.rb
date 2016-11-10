@@ -139,6 +139,49 @@ module Yt
 
   ### CONTENT DETAILS
 
+    # @return [<String>] the length of the video as an ISO 8601 duration.
+    # @see https://developers.google.com/youtube/v3/docs/videos#contentDetails.duration
+    def duration
+      content_details['duration']
+    end
+
+    # @return [<Integer>] the length of the video in seconds.
+    def seconds
+      to_seconds duration
+    end
+
+    # @return [String] whether the video is available in 3D or in 2D.
+    #   Valid values are: +"2d"+ and +"3d".
+    def dimension
+      content_details['dimension']
+    end
+
+    # @return [String] whether the video is available in high definition or only
+    #   in standard definition. Valid values are: +"sd"+ and +"hd".
+    def definition
+      content_details['definition']
+    end
+
+    # @return [Boolean] whether captions are available for the video.
+    def caption
+      content_details['caption'] == 'true'
+    end
+
+    # @return [Boolean] whether the video represents licensed content, which
+    #   means that the content was uploaded to a channel linked to a YouTube
+    #   content partner and then claimed by that partner.
+    def licensed_content
+      content_details['licensedContent']
+    end
+
+    # @return [String] the projection format of the video. Valid values are:
+    #   +"360"+ and +"rectangular".
+    def projection
+      content_details['projection']
+    end
+
+    # def has_custom_thumbnail # not yet implemented
+    # def content_rating # not yet implemented
 
   ### OTHERS
 
@@ -161,19 +204,19 @@ module Yt
   ### DATA
 
     def snippet
-      data_part 'snippet'
+      data_part :snippet
     end
 
     def status
-      data_part 'status'
+      data_part :status
     end
 
     def statistics
-      data_part 'statistics'
+      data_part :statistics
     end
 
     def content_details
-      data_part 'contentDetails'
+      data_part :content_details
     end
 
     def data_part(part)
@@ -183,7 +226,7 @@ module Yt
     def fetch_data(part)
       parts = @selected_data_parts || [part]
       if (items = data_response(parts).body['items']).any?
-        parts.each{|part| @data[part] = items.first[part.to_s]}
+        parts.each{|part| @data[part] = items.first[part.to_s.camelize :lower]}
         @data[part]
       else
         raise Errors::NoItems
@@ -203,6 +246,41 @@ module Yt
       Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end
+    end
+
+  # OTHERS
+
+  private
+
+    # @return [Integer] the duration of the resource as reported by YouTube.
+    # @see https://developers.google.com/youtube/v3/docs/videos
+    #
+    # According to YouTube documentation, the value is an ISO 8601 duration
+    # in the format PT#M#S, in which the letters PT indicate that the value
+    # specifies a period of time, and the letters M and S refer to length in
+    # minutes and seconds, respectively. The # characters preceding the M and
+    # S letters are both integers that specify the number of minutes (or
+    # seconds) of the video. For example, a value of PT15M51S indicates that
+    # the video is 15 minutes and 51 seconds long.
+    #
+    # The ISO 8601 duration standard, though, is not +always+ respected by
+    # the results returned by YouTube API. For instance: video 2XwmldWC_Ls
+    # reports a duration of 'P1W2DT6H21M32S', which is to be interpreted as
+    # 1 week, 2 days, 6 hours, 21 minutes, 32 seconds. Mixing weeks with
+    # other time units is not strictly part of ISO 8601; in this context,
+    # weeks will be interpreted as "the duration of 7 days". Similarly, a
+    # day will be interpreted as "the duration of 24 hours".
+    # Video tPEE9ZwTmy0 reports a duration of 'PT2S'. Skipping time units
+    # such as minutes is not part of the standard either; in this context,
+    # it will be interpreted as "0 minutes and 2 seconds".
+    def to_seconds(iso8601_duration)
+      match = iso8601_duration.match %r{^P(?:|(?<weeks>\d*?)W)(?:|(?<days>\d*?)D)(?:|T(?:|(?<hours>\d*?)H)(?:|(?<min>\d*?)M)(?:|(?<sec>\d*?)S))$}
+      weeks = (match[:weeks] || '0').to_i
+      days = (match[:days] || '0').to_i
+      hours = (match[:hours] || '0').to_i
+      minutes = (match[:min] || '0').to_i
+      seconds = (match[:sec]).to_i
+      (((((weeks * 7) + days) * 24 + hours) * 60) + minutes) * 60 + seconds
     end
   end
 end

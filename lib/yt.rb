@@ -3,6 +3,8 @@ require 'active_support/core_ext/object/to_query' # for Hash.to_param
 require 'active_support/core_ext/hash/transform_values' # for Hash#transform_values
 require 'active_support/core_ext/object/blank' # for Object#presence
 require 'active_support/core_ext/hash/indifferent_access' # for HashWithIndifferentAccess
+require 'active_support/core_ext/string/inflections.rb' # for camelize
+
 
 require 'json' # for JSON.parse
 

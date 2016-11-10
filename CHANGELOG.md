@@ -6,3 +6,4 @@
 * Change auth: account to as: account
 * Change statistics_set to statistics
 * Removed Yt::URL
+* Change video.duration to video.seconds
