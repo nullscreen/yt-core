@@ -60,6 +60,8 @@ describe Yt::Video do
     specify 'multiple data can be fetched with one HTTP call using select' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
+
+      expect(video.select(:snippet, :status, :statistics, :content_details).id).to be
       expect(video.select(:snippet, :status, :statistics, :content_details).title).to be
       expect(video.select(:snippet, :status, :statistics, :content_details).privacy_status).to be
       expect(video.select(:snippet, :status, :statistics, :content_details).view_count).to be

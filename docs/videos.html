@@ -33,6 +33,7 @@ video.title # => "A public video"
 <dl>
   {% include dt.html title="Video’s snippet" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#id" %}{% include example.html object='video' method='id' result='"gknzFj_0vvY"' %}
 {% include doc.html instance="Video#title" %}{% include example.html object='video' method='title' result='"A public video"' %}
 {% include doc.html instance="Video#description" %}{% include example.html object='video' method='description' result='"A YouTube video to test the yt gem."' %}
 {% include doc.html instance="Video#published_at" %}{% include example.html object='video' method='published_at' result='2016-10-20 02:19:05 UTC' %}

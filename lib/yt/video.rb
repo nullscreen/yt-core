@@ -11,6 +11,13 @@ module Yt
       @data[:snippet] = options[:snippet] if options[:snippet]
     end
 
+  ### ID
+
+    # @return [String] the video’s ID.
+    def id
+      @id
+    end
+
   ### SNIPPET
 
     # @return [Time] the date and time that the video was published. Note that
