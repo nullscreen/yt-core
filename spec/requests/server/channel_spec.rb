@@ -44,6 +44,7 @@ describe Yt::Channel do
     specify 'multiple data can be fetched with one HTTP call using select' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
+      expect(channel.select(:snippet, :status, :statistics).id).to be
       expect(channel.select(:snippet, :status, :statistics).title).to be
       expect(channel.select(:snippet, :status, :statistics).privacy_status).to be
       expect(channel.select(:snippet, :status, :statistics).view_count).to be
@@ -57,9 +58,13 @@ describe Yt::Channel do
       end
 
       it 'only allocates video objects the first time it is called' do
-        # TODO should reallocate if .select changes the parts
         expect{channel.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
         expect{channel.videos.map &:itself}.not_to change{ObjectSpace.each_object(Yt::Video).count}
+      end
+
+      it 'allocates new video objects if the parts change' do
+        expect{channel.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+        expect{channel.videos.select(:status).map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
       end
 
       it 'accepts .select to fetch multiple parts with two HTTP calls' do
@@ -67,11 +72,10 @@ describe Yt::Channel do
 
         videos = channel.videos.select :snippet, :status, :statistics, :content_details
 
-        expect(videos).to be_present
-        expect(videos.map &:title).to be
-        expect(videos.map &:privacy_status).to be
-        expect(videos.map &:view_count).to be
-        expect(videos.map &:duration).to be
+        expect(videos.map &:title).to be_present
+        expect(videos.map &:privacy_status).to be_present
+        expect(videos.map &:view_count).to be_present
+        expect(videos.map &:duration).to be_present
       end
     end
   end

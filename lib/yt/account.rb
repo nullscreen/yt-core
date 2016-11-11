@@ -70,9 +70,7 @@ module Yt
     def videos
       Yt::Relation.new do |videos, options = {}|
         parts = (options[:parts] || []) + [:id]
-        @videos ||= videos_response(parts).body['items'].each do |item|
-          videos << Yt::Video.new(item.symbolize_keys.slice(*parts))
-        end
+        videos_for(parts).each{|video| videos << video}
       end
     end
 
@@ -118,16 +116,22 @@ module Yt
 
   ### ASSOCIATIONS
 
+    def videos_for(parts)
+      @videos ||= {}
+      @videos[parts] ||= videos_response(parts).body['items'].map do |item|
+        Yt::Video.new(item.transform_keys{|k| k.underscore.to_sym}.slice(*parts))
+      end
+    end
+
     # /search only returns id and partial snippets. for any other part we
     # need a second call to /channels
     def videos_response(parts)
-      videos = videos_search_response
-      videos.body['items'].map{|item| item['id'] = item['id']['videoId']}
-
       if parts == [:id]
-        videos
+        videos_search_response.tap do |response|
+          response.body['items'].map{|item| item['id'] = item['id']['videoId']}
+        end
       else
-        videos_list_response parts, videos.body['items'].map{|item| item['id']}
+        videos_list_response parts, videos_search_response.body['items'].map{|item| item['id']['videoId']}
       end
     end
 
@@ -157,7 +161,7 @@ module Yt
       ids = video_ids.join ','
       query = {key: Yt.configuration.api_key, id: ids, part: part}.to_param
 
-      Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
+      Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
         request.add_field 'Authorization', "Bearer #{access_token}"
       end

@@ -9,6 +9,9 @@ module Yt
       @auth = options[:auth]
       @data = HashWithIndifferentAccess.new
       @data[:snippet] = options[:snippet] if options[:snippet]
+      @data[:status] = options[:status] if options[:status]
+      @data[:statistics] = options[:statistics] if options[:statistics]
+      @data[:content_details] = options[:content_details] if options[:content_details]
     end
 
   ### ID

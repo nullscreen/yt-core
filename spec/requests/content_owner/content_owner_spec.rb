@@ -39,8 +39,8 @@ describe Yt::ContentOwner do
       channels = content_owner.partnered_channels.select :status, :snippet
 
       expect(channels).to be_present
-      expect(channels.map &:title).to be
-      expect(channels.map &:privacy_status).to be
+      expect(channels.map &:title).to be_present
+      expect(channels.map &:privacy_status).to be_present
     end
   end
 end
