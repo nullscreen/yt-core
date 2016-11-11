@@ -49,16 +49,19 @@ describe Yt::Video do
 
       expect(video.duration).to eq 'PT2S'
       expect(video.seconds).to be 2
+      expect(video.hh_mm_ss).to eq '00:00:02'
       expect(video.dimension).to eq '2d'
       expect(video.definition).to eq 'sd'
       expect(video.caption).to be false
       expect(video.licensed_content).to be false
       expect(video.projection).to eq 'rectangular'
     end
-    
+
     specify 'multiple data can be fetched with one HTTP call using select' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
+
+      expect(video.select(:snippet, :status, :statistics, :content_details).id).to be
       expect(video.select(:snippet, :status, :statistics, :content_details).title).to be
       expect(video.select(:snippet, :status, :statistics, :content_details).privacy_status).to be
       expect(video.select(:snippet, :status, :statistics, :content_details).view_count).to be

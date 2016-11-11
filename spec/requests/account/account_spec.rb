@@ -29,20 +29,30 @@ describe Yt::Account do
       expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
       expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
 
-      videos = account.videos
-
-      expect(videos).to be_present
-      expect(videos).to all( be_a Yt::Video )
+      expect(account.videos).to all( be_a Yt::Video )
     end
 
-    it 'accepts .select to fetch multiple parts with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
-      expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
+    it 'only allocates video objects the first time it is called' do
+      expect{account.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+      expect{account.videos.map &:itself}.not_to change{ObjectSpace.each_object(Yt::Video).count}
+    end
 
-      videos = account.videos.select :snippet
+    it 'allocates new video objects if the parts change' do
+      expect{account.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+      expect{account.videos.select(:status).map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+    end
+
+    it 'accepts .select to fetch multiple parts with two HTTP calls' do
+      expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
+      expect(Net::HTTP).to receive(:start).twice.with('www.googleapis.com', 443, use_ssl: true).and_call_original
+
+      videos = account.videos.select :snippet, :status, :statistics, :content_details
 
       expect(videos).to be_present
-      expect(videos.map &:title).to be
+      expect(videos.map &:title).to be_present
+      expect(videos.map &:privacy_status).to be_present
+      expect(videos.map &:view_count).to be_present
+      expect(videos.map &:duration).to be_present
     end
   end
 end

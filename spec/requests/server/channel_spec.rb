@@ -44,6 +44,7 @@ describe Yt::Channel do
     specify 'multiple data can be fetched with one HTTP call using select' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
+      expect(channel.select(:snippet, :status, :statistics).id).to be
       expect(channel.select(:snippet, :status, :statistics).title).to be
       expect(channel.select(:snippet, :status, :statistics).privacy_status).to be
       expect(channel.select(:snippet, :status, :statistics).view_count).to be
@@ -53,19 +54,28 @@ describe Yt::Channel do
       it 'returns the list of *public* videos limiting the number of HTTP requests' do
         expect(Net::HTTP).to receive(:start).once.and_call_original
 
-        videos = channel.videos
-
-        expect(videos).to be_present
-        expect(videos).to all( be_a Yt::Video )
+        expect(channel.videos).to all( be_a Yt::Video )
       end
 
-      it 'accepts .select to fetch multiple parts with one HTTP call' do
-        expect(Net::HTTP).to receive(:start).once.and_call_original
+      it 'only allocates video objects the first time it is called' do
+        expect{channel.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+        expect{channel.videos.map &:itself}.not_to change{ObjectSpace.each_object(Yt::Video).count}
+      end
 
-        videos = channel.videos.select :snippet
+      it 'allocates new video objects if the parts change' do
+        expect{channel.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+        expect{channel.videos.select(:status).map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+      end
 
-        expect(videos).to be_present
-        expect(videos.map &:title).to be
+      it 'accepts .select to fetch multiple parts with two HTTP calls' do
+        expect(Net::HTTP).to receive(:start).twice.and_call_original
+
+        videos = channel.videos.select :snippet, :status, :statistics, :content_details
+
+        expect(videos.map &:title).to be_present
+        expect(videos.map &:privacy_status).to be_present
+        expect(videos.map &:view_count).to be_present
+        expect(videos.map &:duration).to be_present
       end
     end
   end

@@ -9,6 +9,16 @@ module Yt
       @auth = options[:auth]
       @data = HashWithIndifferentAccess.new
       @data[:snippet] = options[:snippet] if options[:snippet]
+      @data[:status] = options[:status] if options[:status]
+      @data[:statistics] = options[:statistics] if options[:statistics]
+      @data[:content_details] = options[:content_details] if options[:content_details]
+    end
+
+  ### ID
+
+    # @return [String] the video’s ID.
+    def id
+      @id
     end
 
   ### SNIPPET
@@ -148,6 +158,12 @@ module Yt
     # @return [<Integer>] the length of the video in seconds.
     def seconds
       to_seconds duration
+    end
+
+    # @return [<String>] the length of the video as an ISO 8601 time, HH:MM:SS.
+    def hh_mm_ss
+      hh, mm, ss = seconds / 3600, seconds / 60 % 60, seconds % 60
+      [hh, mm, ss].map{|t| t.to_s.rjust(2,'0')}.join(':')
     end
 
     # @return [String] whether the video is available in 3D or in 2D.
