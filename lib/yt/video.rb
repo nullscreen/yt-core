@@ -150,6 +150,12 @@ module Yt
       to_seconds duration
     end
 
+    # @return [<String>] the length of the video as an ISO 8601 time, HH:MM:SS.
+    def hh_mm_ss
+      hh, mm, ss = seconds / 3600, seconds / 60 % 60, seconds % 60
+      [hh, mm, ss].map{|t| t.to_s.rjust(2,'0')}.join(':')
+    end
+
     # @return [String] whether the video is available in 3D or in 2D.
     #   Valid values are: +"2d"+ and +"3d".
     def dimension

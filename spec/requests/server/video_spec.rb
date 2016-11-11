@@ -49,6 +49,7 @@ describe Yt::Video do
 
       expect(video.duration).to eq 'PT2S'
       expect(video.seconds).to be 2
+      expect(video.hh_mm_ss).to eq '00:00:02'
       expect(video.dimension).to eq '2d'
       expect(video.definition).to eq 'sd'
       expect(video.caption).to be false
