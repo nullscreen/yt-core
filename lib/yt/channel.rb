@@ -126,13 +126,12 @@ module Yt
     def videos
       Yt::Relation.new do |videos, options = {}|
         parts = (options[:parts] || []) + [:id]
-        @videos_items ||= videos_response(parts).body['items']
-        @videos_items.each do |item|
-          options = item.symbolize_keys.slice(*parts).merge id: item['id']['videoId']
-          videos << Yt::Video.new(options)
+        @videos ||= videos_response(parts).body['items'].each do |item|
+          videos << Yt::Video.new(item.symbolize_keys.slice(*parts))
         end
       end
     end
+
 
   ### CHANNEL ANALYTICS
 
@@ -229,17 +228,45 @@ module Yt
 
   ### ASSOCIATIONS
 
+    # /search only returns id and partial snippets. for any other part we
+    # need a second call to /channels
     def videos_response(parts)
+      videos = videos_search_response
+      videos.body['items'].map{|item| item['id'] = item['id']['videoId']}
+
+      if parts == [:id]
+        videos
+      else
+        videos_list_response parts, videos.body['items'].map{|item| item['id']}
+      end
+    end
+
+    def videos_search_response
       Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request videos_request(parts)
+        http.request videos_search_request
       end.tap{|response| response.body = JSON response.body}
     end
 
-    def videos_request(parts)
-      part = parts.join ','
-      query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: part}.to_param
+    def videos_search_request
+      query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: :id}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
+        request.initialize_http_header 'Content-Type' => 'application/json'
+      end
+    end
+
+    def videos_list_response(parts, video_ids)
+      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
+        http.request videos_list_request(parts, video_ids)
+      end.tap{|response| response.body = JSON response.body}
+    end
+
+    def videos_list_request(parts, video_ids)
+      part = parts.join ','
+      ids = video_ids.join ','
+      query = {key: Yt.configuration.api_key, id: ids, part: part}.to_param
+
+      Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end
     end

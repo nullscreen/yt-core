@@ -29,20 +29,26 @@ describe Yt::Account do
       expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
       expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
 
-      videos = account.videos
-
-      expect(videos).to be_present
-      expect(videos).to all( be_a Yt::Video )
+      expect(account.videos).to all( be_a Yt::Video )
     end
 
-    it 'accepts .select to fetch multiple parts with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
-      expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
+    it 'only allocates video objects the first time it is called' do
+      # TODO should reallocate if .select changes the parts
+      expect{account.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+      expect{account.videos.map &:itself}.not_to change{ObjectSpace.each_object(Yt::Video).count}
+    end
 
-      videos = account.videos.select :snippet
+    it 'accepts .select to fetch multiple parts with two HTTP calls' do
+      expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
+      expect(Net::HTTP).to receive(:start).twice.with('www.googleapis.com', 443, use_ssl: true).and_call_original
+
+      videos = account.videos.select :snippet, :status, :statistics, :content_details
 
       expect(videos).to be_present
       expect(videos.map &:title).to be
+      expect(videos.map &:privacy_status).to be
+      expect(videos.map &:view_count).to be
+      expect(videos.map &:duration).to be
     end
   end
 end

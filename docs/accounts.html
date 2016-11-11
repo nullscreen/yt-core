@@ -54,7 +54,8 @@ account.email # => "user@example.com"
 </p>
 <dl>
   <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
-{% include doc.html instance="Relation#select" %}{% include example.html object='videos = account.videos' method='select' params=' <span class="ss">:snippet</span>' %}
-{% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["A public video", "A private video", ...]' %}</pre>
+{% include doc.html instance="Relation#select" %}{% include example.html object='videos = account.videos' method='select' params=' <span class="ss">:snippet</span>, <span class="ss">:status</span>' %}
+{% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["A public video", "A private video", ...]' %}
+{% include example.html object='videos' method='map <span class="ss">&amp;:privacy_status</span>' result='["public", "private", ...]' %}</pre>
   </div></dd>
 </dl>

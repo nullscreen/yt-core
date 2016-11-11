@@ -55,7 +55,7 @@ describe Yt::Video do
       expect(video.licensed_content).to be false
       expect(video.projection).to eq 'rectangular'
     end
-    
+
     specify 'multiple data can be fetched with one HTTP call using select' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
