@@ -46,7 +46,7 @@ account.email # => "user@example.com"
   {% include dt.html title="Account’s (private and public) videos" label="warning" auth="must authenticate as a YouTube account" %}
   <dd><a class="anchor" id="videos"></a><div class="highlight"><pre>
 {% include doc.html instance="Account#videos" %}{% include example.html object='account' method='videos' %}
-{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=oO6W...&gt;, ...]&gt;' %}</pre>
+{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=32Gc...&gt;, ...]&gt;' %}</pre>
   </div></dd>
 </dl>
 <p>
@@ -57,5 +57,14 @@ account.email # => "user@example.com"
 {% include doc.html instance="Relation#select" %}{% include example.html object='videos = account.videos' method='select' params=' <span class="ss">:snippet</span>, <span class="ss">:status</span>' %}
 {% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["A public video", "A private video", ...]' %}
 {% include example.html object='videos' method='map <span class="ss">&amp;:privacy_status</span>' result='["public", "private", ...]' %}</pre>
+  </div></dd>
+</dl>
+<p>
+  You can also use <code>limit</code> to only fetch a certain number of videos:
+</p>
+<dl>
+  <dd><a class="anchor" id="limit"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#limit" %}{% include example.html object='videos = account.videos' method='limit' params=' <span class="mi">2</span>' %}
+{% include example.html object='videos' method='map <span class="ss">&amp;:id</span>' result='["gknzFj_0vvY", "32Gc88CswnI"]' %}</pre>
   </div></dd>
 </dl>

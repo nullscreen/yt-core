@@ -105,7 +105,7 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
   {% include dt.html title="Channel’s (public) videos" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="videos"></a><div class="highlight"><pre>
 {% include doc.html instance="Channel#videos" %}{% include example.html object='channel' method='videos' %}
-{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=oO6W...&gt;, ...]&gt;' %}</pre>
+{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=32Gc...&gt;, ...]&gt;' %}</pre>
   </div></dd>
 </dl>
 <p>
@@ -118,6 +118,16 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include example.html object='videos' method='map <span class="ss">&amp;:view_count</span>' result='[123, 456, ...]' %}</pre>
   </div></dd>
 </dl>
+<p>
+  You can also use <code>limit</code> to only fetch a certain number of videos:
+</p>
+<dl>
+  <dd><a class="anchor" id="limit"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#limit" %}{% include example.html object='videos = channel.videos' method='limit' params=' <span class="mi">2</span>' %}
+{% include example.html object='videos' method='map <span class="ss">&amp;:id</span>' result='["gknzFj_0vvY", "oO6WawhsxTA"]' %}</pre>
+  </div></dd>
+</dl>
+
 <dl>
   {% include dt.html title="Collection of channels" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="where"></a><div class="highlight"><pre>

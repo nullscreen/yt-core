@@ -51,3 +51,12 @@ content_owner.display_name # => "Your CMS" (the name of your CMS)
 {% include example.html object='channels' method='map <span class="ss">&amp;:privacy_status</span>' result='["public", "unlisted", ...]' %}</pre>
   </div></dd>
 </dl>
+<p>
+  You can also use <code>limit</code> to only fetch a certain number of channels:
+</p>
+<dl>
+  <dd><a class="anchor" id="limit"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#limit" %}{% include example.html object='channels = content_owner.partnered_channels' method='limit' params=' <span class="mi">1</span>' %}
+{% include example.html object='channels' method='map <span class="ss">&amp;:id</span>' result='["UCwCnUcLcb9-eSrHa_RQGkQQ"]' %}</pre>
+  </div></dd>
+</dl>

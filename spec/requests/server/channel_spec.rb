@@ -8,6 +8,7 @@ describe Yt::Channel do
   end
 
   let(:existing_id)    { 'UCwCnUcLcb9-eSrHa_RQGkQQ' }
+  let(:another_id)     { 'UCxO1tY8h1AhOz0T4ENwmpow' }
   let(:unknown_id)     { 'UC-not-a-valid-id-_RQGkQ' }
   let(:terminated_id)  { 'UCKe_0fJtkT1dYnznt_HaTrA' }
 
@@ -67,6 +68,11 @@ describe Yt::Channel do
         expect{channel.videos.select(:status).map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
       end
 
+      it 'allocates new video objects if the limit changes' do
+        expect{channel.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+        expect{channel.videos.limit(10).map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+      end
+
       it 'accepts .select to fetch multiple parts with two HTTP calls' do
         expect(Net::HTTP).to receive(:start).twice.and_call_original
 
@@ -76,6 +82,12 @@ describe Yt::Channel do
         expect(videos.map &:privacy_status).to be_present
         expect(videos.map &:view_count).to be_present
         expect(videos.map &:duration).to be_present
+      end
+
+      it 'accepts .limit to only fetch some videos' do
+        expect(Net::HTTP).to receive(:start).once.and_call_original
+
+        expect(channel.videos.limit(1).count).to be 1
       end
     end
   end
@@ -89,7 +101,7 @@ describe Yt::Channel do
   end
 
   context 'given multiple channel IDs' do
-    let(:ids) { [existing_id, unknown_id, terminated_id] }
+    let(:ids) { [existing_id, unknown_id, terminated_id, another_id] }
     subject(:relation) { Yt::Channel.where id: ids }
 
     it 'returns a list of channels limiting the number of HTTP requests' do
@@ -107,7 +119,7 @@ describe Yt::Channel do
       channels = relation
 
       expect(channels).to be_present
-      expect(channels.map &:id).to eq [existing_id]
+      expect(channels.map &:id).to eq [existing_id, another_id]
     end
 
     it 'accepts .select to fetch multiple parts with one HTTP call' do
