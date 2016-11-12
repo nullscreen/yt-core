@@ -42,6 +42,11 @@ describe Yt::Account do
       expect{account.videos.select(:status).map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
     end
 
+    it 'allocates new video objects if the limit changes' do
+      expect{account.videos.map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+      expect{account.videos.limit(10).map &:itself}.to change{ObjectSpace.each_object(Yt::Video).count}
+    end
+
     it 'accepts .select to fetch multiple parts with two HTTP calls' do
       expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
       expect(Net::HTTP).to receive(:start).twice.with('www.googleapis.com', 443, use_ssl: true).and_call_original
@@ -53,6 +58,13 @@ describe Yt::Account do
       expect(videos.map &:privacy_status).to be_present
       expect(videos.map &:view_count).to be_present
       expect(videos.map &:duration).to be_present
+    end
+
+    it 'accepts .limit to only fetch some videos' do
+      expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
+      expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
+
+      expect(account.videos.limit(1).count).to be 1
     end
   end
 end

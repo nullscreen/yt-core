@@ -32,7 +32,22 @@ describe Yt::ContentOwner do
       expect(channels).to all( be_a Yt::Channel )
     end
 
-    specify 'accepts .select to fetch multiple parts with one HTTP call' do
+    it 'only allocates channel objects the first time it is called' do
+      expect{content_owner.partnered_channels.map &:itself}.to change{ObjectSpace.each_object(Yt::Channel).count}
+      expect{content_owner.partnered_channels.map &:itself}.not_to change{ObjectSpace.each_object(Yt::Channel).count}
+    end
+
+    it 'allocates new channel objects if the parts change' do
+      expect{content_owner.partnered_channels.map &:itself}.to change{ObjectSpace.each_object(Yt::Channel).count}
+      expect{content_owner.partnered_channels.select(:status).map &:itself}.to change{ObjectSpace.each_object(Yt::Channel).count}
+    end
+
+    it 'allocates new channel objects if the limit changes' do
+      expect{content_owner.partnered_channels.map &:itself}.to change{ObjectSpace.each_object(Yt::Channel).count}
+      expect{content_owner.partnered_channels.limit(10).map &:itself}.to change{ObjectSpace.each_object(Yt::Channel).count}
+    end
+
+    it 'accepts .select to fetch multiple parts with one HTTP call' do
       expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
       expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
 
@@ -42,5 +57,14 @@ describe Yt::ContentOwner do
       expect(channels.map &:title).to be_present
       expect(channels.map &:privacy_status).to be_present
     end
+
+    it 'accepts .limit to only fetch some channels' do
+      expect(Net::HTTP).to receive(:start).once.with('accounts.google.com', 443, use_ssl: true).and_call_original
+      expect(Net::HTTP).to receive(:start).once.with('www.googleapis.com', 443, use_ssl: true).and_call_original
+
+      expect(content_owner.partnered_channels.limit(1).count).to be 1
+    end
   end
 end
+
+

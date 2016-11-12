@@ -17,6 +17,14 @@ module Yt
       self
     end
 
+    # Specifies how many items to fetch when hitting the data API.
+    # @param [Integer] max_results The maximum number of items to fetch.
+    # @return [Yt::Relation] itself.
+    def limit(max_results)
+      @options.merge! limit: max_results
+      self
+    end
+
     # @see http://ruby-doc.org/core-2.3.1/Enumerator.html#method-i-each
     def each
       super @options

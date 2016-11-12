@@ -70,7 +70,8 @@ module Yt
     def videos
       Yt::Relation.new do |videos, options = {}|
         parts = (options[:parts] || []) + [:id]
-        videos_for(parts).each{|video| videos << video}
+        limit = options[:limit] || 50
+        videos_for(parts, limit).each{|video| videos << video}
       end
     end
 
@@ -116,33 +117,33 @@ module Yt
 
   ### ASSOCIATIONS
 
-    def videos_for(parts)
+    def videos_for(parts, limit)
       @videos ||= {}
-      @videos[parts] ||= videos_response(parts).body['items'].map do |item|
+      @videos[[parts, limit]] ||= videos_response(parts, limit).body['items'].map do |item|
         Yt::Video.new(item.transform_keys{|k| k.underscore.to_sym}.slice(*parts))
       end
     end
 
     # /search only returns id and partial snippets. for any other part we
     # need a second call to /channels
-    def videos_response(parts)
+    def videos_response(parts, limit)
       if parts == [:id]
-        videos_search_response.tap do |response|
+        videos_search_response(limit).tap do |response|
           response.body['items'].map{|item| item['id'] = item['id']['videoId']}
         end
       else
-        videos_list_response parts, videos_search_response.body['items'].map{|item| item['id']['videoId']}
+        videos_list_response parts, videos_search_response(limit).body['items'].map{|item| item['id']['videoId']}
       end
     end
 
-    def videos_search_response
+    def videos_search_response(limit)
       Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request videos_search_request
+        http.request videos_search_request(limit)
       end.tap{|response| response.body = JSON response.body}
     end
 
-    def videos_search_request
-      query = {forMine: true, type: :video, part: :id}.to_param
+    def videos_search_request(limit)
+      query = {forMine: true, type: :video, part: :id, maxResults: limit}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
