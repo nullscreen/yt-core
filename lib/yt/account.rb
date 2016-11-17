@@ -66,13 +66,9 @@ module Yt
 
   ### ASSOCIATIONS
 
-    # @return [Yt::Relation<Yt::Video>] the videos of the channel.
+    # @return [Yt::Relation<Yt::Video>] the videos of the account.
     def videos
-      Yt::Relation.new do |videos, options = {}|
-        parts = (options[:parts] || []) + [:id]
-        limit = options[:limit] || 50
-        videos_for(parts, limit).each{|video| videos << video}
-      end
+      @videos ||= Relation.new(Video) {|options| videos_response options}
     end
 
   ### OTHERS
@@ -117,33 +113,28 @@ module Yt
 
   ### ASSOCIATIONS
 
-    def videos_for(parts, limit)
-      @videos ||= {}
-      @videos[[parts, limit]] ||= videos_response(parts, limit).body['items'].map do |item|
-        Yt::Video.new(item.transform_keys{|k| k.underscore.to_sym}.slice(*parts))
-      end
-    end
-
     # /search only returns id and partial snippets. for any other part we
     # need a second call to /channels
-    def videos_response(parts, limit)
-      if parts == [:id]
-        videos_search_response(limit).tap do |response|
+    def videos_response(options = {})
+      search = videos_search_response(options[:limit], options[:offset])
+
+      if options[:parts] == [:id]
+        search.tap do |response|
           response.body['items'].map{|item| item['id'] = item['id']['videoId']}
         end
       else
-        videos_list_response parts, videos_search_response(limit).body['items'].map{|item| item['id']['videoId']}
+        videos_list_response options[:parts], search.body['items'].map{|item| item['id']['videoId']}
       end
     end
 
-    def videos_search_response(limit)
+    def videos_search_response(limit, offset)
       Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request videos_search_request(limit)
+        http.request videos_search_request(limit, offset)
       end.tap{|response| response.body = JSON response.body}
     end
 
-    def videos_search_request(limit)
-      query = {forMine: true, type: :video, part: :id, maxResults: limit}.to_param
+    def videos_search_request(limit, offset)
+      query = {forMine: true, type: :video, part: :id, maxResults: [limit, 50].min, pageToken: offset}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'

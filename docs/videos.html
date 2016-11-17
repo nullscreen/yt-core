@@ -25,7 +25,7 @@ video = Yt::Video.new id: 'gknzFj_0vvY'
 Yt.configuration.api_key = "<your api key>"                        ## use your API key
 
 video = Yt::Video.new id: 'gknzFj_0vvY'                            ## use any video ID
-video.title # => "A public video"
+video.title # => "First public video"
 {% endhighlight %}
 
 <hr />
@@ -34,7 +34,7 @@ video.title # => "A public video"
   {% include dt.html title="Video’s snippet" label="success" auth="any authentication works" %}
   <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
 {% include doc.html instance="Video#id" %}{% include example.html object='video' method='id' result='"gknzFj_0vvY"' %}
-{% include doc.html instance="Video#title" %}{% include example.html object='video' method='title' result='"A public video"' %}
+{% include doc.html instance="Video#title" %}{% include example.html object='video' method='title' result='"First public video"' %}
 {% include doc.html instance="Video#description" %}{% include example.html object='video' method='description' result='"A YouTube video to test the yt gem."' %}
 {% include doc.html instance="Video#published_at" %}{% include example.html object='video' method='published_at' result='2016-10-20 02:19:05 UTC' %}
 {% include doc.html instance="Video#thumbnail_url" %}{% include example.html object='video' method='thumbnail_url' result='"https://i.ytimg.com/vi/gknzFj_0vvY/default.jpg"' %}

@@ -114,7 +114,7 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 <dl>
   <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
 {% include doc.html instance="Relation#select" %}{% include example.html object='videos = channel.videos' method='select' params=' <span class="ss">:snippet</span>, <span class="ss">:statistics</span>' %}
-{% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["A public video", "Another public video", ...]' %}
+{% include example.html object='videos' method='map <span class="ss">&amp;:title</span>' result='["First public video", "Second public video", ...]' %}
 {% include example.html object='videos' method='map <span class="ss">&amp;:view_count</span>' result='[123, 456, ...]' %}</pre>
   </div></dd>
 </dl>

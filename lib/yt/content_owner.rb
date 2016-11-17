@@ -33,10 +33,8 @@ module Yt
     # @return [Yt::Relation<Yt::Channel>] the channels partnered with the YouTube
     #   content owner.
     def partnered_channels
-      Yt::Relation.new do |channels, options = {}|
-        parts = (options[:parts] || []) + [:id]
-        limit = options[:limit] || 50
-        partnered_channels_for(parts, limit).each{|channel| channels << channel}
+      @partnered_channels ||= Relation.new(Channel) do |options|
+        partnered_channels_response options
       end
     end
 
@@ -62,22 +60,15 @@ module Yt
   ### ASSOCIATIONS
 
 
-    def partnered_channels_for(parts, limit)
-      @partnered_channels ||= {}
-      @partnered_channels[[parts, limit]] ||= partnered_channels_response(parts, limit).body['items'].map do |item|
-        Yt::Channel.new(item.transform_keys{|k| k.underscore.to_sym}.slice(*parts))
-      end
-    end
-
-    def partnered_channels_response(parts, limit)
+    def partnered_channels_response(options = {})
       Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request partnered_channels_request(parts, limit)
+        http.request partnered_channels_request(options[:parts], options[:limit])
       end.tap{|response| response.body = JSON response.body}
     end
 
     def partnered_channels_request(parts, limit)
       part = parts.join ','
-      query = {managedByMe: true, onBehalfOfContentOwner: @id, part: part, maxResults: limit}.to_param
+      query = {managedByMe: true, onBehalfOfContentOwner: @id, part: part, maxResults: [limit, 50].min}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
