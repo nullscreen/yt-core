@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Yt::Account do
+describe 'Yt::Account#inspect' do
   subject(:account) { Yt::Account.new attrs }
 
   context 'given any account ID' do

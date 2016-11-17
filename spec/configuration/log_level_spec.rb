@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Yt::Configuration do
+describe 'Yt::Configuration#log_level' do
   describe 'can be set directly' do
     before { Yt.configuration.log_level = 'devel' }
     it { expect(Yt.configuration.log_level).to eq 'devel' }

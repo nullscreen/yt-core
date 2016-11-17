@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Yt::Channel do
+describe 'Yt::Channel#inspect' do
   subject(:channel) { Yt::Channel.new attrs }
 
   context 'given any channel ID' do
