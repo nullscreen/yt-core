@@ -108,8 +108,15 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Video @id=gknz...&gt;, #&lt;Yt::Video @id=32Gc...&gt;, ...]&gt;' %}</pre>
   </div></dd>
 </dl>
+<dl>
+  {% include dt.html title="Channel’s (public) playlists" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="playlists"></a><div class="highlight"><pre>
+{% include doc.html instance="Channel#playlists" %}{% include example.html object='channel' method='playlists' %}
+{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Playlist @id=PL-L...&gt;, #&lt;Yt::Playlist @id=PL-N...&gt;, ...]&gt;' %}</pre>
+  </div></dd>
+</dl>
 <p>
-  Before iterating through the videos, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/videos/list#part">parts</a> of each video’s data to load:
+  Before iterating through videos or playlists, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/videos/list#part">parts</a> of each video’s data to load:
 </p>
 <dl>
   <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
@@ -119,7 +126,7 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
   </div></dd>
 </dl>
 <p>
-  You can also use <code>limit</code> to only fetch a certain number of videos:
+  You can also use <code>limit</code> to only fetch a certain number of videos or playlists:
 </p>
 <dl>
   <dd><a class="anchor" id="limit"></a><div class="highlight"><pre>
