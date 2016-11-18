@@ -121,6 +121,11 @@ module Yt
       @videos ||= Relation.new(Video) {|options| videos_response options}
     end
 
+    # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
+    def playlists
+      @playlists ||= Relation.new(Playlist) {|options| playlists_response options}
+    end
+
   ### CHANNEL ANALYTICS
 
     # @return [Hash<Symbol, Integer>] the total channel’s views.
@@ -214,7 +219,7 @@ module Yt
       end
     end
 
-  ### ASSOCIATIONS
+  ### ASSOCIATIONS (VIDEOS)
 
     # /search only returns id and partial snippets. for any other part we
     # need a second call to /channels
@@ -257,6 +262,22 @@ module Yt
       ids = video_ids.join ','
       query = {key: Yt.configuration.api_key, id: ids, part: part}.to_param
       Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
+        request.initialize_http_header 'Content-Type' => 'application/json'
+      end
+    end
+
+  ### ASSOCIATIONS (PLAYLISTS)
+
+    def playlists_response(options = {})
+      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
+        http.request playlists_request(options)
+      end.tap{|response| response.body = JSON response.body}
+    end
+
+    def playlists_request(options = {})
+      part = options[:parts].join ','
+      query = {key: Yt.configuration.api_key, channelId: id, part: part, maxResults: [options[:limit], 50].min, pageToken: options[:offset]}.to_param
+      Net::HTTP::Get.new("/youtube/v3/playlists?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end
     end

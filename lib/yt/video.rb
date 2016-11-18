@@ -67,7 +67,8 @@ module Yt
       snippet['channelTitle']
     end
 
-    # @return [Array] the list of keyword tags associated with the video.
+    # @return [Array<String>] the list of keyword tags associated with the
+    #   video.
     def tags
       snippet['tags']
     end

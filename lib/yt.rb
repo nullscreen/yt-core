@@ -13,6 +13,7 @@ require 'yt/authentication'
 require 'yt/channel'
 require 'yt/configuration'
 require 'yt/content_owner'
+require 'yt/playlist'
 require 'yt/relation'
 require 'yt/video'
 
