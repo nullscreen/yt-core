@@ -15,4 +15,7 @@ RSpec.configure do |config|
 
   $existing_playlist_id  = 'PL-LeTutc9GRKD3yBDhnRF_yE8UTaQI5Jf'
   $unknown_playlist_id   = 'invalid-id-'
+
+  $existing_item_id      = 'UEwtTGVUdXRjOUdSS0QzeUJEaG5SRl95RThVVGFRSTVKZi4yODlGNEE0NkRGMEEzMEQy'
+  $unknown_item_id       = 'invalid-id-'
 end

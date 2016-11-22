@@ -31,7 +31,7 @@ describe 'Yt::Channel.where', :server do
 
     it 'makes a new HTTP request if the request has changed' do
       expect(Net::HTTP).to receive(:start).twice.and_call_original
-      Yt::Channel.where(id: [$existing_channel_id]).map &:id
+      Yt::Channel.where(id: [$unknown_channel_id]).map &:id
       Yt::Channel.where(id: [$another_channel_id]).map &:id
     end
 

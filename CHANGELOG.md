@@ -7,3 +7,4 @@
 * Change statistics_set to statistics
 * Removed Yt::URL
 * Change video.duration to video.seconds
+* Change Playlist#playlist_items to Playlist#items
