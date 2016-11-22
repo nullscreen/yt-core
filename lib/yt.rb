@@ -14,6 +14,7 @@ require 'yt/channel'
 require 'yt/configuration'
 require 'yt/content_owner'
 require 'yt/playlist'
+require 'yt/playlist_item'
 require 'yt/relation'
 require 'yt/video'
 
