@@ -20,7 +20,9 @@ module Yt
         @count = 0
         @options[:offset] = nil
         loop do
-          break if @count >= @options[:limit]
+          if @count >= @options[:limit]
+            break
+          end
 
           @response = @item_block.call @options
 
@@ -33,8 +35,9 @@ module Yt
             break if @count > @options[:limit]
             block.call video
           end
-
-          break if @response.body['nextPageToken'].nil?
+          if @response.body['nextPageToken'].nil?
+            break
+          end
           @options[:offset] = @response.body['nextPageToken']
         end
         @last_options = @options.dup
@@ -68,7 +71,9 @@ module Yt
     # @return [String] a representation of the Yt::Relation instance.
     def inspect
       entries = take(3).map!(&:inspect)
-      entries[2] = '...' if entries.size == 3
+      if entries.size == 3
+        entries[2] = '...'
+      end
 
       "#<#{self.class.name} [#{entries.join(', ')}]>"
     end

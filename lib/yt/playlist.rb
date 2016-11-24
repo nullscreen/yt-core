@@ -7,9 +7,15 @@ module Yt
     def initialize(options = {})
       @id = options[:id]
       @data = HashWithIndifferentAccess.new
-      @data[:snippet] = options[:snippet] if options[:snippet]
-      @data[:status] = options[:status] if options[:status]
-      @data[:content_details] = options[:content_details] if options[:content_details]
+      if options[:snippet]
+        @data[:snippet] = options[:snippet]
+      end
+      if options[:status]
+        @data[:status] = options[:status]
+      end
+      if options[:content_details]
+        @data[:content_details] = options[:content_details]
+      end
     end
 
   ### ID

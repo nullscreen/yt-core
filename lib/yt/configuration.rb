@@ -63,7 +63,9 @@ module Yt
     #
     # @yield [Yt::Configuration] The global configuration.
     def configure
-      yield configuration if block_given?
+      if block_given?
+        yield configuration
+      end
     end
 
     # Returns the global {Yt::Configuration} object.

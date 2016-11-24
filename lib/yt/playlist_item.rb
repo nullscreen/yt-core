@@ -7,9 +7,12 @@ module Yt
     def initialize(options = {})
       @id = options[:id]
       @data = HashWithIndifferentAccess.new
-      @data[:snippet] = options[:snippet] if options[:snippet]
-      @data[:status] = options[:status] if options[:status]
-      @data[:content_details] = options[:content_details] if options[:content_details]
+      if options[:snippet]
+        @data[:snippet] = options[:snippet]
+      end
+      if options[:status]
+        @data[:status] = options[:status]
+      end
     end
 
   ### ID
@@ -58,12 +61,12 @@ module Yt
       snippet['channelTitle']
     end
 
-    # @return [String] the ID of the playlist that the item belongs to.    
+    # @return [String] the ID of the playlist that the item belongs to.
     def playlist_id
       snippet['playlistId']
     end
 
-    # @return [Integer] the order in which the item appears in the playlist. 
+    # @return [Integer] the order in which the item appears in the playlist.
     #   The value uses a zero-based index so the first item has a position of 0.
     def position
       snippet['position']

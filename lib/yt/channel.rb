@@ -8,9 +8,15 @@ module Yt
       @id = options[:id]
       @auth = options[:auth]
       @data = HashWithIndifferentAccess.new
-      @data[:snippet] = options[:snippet] if options[:snippet]
-      @data[:statistics] = options[:statistics] if options[:statistics]
-      @data[:status] = options[:status] if options[:status]
+      if options[:snippet]
+        @data[:snippet] = options[:snippet]
+      end
+      if options[:statistics]
+        @data[:statistics] = options[:statistics]
+      end
+      if options[:status]
+        @data[:status] = options[:status]
+      end
     end
 
   ### COLLECTION

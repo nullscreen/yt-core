@@ -85,9 +85,11 @@ module Yt
     end
 
     def authentication_scope
-      @scopes.map do |scope|
-        "https://www.googleapis.com/auth/#{scope}"
-      end.join(' ') if @scopes.is_a?(Array)
+      if @scopes.is_a?(Array)
+        @scopes.map do |scope|
+          "https://www.googleapis.com/auth/#{scope}"
+        end.join(' ')
+      end
     end
 
   ### TOKENS
