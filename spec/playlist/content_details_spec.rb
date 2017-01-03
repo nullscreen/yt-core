@@ -9,7 +9,7 @@ describe 'Yt::Playlist’s content details methods', :server do
     specify 'return all content details data with one HTTP call' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
-      expect(playlist.item_count).to be 3
+      expect(playlist.item_count).to be 52
     end
   end
 end
