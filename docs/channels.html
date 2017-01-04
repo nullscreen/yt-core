@@ -94,11 +94,11 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
   <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
 {% include example.html object='slow = channel' result='without select: 2 HTTP requests' %}
 {% include example.html object='slow' method='title' result='one HTTP request to fetch the channel’s snippet' %}
-{% include example.html object='slow' method='privacy_status' result='=> another HTTP request to fetch the channel’s status' %}
+{% include example.html object='slow' method='privacy_status' result='another HTTP request to fetch the channel’s status' %}
 
 {% include doc.html instance="Channel#select" %}{% include example.html object='fast = channel' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
 {% include example.html object='fast' method='title' result='one HTTP request to fetch both the channel’s snippet and status' %}
-{% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
+{% include example.html object='fast' method='privacy_status' result='no extra HTTP requests' %}</pre>
   </div></dd>
 </dl>
 
