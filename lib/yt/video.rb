@@ -170,7 +170,7 @@ module Yt
     end
 
     # @return [<String>] the length of the video as an ISO 8601 time, HH:MM:SS.
-    def hh_mm_ss
+    def length
       hh, mm, ss = seconds / 3600, seconds / 60 % 60, seconds % 60
       [hh, mm, ss].map{|t| t.to_s.rjust(2,'0')}.join(':')
     end
