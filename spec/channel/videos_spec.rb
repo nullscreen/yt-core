@@ -59,4 +59,12 @@ describe 'Yt::Channel#videos', :server do
       expect(channel.videos.select(:snippet).limit(3).count).to be 3
     end
   end
+
+  context 'given a channel with more than 500 public videos' do
+    let(:attrs) { {id: $gigantic_channel_id} }
+
+    it 'returns at most 500 videos' do
+      expect(channel.videos.count).to eq 500
+    end
+  end
 end

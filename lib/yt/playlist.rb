@@ -7,9 +7,15 @@ module Yt
     def initialize(options = {})
       @id = options[:id]
       @data = HashWithIndifferentAccess.new
-      @data[:snippet] = options[:snippet] if options[:snippet]
-      @data[:status] = options[:status] if options[:status]
-      @data[:content_details] = options[:content_details] if options[:content_details]
+      if options[:snippet]
+        @data[:snippet] = options[:snippet]
+      end
+      if options[:status]
+        @data[:status] = options[:status]
+      end
+      if options[:content_details]
+        @data[:content_details] = options[:content_details]
+      end
     end
 
   ### ID
@@ -84,6 +90,11 @@ module Yt
       @items ||= Relation.new(PlaylistItem) {|options| items_response options}
     end
 
+    # @return [Yt::Relation<Yt::Video>] the videos of the playlist.
+    def videos
+      @videos ||= Relation.new(Video) {|options| videos_response options}
+    end
+
   ### OTHERS
 
     # Specifies which parts of the video to fetch when hitting the data API.
@@ -155,8 +166,37 @@ module Yt
 
     def items_request(options = {})
       part = options[:parts].join ','
-      query = {key: Yt.configuration.api_key, playlistId: id, part: part, maxResults: [options[:limit], 50].min, pageToken: options[:offset]}.to_param
+      query = {key: Yt.configuration.api_key, playlistId: id, part: part, maxResults: 50, pageToken: options[:offset]}.to_param
       Net::HTTP::Get.new("/youtube/v3/playlistItems?#{query}").tap do |request|
+        request.initialize_http_header 'Content-Type' => 'application/json'
+      end
+    end
+
+    def videos_response(options = {})
+      items = items_response options.merge(parts: [:content_details])
+
+      if options[:parts] == [:id]
+        items.tap do |response|
+          response.body['items'].map{|item| item['id'] = item['contentDetails']['videoId']}
+        end
+      else
+        videos_list_response(options[:parts], items.body['items'].map{|item| item['contentDetails']['videoId']}).tap do |response|
+          response.body['nextPageToken'] = items.body['nextPageToken']
+        end
+      end
+    end
+
+    def videos_list_response(parts, video_ids)
+      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
+        http.request videos_list_request(parts, video_ids)
+      end.tap{|response| response.body = JSON response.body}
+    end
+
+    def videos_list_request(parts, video_ids)
+      part = parts.join ','
+      ids = video_ids.join ','
+      query = {key: Yt.configuration.api_key, id: ids, part: part}.to_param
+      Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end
     end

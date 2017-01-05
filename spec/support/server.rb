@@ -7,6 +7,7 @@ RSpec.configure do |config|
 
   $existing_channel_id   = 'UCwCnUcLcb9-eSrHa_RQGkQQ'
   $another_channel_id    = 'UCxO1tY8h1AhOz0T4ENwmpow'
+  $gigantic_channel_id   = 'UCcEWv_J2SEU8XO2tEm4Phgw'
   $unknown_channel_id    = 'UC-not-a-valid-id-_RQGkQ'
   $terminated_channel_id = 'UCKe_0fJtkT1dYnznt_HaTrA'
 

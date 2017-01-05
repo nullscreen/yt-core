@@ -68,7 +68,7 @@ module Yt
 
     def partnered_channels_request(parts, limit)
       part = parts.join ','
-      query = {managedByMe: true, onBehalfOfContentOwner: @id, part: part, maxResults: [limit, 50].min}.to_param
+      query = {managedByMe: true, onBehalfOfContentOwner: @id, part: part, maxResults: 50}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'

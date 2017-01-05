@@ -134,7 +134,7 @@ module Yt
     end
 
     def videos_search_request(limit, offset)
-      query = {forMine: true, type: :video, part: :id, maxResults: [limit, 50].min, pageToken: offset}.to_param
+      query = {forMine: true, type: :video, part: :id, maxResults: 50, pageToken: offset}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'

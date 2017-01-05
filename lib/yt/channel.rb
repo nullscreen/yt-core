@@ -8,9 +8,15 @@ module Yt
       @id = options[:id]
       @auth = options[:auth]
       @data = HashWithIndifferentAccess.new
-      @data[:snippet] = options[:snippet] if options[:snippet]
-      @data[:statistics] = options[:statistics] if options[:statistics]
-      @data[:status] = options[:status] if options[:status]
+      if options[:snippet]
+        @data[:snippet] = options[:snippet]
+      end
+      if options[:statistics]
+        @data[:statistics] = options[:statistics]
+      end
+      if options[:status]
+        @data[:status] = options[:status]
+      end
     end
 
   ### COLLECTION
@@ -117,8 +123,11 @@ module Yt
   ### ASSOCIATIONS
 
     # @return [Yt::Relation<Yt::Video>] the public videos of the channel.
+    # @note For unauthenticated channels, results are constrained to a maximum
+    # of 500 videos.
+    # @see https://developers.google.com/youtube/v3/docs/search/list#channelId
     def videos
-      @videos ||= Relation.new(Video) {|options| videos_response options}
+      @videos ||= Relation.new(Video, limit: 500) {|options| videos_response options}
     end
 
     # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
@@ -244,7 +253,7 @@ module Yt
     end
 
     def videos_search_request(limit, offset)
-      query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: :id, maxResults: [limit, 50].min, pageToken: offset}.to_param
+      query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: :id, maxResults: 50, pageToken: offset}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
@@ -276,7 +285,7 @@ module Yt
 
     def playlists_request(options = {})
       part = options[:parts].join ','
-      query = {key: Yt.configuration.api_key, channelId: id, part: part, maxResults: [options[:limit], 50].min, pageToken: options[:offset]}.to_param
+      query = {key: Yt.configuration.api_key, channelId: id, part: part, maxResults: 50, pageToken: options[:offset]}.to_param
       Net::HTTP::Get.new("/youtube/v3/playlists?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end
