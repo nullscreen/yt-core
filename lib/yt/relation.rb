@@ -18,6 +18,7 @@ module Yt
         @items.each(&block)
       else
         @count = 0
+        @options[:offset] = nil
         loop do
           break if @count >= @options[:limit]
 
@@ -33,7 +34,7 @@ module Yt
             block.call video
           end
 
-          break if @response.body['nextPageToken'].nil? || (@items.size < 50 && @options[:limit] == Float::INFINITY)
+          break if @response.body['nextPageToken'].nil?
           @options[:offset] = @response.body['nextPageToken']
         end
         @last_options = @options.dup
