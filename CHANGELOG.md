@@ -8,3 +8,4 @@
 * Removed Yt::URL
 * Change video.duration to video.seconds
 * Change Playlist#playlist_items to Playlist#items
+* Add Playlist#videos
