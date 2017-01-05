@@ -6,10 +6,10 @@ module Yt
     # @param [Class] item_class the class of objects to initialize when
     #   iterating through a collection of YouTube resources.
     # @yield [Hash] the options to change which items to iterate through.
-    def initialize(item_class, &item_block)
+    def initialize(item_class, options = {}, &item_block)
       @item_class = item_class
       @item_block = item_block
-      @options = {parts: [:id], limit: Float::INFINITY}
+      @options = {parts: [:id], limit: Float::INFINITY}.merge options
     end
 
     # Executes +item_block+ for each item of the collection.

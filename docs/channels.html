@@ -134,6 +134,9 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include example.html object='videos' method='map <span class="ss">&amp;:id</span>' result='["gknzFj_0vvY", "oO6WawhsxTA"]' %}</pre>
   </div></dd>
 </dl>
+<p>
+  Note that, due to <a href="https://developers.google.com/youtube/v3/docs/search/list#channelId">YouTube API limitations</a>, only a maximum of 500 videos can be fetched for an unauthenticated channel.
+</p>
 
 <dl>
   {% include dt.html title="Collection of channels" label="success" auth="any authentication works" %}

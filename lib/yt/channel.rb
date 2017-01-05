@@ -117,8 +117,11 @@ module Yt
   ### ASSOCIATIONS
 
     # @return [Yt::Relation<Yt::Video>] the public videos of the channel.
+    # @note For unauthenticated channels, results are constrained to a maximum
+    # of 500 videos.
+    # @see https://developers.google.com/youtube/v3/docs/search/list#channelId
     def videos
-      @videos ||= Relation.new(Video) {|options| videos_response options}
+      @videos ||= Relation.new(Video, limit: 500) {|options| videos_response options}
     end
 
     # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
