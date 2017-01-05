@@ -155,7 +155,7 @@ module Yt
 
     def items_request(options = {})
       part = options[:parts].join ','
-      query = {key: Yt.configuration.api_key, playlistId: id, part: part, maxResults: [options[:limit], 50].min, pageToken: options[:offset]}.to_param
+      query = {key: Yt.configuration.api_key, playlistId: id, part: part, maxResults: 50, pageToken: options[:offset]}.to_param
       Net::HTTP::Get.new("/youtube/v3/playlistItems?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end

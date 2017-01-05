@@ -247,7 +247,7 @@ module Yt
     end
 
     def videos_search_request(limit, offset)
-      query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: :id, maxResults: [limit, 50].min, pageToken: offset}.to_param
+      query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: :id, maxResults: 50, pageToken: offset}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
@@ -279,7 +279,7 @@ module Yt
 
     def playlists_request(options = {})
       part = options[:parts].join ','
-      query = {key: Yt.configuration.api_key, channelId: id, part: part, maxResults: [options[:limit], 50].min, pageToken: options[:offset]}.to_param
+      query = {key: Yt.configuration.api_key, channelId: id, part: part, maxResults: 50, pageToken: options[:offset]}.to_param
       Net::HTTP::Get.new("/youtube/v3/playlists?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end
