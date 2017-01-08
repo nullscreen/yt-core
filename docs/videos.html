@@ -94,3 +94,11 @@ video.title # => "First public video"
 {% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
   </div></dd>
 </dl>
+
+<dl>
+  {% include dt.html title="Video’s channel" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="channel"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#channel" %}{% include example.html object='video' method='channel' %}
+{% include example.html result='#&lt;Yt::Channel @id=UCwCnUcLcb9-eSrHa_RQGkQQ&gt;' %}</pre>
+  </div></dd>
+</dl>

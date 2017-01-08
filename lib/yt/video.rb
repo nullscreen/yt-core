@@ -256,6 +256,13 @@ module Yt
     # def has_custom_thumbnail # not yet implemented
     # def content_rating # not yet implemented
 
+  ### ASSOCIATIONS
+
+    # @return [Yt::Channel] the channel the video belongs to.
+    def channel
+      @channel ||= Channel.new id: channel_id, auth: @auth
+    end
+
   ### OTHERS
 
     # Specifies which parts of the video to fetch when hitting the data API.
