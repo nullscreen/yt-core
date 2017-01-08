@@ -88,6 +88,11 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include doc.html instance="Channel#hidden_subscriber_count" %}{% include example.html object='channel' method='hidden_subscriber_count' result='false' %}
 {% include doc.html instance="Channel#video_count" %}{% include example.html object='channel' method='video_count' result='62' %}</pre>
   </div></dd>
+
+  {% include dt.html title="Channel’s branding settings" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="branding_settings"></a><div class="highlight"><pre>
+{% include doc.html instance="Channel#banner_image_url" %}{% include example.html object='channel' method='banner_image_url' result='"https://yt3.ggpht.com/9dh4rj-k-no"' %}</pre>
+  </div></dd>
 </dl>
 <p>
   To limit the number of HTTP requests, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/channels/list#part">parts</a> of the channel’s data to load:

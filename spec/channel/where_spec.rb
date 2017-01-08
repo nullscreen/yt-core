@@ -49,11 +49,12 @@ describe 'Yt::Channel.where', :server do
     it 'accepts .select to fetch multiple parts with one HTTP calls' do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
-      list = channels.select :snippet, :status, :statistics
+      list = channels.select :snippet, :status, :statistics, :branding_settings
       expect(list).to be_present
       expect(list.map &:title).to be_present
       expect(list.map &:privacy_status).to be_present
       expect(list.map &:view_count).to be_present
+      expect(list.map &:banner_image_url).to be_present
     end
   end
 end

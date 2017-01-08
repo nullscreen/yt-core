@@ -17,6 +17,9 @@ module Yt
       if options[:status]
         @data[:status] = options[:status]
       end
+      if options[:branding_settings]
+        @data[:branding_settings] = options[:branding_settings]
+      end
     end
 
   ### COLLECTION
@@ -97,6 +100,14 @@ module Yt
       status['longUploadsStatus']
     end
 
+  ### BRANDING SETTINGS
+
+    # @return [String] the URL for the banner image shown on the channel page
+    # on the YouTube website. The image is 1060px by 175px.
+    def banner_image_url
+      branding_settings['image']['bannerImageUrl']
+    end
+
   ### STATISTICS
 
     # @return [<Integer>] the number of times the channel has been viewed.
@@ -158,7 +169,7 @@ module Yt
 
     # Specifies which parts of the channel to fetch when hitting the data API.
     # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
-    #   are: +:snippet+, +:status+, and +:statistics+.
+    #   are: +:snippet+, +:status+, +:branding_settings+, and +:statistics+.
     # @return [Yt::Channel] itself.
     def select(*parts)
       @selected_data_parts = parts
@@ -182,6 +193,10 @@ module Yt
       data_part 'status'
     end
 
+    def branding_settings
+      data_part 'branding_settings'
+    end
+
     def statistics
       data_part 'statistics'
     end
@@ -193,7 +208,7 @@ module Yt
     def fetch_data(part)
       parts = @selected_data_parts || [part]
       if (items = data_response(parts).body['items']).any?
-        parts.each{|part| @data[part] = items.first[part.to_s]}
+        parts.each{|part| @data[part] = items.first[part.to_s.camelize :lower]}
         @data[part]
       else
         raise Errors::NoItems
