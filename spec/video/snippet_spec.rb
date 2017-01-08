@@ -17,6 +17,7 @@ describe 'Yt::Video’s snippet methods', :server do
       expect(video.channel_title).to eq 'Yt Test'
       expect(video.tags).to eq ['yt', 'test', 'tag']
       expect(video.category_id).to eq 22
+      expect(video.category_title).to eq 'People & Blogs'
       expect(video.live_broadcast_content).to eq 'none'
     end
   end
