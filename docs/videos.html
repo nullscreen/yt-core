@@ -8,10 +8,14 @@ h2: "Videos"
   Initialize using its YouTube ID:
 </p>
 
-{% highlight ruby %}
-video = Yt::Video.new id: 'gknzFj_0vvY'
-# => #<Yt::Video:0x... @id=gknzFj_0vvY>
-{% endhighlight %}
+<dl>
+  <dd><a class="anchor" id="new"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#initialize" %}{% include example.html object='video = <span class="no">Yt</span><span class="o">::</span><span class="no">Video</span>' method='new' params=' <span class="ss">id:</span> <span class="s1">"gknzFj_0vvY"</span>' %}
+{% include example.html result='#&lt;Yt::Video @id=gknzFj_0vvY&gt;' %}
+{% include doc.html instance="Video#canonical_url" %}{% include example.html object='video' method='canonical_url' %}
+{% include example.html result='"https://www.youtube.com/watch?v=gknzFj_0vvY"' %}</pre>
+  </div></dd>
+</dl>
 
 <hr />
 <h4>Authentication</h4>

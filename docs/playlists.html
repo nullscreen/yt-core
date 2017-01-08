@@ -8,10 +8,14 @@ h2: "Playlists"
   Initialize using its YouTube ID:
 </p>
 
-{% highlight ruby %}
-playlist = Yt::Playlist.new id: 'PL-LeTutc9GRKD3yBDhnRF_yE8UTaQI5Jf'
-# => #<Yt::Playlist:0x... @id=PL-LeTutc9GRKD3yBDhnRF_yE8UTaQI5Jf>
-{% endhighlight %}
+<dl>
+  <dd><a class="anchor" id="new"></a><div class="highlight"><pre>
+{% include doc.html instance="Playlist#initialize" %}{% include example.html object='playlist = <span class="no">Yt</span><span class="o">::</span><span class="no">Playlist</span>' method='new' params=' <span class="ss">id:</span> <span class="s1">"PL-LeTutc9GRKD3yBDhnRF_yE8UTaQI5Jf"</span>' %}
+{% include example.html result='#&lt;Yt::Playlist @id=PL-LeTutc9GRKD3yBDhnRF_yE8UTaQI5Jf&gt;' %}
+{% include doc.html instance="Playlist#canonical_url" %}{% include example.html object='playlist' method='canonical_url' %}
+{% include example.html result='"https://www.youtube.com/playlist?list=PL-LeTutc9GRKD3yBDhnRF_yE8UTaQI5Jf"' %}</pre>
+  </div></dd>
+</dl>
 
 <hr />
 <h4>Authentication</h4>

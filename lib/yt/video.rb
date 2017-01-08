@@ -29,6 +29,11 @@ module Yt
       @id
     end
 
+    # @return [String] the canonical form of the video’s URL.
+    def canonical_url
+      "https://www.youtube.com/watch?v=#{id}"
+    end
+
   ### SNIPPET
 
     # @return [Time] the date and time that the video was published. Note that
