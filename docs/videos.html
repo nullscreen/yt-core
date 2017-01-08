@@ -8,10 +8,14 @@ h2: "Videos"
   Initialize using its YouTube ID:
 </p>
 
-{% highlight ruby %}
-video = Yt::Video.new id: 'gknzFj_0vvY'
-# => #<Yt::Video:0x... @id=gknzFj_0vvY>
-{% endhighlight %}
+<dl>
+  <dd><a class="anchor" id="new"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#initialize" %}{% include example.html object='video = <span class="no">Yt</span><span class="o">::</span><span class="no">Video</span>' method='new' params=' <span class="ss">id:</span> <span class="s1">"gknzFj_0vvY"</span>' %}
+{% include example.html result='#&lt;Yt::Video @id=gknzFj_0vvY&gt;' %}
+{% include doc.html instance="Video#canonical_url" %}{% include example.html object='video' method='canonical_url' %}
+{% include example.html result='"https://www.youtube.com/watch?v=gknzFj_0vvY"' %}</pre>
+  </div></dd>
+</dl>
 
 <hr />
 <h4>Authentication</h4>
@@ -42,6 +46,7 @@ video.title # => "First public video"
 {% include doc.html instance="Video#channel_title" %}{% include example.html object='video' method='channel_title' result='"Yt Test"' %}
 {% include doc.html instance="Video#tags" %}{% include example.html object='video' method='tags' result='["yt", "test", "tag"]' %}
 {% include doc.html instance="Video#category_id" %}{% include example.html object='video' method='category_id' result='22' %}
+{% include doc.html instance="Video#category_title" %}{% include example.html object='video' method='category_title' result='"People & Blogs"' %}
 {% include doc.html instance="Video#live_broadcast_content" %}{% include example.html object='video' method='live_broadcast_content' result='"none"' %}</pre>
   </div></dd>
 
@@ -66,7 +71,7 @@ video.title # => "First public video"
   <dd><a class="anchor" id="content_details"></a><div class="highlight"><pre>
 {% include doc.html instance="Video#duration" %}{% include example.html object='video' method='duration' result='"PT2S"' %}
 {% include doc.html instance="Video#seconds" %}{% include example.html object='video' method='seconds' result='2' %}
-{% include doc.html instance="Video#hh_mm_ss" %}{% include example.html object='video' method='hh_mm_ss' result='"00:00:02"' %}
+{% include doc.html instance="Video#length" %}{% include example.html object='video' method='length' result='"00:00:02"' %}
 {% include doc.html instance="Video#dimension" %}{% include example.html object='video' method='dimension' result='"2d"' %}
 {% include doc.html instance="Video#definition" %}{% include example.html object='video' method='definition' result='"sd"' %}
 {% include doc.html instance="Video#caption" %}{% include example.html object='video' method='caption' result='false' %}
@@ -87,5 +92,13 @@ video.title # => "First public video"
 {% include doc.html instance="Video#select" %}{% include example.html object='fast = video' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
 {% include example.html object='fast' method='title' result='one HTTP request to fetch both the video’s snippet and status' %}
 {% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
+  </div></dd>
+</dl>
+
+<dl>
+  {% include dt.html title="Video’s channel" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="channel"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#channel" %}{% include example.html object='video' method='channel' %}
+{% include example.html result='#&lt;Yt::Channel @id=UCwCnUcLcb9-eSrHa_RQGkQQ&gt;' %}</pre>
   </div></dd>
 </dl>

@@ -29,6 +29,11 @@ module Yt
       @id
     end
 
+    # @return [String] the canonical form of the video’s URL.
+    def canonical_url
+      "https://www.youtube.com/watch?v=#{id}"
+    end
+
   ### SNIPPET
 
     # @return [Time] the date and time that the video was published. Note that
@@ -85,6 +90,49 @@ module Yt
     # @see https://developers.google.com/youtube/v3/docs/videoCategories/list
     def category_id
       snippet['categoryId'].to_i
+    end
+
+    # List of YouTube video categories.
+    # @see https://developers.google.com/youtube/v3/docs/videoCategories/list
+    CATEGORIES = {
+       1 => 'Film & Animation',
+       2 => 'Autos & Vehicles',
+      10 => 'Music',
+      15 => 'Pets & Animals',
+      17 => 'Sports',
+      18 => 'Short Movies',
+      19 => 'Travel & Events',
+      20 => 'Gaming',
+      21 => 'Videoblogging',
+      22 => 'People & Blogs',
+      23 => 'Comedy',
+      24 => 'Entertainment',
+      25 => 'News & Politics',
+      26 => 'Howto & Style',
+      27 => 'Education',
+      28 => 'Science & Technology',
+      29 => 'Nonprofits & Activism',
+      30 => 'Movies',
+      31 => 'Anime/Animation',
+      32 => 'Action/Adventure',
+      33 => 'Classics',
+      34 => 'Comedy',
+      35 => 'Documentary',
+      36 => 'Drama',
+      37 => 'Family',
+      38 => 'Foreign',
+      39 => 'Horror',
+      40 => 'Sci-Fi/Fantasy',
+      41 => 'Thriller',
+      42 => 'Shorts',
+      43 => 'Shows',
+      44 => 'Trailers',
+    }
+
+    # @return [String] the title of the associated YouTube video category.
+    # @see https://developers.google.com/youtube/v3/docs/videoCategories/list
+    def category_title
+      CATEGORIES[category_id]
     end
 
     # @return [String] whether the video is an upcoming/active live broadcast.
@@ -170,7 +218,7 @@ module Yt
     end
 
     # @return [<String>] the length of the video as an ISO 8601 time, HH:MM:SS.
-    def hh_mm_ss
+    def length
       hh, mm, ss = seconds / 3600, seconds / 60 % 60, seconds % 60
       [hh, mm, ss].map{|t| t.to_s.rjust(2,'0')}.join(':')
     end
@@ -207,6 +255,13 @@ module Yt
 
     # def has_custom_thumbnail # not yet implemented
     # def content_rating # not yet implemented
+
+  ### ASSOCIATIONS
+
+    # @return [Yt::Channel] the channel the video belongs to.
+    def channel
+      @channel ||= Channel.new id: channel_id, auth: @auth
+    end
 
   ### OTHERS
 

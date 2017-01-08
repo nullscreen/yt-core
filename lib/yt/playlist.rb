@@ -25,6 +25,11 @@ module Yt
       @id
     end
 
+    # @return [String] the canonical form of the playlist’s URL.
+    def canonical_url
+      "https://www.youtube.com/playlist?list=#{id}"
+    end
+
   ### SNIPPET
 
     # @return [String] the playlist’s title.

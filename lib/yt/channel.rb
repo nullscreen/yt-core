@@ -34,6 +34,11 @@ module Yt
       @id
     end
 
+    # @return [String] the canonical form of the channel’s URL.
+    def canonical_url
+      "https://www.youtube.com/channel/#{id}"
+    end
+
   ### SNIPPET
 
     # @return [String] the channel’s title.
