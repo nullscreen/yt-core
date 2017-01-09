@@ -69,6 +69,8 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include doc.html instance="Channel#id" %}{% include example.html object='channel' method='id' result='"UCwCnUcLcb9-eSrHa_RQGkQQ"' %}
 {% include doc.html instance="Channel#title" %}{% include example.html object='channel' method='title' result='"Yt Test"' %}
 {% include doc.html instance="Channel#description" %}{% include example.html object='channel' method='description' result='"A test channel."' %}
+{% include doc.html instance="Channel#custom_url" %}{% include example.html object='channel' method='custom_url' result='"yt-test"' %}
+{% include doc.html instance="Channel#vanity_url" %}{% include example.html object='channel' method='vanity_url' result='"https://www.youtube.com/yt-test"' %}
 {% include doc.html instance="Channel#published_at" %}{% include example.html object='channel' method='published_at' result='2014-05-02 20:12:57 UTC' %}
 {% include doc.html instance="Channel#thumbnail_url" %}{% include example.html object='channel' method='thumbnail_url' result='"https://yt3.ggpht.com/-KMnbKDBl60w/photo.jpg"' %}</pre>
   </div></dd>
@@ -87,6 +89,12 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
 {% include doc.html instance="Channel#subscriber_count" %}{% include example.html object='channel' method='subscriber_count' result='42' %}
 {% include doc.html instance="Channel#hidden_subscriber_count" %}{% include example.html object='channel' method='hidden_subscriber_count' result='false' %}
 {% include doc.html instance="Channel#video_count" %}{% include example.html object='channel' method='video_count' result='62' %}</pre>
+  </div></dd>
+
+  {% include dt.html title="Channel’s branding settings" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="branding_settings"></a><div class="highlight"><pre>
+{% include doc.html instance="Channel#banner_image_url" %}{% include example.html object='channel' method='banner_image_url' result='"https://yt3.ggpht.com/9dh4rj-k-no"' %}
+{% include doc.html instance="Channel#keywords" %}{% include example.html object='channel' method='keywords' result='["Some", "tag"]' %}</pre>
   </div></dd>
 </dl>
 <p>
