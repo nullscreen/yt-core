@@ -10,6 +10,7 @@ describe 'Yt::Channel’s branding settings methods', :server do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
       expect(channel.banner_image_url).to be_a String
+      expect(channel.keywords).to match_array ['YouTube', 'channel', 'test']
     end
   end
 

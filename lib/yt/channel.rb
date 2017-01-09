@@ -108,6 +108,11 @@ module Yt
       branding_settings['image']['bannerImageUrl']
     end
 
+    # @return [Array<String>] the keywords associated with the channel.
+    def keywords
+      branding_settings['channel']['keywords'].split ' '
+    end
+
   ### STATISTICS
 
     # @return [<Integer>] the number of times the channel has been viewed.
