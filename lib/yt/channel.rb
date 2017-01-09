@@ -54,7 +54,20 @@ module Yt
       snippet['description']
     end
 
-    # def custom_url # not yet implemented, need 100 subs to test
+    # @return [<String, nil>] the path component of the channel’s custom URL.
+    def custom_url
+      snippet['customUrl']
+    end
+
+    # @return [<String] the full channel’s URL (custom or canonical).
+    # @see https://support.google.com/youtube/answer/2657968
+    def vanity_url
+      if custom_url
+        "https://www.youtube.com/#{custom_url}"
+      else
+        canonical_url
+      end
+    end
 
     # @return [Time] the date and time that the channel was created.
     def published_at

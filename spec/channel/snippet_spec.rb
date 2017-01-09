@@ -16,6 +16,24 @@ describe 'Yt::Channel’s snippet methods', :server do
     end
   end
 
+  context 'given a channel ID without a custom URL' do
+    let(:attrs) { {id: $existing_channel_id} }
+
+    specify 'uses the canonical URL as the vanity URL' do
+      expect(channel.custom_url).to be_nil
+      expect(channel.vanity_url).to eq "https://www.youtube.com/channel/#{$existing_channel_id}"
+    end
+  end
+
+  context 'given a channel ID with a custom URL' do
+    let(:attrs) { {id: $gigantic_channel_id} }
+
+    specify 'uses the custom URL as the vanity URL' do
+      expect(channel.custom_url).to eq 'univision'
+      expect(channel.vanity_url).to eq 'https://www.youtube.com/univision'
+    end
+  end
+
   context 'given an unknown channel ID' do
     let(:attrs) { {id: $unknown_channel_id} }
 
