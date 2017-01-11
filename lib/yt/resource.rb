@@ -11,6 +11,14 @@ module Yt
       end
     end
 
+
+  ### OTHERS
+
+    # @return [String] a representation of the resource instance.
+    def inspect
+      "#<#{self.class} @id=#{@id}>"
+    end
+
   private
 
     def valid_parts

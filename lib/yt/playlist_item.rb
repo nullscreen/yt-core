@@ -89,11 +89,6 @@ module Yt
       self
     end
 
-    # @return [String] a representation of the Yt::PlaylistItem instance.
-    def inspect
-      "#<#{self.class} @id=#{@id}>"
-    end
-
   private
 
   ### DATA
