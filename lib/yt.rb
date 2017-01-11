@@ -8,6 +8,8 @@ require 'active_support/core_ext/string/inflections.rb' # for camelize
 
 require 'json' # for JSON.parse
 
+require 'yt/resource'
+
 require 'yt/account'
 require 'yt/authentication'
 require 'yt/channel'

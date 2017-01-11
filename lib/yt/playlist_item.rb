@@ -1,11 +1,11 @@
 module Yt
   # Provides methods to interact with YouTube playlist items.
   # @see https://developers.google.com/youtube/v3/docs/playlistItems
-  class PlaylistItem
+  class PlaylistItem < Resource
     # @param [Hash] options the options to initialize a PlaylistItem.
     # @option options [String] :id The unique ID of a YouTube playlist item.
     def initialize(options = {})
-      @id = options[:id]
+      super
       @data = HashWithIndifferentAccess.new
       if options[:snippet]
         @data[:snippet] = options[:snippet]

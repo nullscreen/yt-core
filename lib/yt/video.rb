@@ -1,11 +1,11 @@
 module Yt
   # Provides methods to interact with YouTube videos.
   # @see https://developers.google.com/youtube/v3/docs/videos
-  class Video
+  class Video < Resource
     # @param [Hash] options the options to initialize a Channel.
     # @option options [String] :id The unique ID of a YouTube channel.
     def initialize(options = {})
-      @id = options[:id]
+      super
       @auth = options[:auth]
       @data = HashWithIndifferentAccess.new
       if options[:snippet]
