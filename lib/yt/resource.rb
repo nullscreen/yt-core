@@ -1,10 +1,20 @@
 module Yt
   # Provides a base class for multiple YouTube resources (channel, video, ...).
-  class Resource    
+  class Resource
     # @param [Hash] options the options to initialize a resource.
     # @option options [String] :id The unique ID of a YouTube resource.
     def initialize(options = {})
       @id = options[:id]
+      @data = HashWithIndifferentAccess.new
+      valid_parts.each do |part|
+        @data[part] = options[part] if options[part]
+      end
+    end
+
+  private
+
+    def valid_parts
+      %i(snippet)
     end
   end
 end

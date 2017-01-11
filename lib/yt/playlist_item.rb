@@ -6,13 +6,6 @@ module Yt
     # @option options [String] :id The unique ID of a YouTube playlist item.
     def initialize(options = {})
       super
-      @data = HashWithIndifferentAccess.new
-      if options[:snippet]
-        @data[:snippet] = options[:snippet]
-      end
-      if options[:status]
-        @data[:status] = options[:status]
-      end
     end
 
   ### ID
@@ -104,6 +97,10 @@ module Yt
   private
 
   ### DATA
+
+    def valid_parts
+      %i(snippet status)
+    end
 
     def snippet
       data_part :snippet

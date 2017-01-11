@@ -7,19 +7,6 @@ module Yt
     def initialize(options = {})
       super
       @auth = options[:auth]
-      @data = HashWithIndifferentAccess.new
-      if options[:snippet]
-        @data[:snippet] = options[:snippet]
-      end
-      if options[:statistics]
-        @data[:statistics] = options[:statistics]
-      end
-      if options[:status]
-        @data[:status] = options[:status]
-      end
-      if options[:branding_settings]
-        @data[:branding_settings] = options[:branding_settings]
-      end
     end
 
   ### COLLECTION
@@ -202,6 +189,10 @@ module Yt
   private
 
   ### DATA
+
+    def valid_parts
+      %i(snippet status statistics branding_settings)
+    end
 
     def snippet
       data_part 'snippet'
