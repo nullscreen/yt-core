@@ -10,6 +10,11 @@ describe 'Yt::Channel#videos', :server do
       expect(channel.videos).to all( be_a Yt::Video )
     end
 
+    it 'returns videos sorted by descending published date' do
+      dates = channel.videos.map &:published_at
+      expect(dates).to eq dates.sort.reverse
+    end
+
     it 'does not make any HTTP requests unless iterated' do
       expect(Net::HTTP).not_to receive(:start)
       channel.videos
