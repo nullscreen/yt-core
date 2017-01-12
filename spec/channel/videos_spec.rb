@@ -57,6 +57,7 @@ describe 'Yt::Channel#videos', :server do
     it 'accepts .limit to only fetch some videos' do
       expect(Net::HTTP).to receive(:start).twice.and_call_original
       expect(channel.videos.select(:snippet).limit(3).count).to be 3
+      expect(channel.videos.select(:snippet).limit(3).count).to be 3
     end
   end
 

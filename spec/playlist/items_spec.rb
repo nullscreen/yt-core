@@ -55,6 +55,7 @@ describe 'Yt::Playlist#items', :server do
     it 'accepts .limit to only fetch some items' do
       expect(Net::HTTP).to receive(:start).twice.and_call_original
       expect(playlist.items.select(:snippet).limit(42).count).to be 42
+      expect(playlist.items.select(:snippet).limit(42).count).to be 42
     end
   end
 end
