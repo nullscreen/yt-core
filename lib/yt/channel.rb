@@ -20,9 +20,7 @@ module Yt
   ### ID
 
     # @return [String] the channel’s ID.
-    def id
-      @id
-    end
+    attr_reader :id
 
     # @return [String] the canonical form of the channel’s URL.
     def canonical_url
@@ -185,6 +183,7 @@ module Yt
 
   ### DATA
 
+    # @return [Array<Symbol>] the parts that can be fetched for a channel.
     def valid_parts
       %i(snippet status statistics branding_settings)
     end

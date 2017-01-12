@@ -11,9 +11,7 @@ module Yt
   ### ID
 
     # @return [String] the playlist’s ID.
-    def id
-      @id
-    end
+    attr_reader :id
 
     # @return [String] the canonical form of the playlist’s URL.
     def canonical_url
@@ -105,6 +103,7 @@ module Yt
 
   ### DATA
 
+    # @return [Array<Symbol>] the parts that can be fetched for a playlist.
     def valid_parts
       %i(snippet status content_details)
     end

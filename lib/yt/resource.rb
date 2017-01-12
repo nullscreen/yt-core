@@ -1,5 +1,6 @@
 module Yt
   # Provides a base class for multiple YouTube resources (channel, video, ...).
+  # This is an abstract class and should not be instantiated directly.
   class Resource
     # @param [Hash] options the options to initialize a resource.
     # @option options [String] :id The unique ID of a YouTube resource.
@@ -17,12 +18,6 @@ module Yt
     # @return [String] a representation of the resource instance.
     def inspect
       "#<#{self.class} @id=#{@id}>"
-    end
-
-  private
-
-    def valid_parts
-      %i(snippet)
     end
   end
 end

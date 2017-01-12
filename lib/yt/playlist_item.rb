@@ -11,9 +11,7 @@ module Yt
   ### ID
 
     # @return [String] the item’s ID.
-    def id
-      @id
-    end
+    attr_reader :id
 
   ### SNIPPET
 
@@ -93,6 +91,7 @@ module Yt
 
   ### DATA
 
+    # @return [Array<Symbol>] the parts that can be fetched for a playlist item.
     def valid_parts
       %i(snippet status)
     end
