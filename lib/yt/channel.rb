@@ -108,7 +108,7 @@ module Yt
 
     # @return [Array<String>] the keywords associated with the channel.
     def keywords
-      branding_settings['channel']['keywords'].split ' '
+      branding_settings['channel'].fetch('keywords', '').split ' '
     end
 
   ### STATISTICS
