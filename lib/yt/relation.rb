@@ -17,6 +17,7 @@ module Yt
       if @last_options == @options
         @items.each(&block)
       else
+        @last_options = @options
         @count = 0
         @items = []
         @options[:offset] = nil
@@ -26,7 +27,6 @@ module Yt
           end
 
           @response = @item_block.call @options
-
           @response.body['items'].map do |hash|
             @count += 1
             break if @count > @options[:limit]
@@ -42,6 +42,12 @@ module Yt
         end
         @last_options = @options.dup
       end
+    end
+
+    # @return [Integer] the estimated number of items in the collection.
+    def size
+      @response = @item_block.call parts: [:id], limit: 1
+      [@response.body['pageInfo']['totalResults'], @options[:limit]].min
     end
 
     # Specifies which parts of the resource to fetch when hitting the data API.
