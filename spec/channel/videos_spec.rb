@@ -72,5 +72,10 @@ describe 'Yt::Channel#videos', :server do
     it 'returns at most 500 videos' do
       expect(channel.videos.count).to eq 500
     end
+
+    it 'returns the number of items with one HTTP request' do
+      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(channel.videos.select(:snippet).size).to eq 500
+    end
   end
 end

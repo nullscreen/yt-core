@@ -146,6 +146,14 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
   </div></dd>
 </dl>
 <p>
+  You can also use <code>size</code> to quickly obtain the estimated number of videos or playlists:
+</p>
+<dl>
+  <dd><a class="anchor" id="size"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#size" %}{% include example.html object='channel.videos' method='size' result='312' %}</pre>
+  </div></dd>
+</dl>
+<p>
   Note that, due to <a href="https://developers.google.com/youtube/v3/docs/search/list#channelId">YouTube API limitations</a>, only a maximum of 500 videos can be fetched for an unauthenticated channel.
 </p>
 

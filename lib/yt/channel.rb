@@ -227,6 +227,7 @@ module Yt
     def data_request(parts)
       part = parts.join ','
       query = {key: Yt.configuration.api_key, id: @id, part: part}.to_param
+      p "CDATA #{query}"
 
       Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
@@ -245,6 +246,7 @@ module Yt
       part = parts.join ','
       id = ids.join ','
       query = {key: Yt.configuration.api_key, id: id, part: part}.to_param
+      p "CWHERE #{query}"
 
       Net::HTTP::Get.new("/youtube/v3/channels?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
@@ -265,6 +267,7 @@ module Yt
       else
         videos_list_response(options[:parts], search.body['items'].map{|item| item['id']['videoId']}).tap do |response|
           response.body['nextPageToken'] = search.body['nextPageToken']
+          # response.body['pageInfo'] = search.body['pageInfo']
         end
       end
     end
@@ -277,6 +280,7 @@ module Yt
 
     def videos_search_request(offset)
       query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: :id, maxResults: 50, pageToken: offset, order: :date}.to_param
+      p "C VIDEO SEARCH #{query}"
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
@@ -293,7 +297,7 @@ module Yt
       part = parts.join ','
       ids = video_ids.join ','
       query = {key: Yt.configuration.api_key, id: ids, part: part}.to_param
-
+      p "C VIDEO LIST #{query}"
       Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end

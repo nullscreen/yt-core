@@ -104,3 +104,11 @@ playlist.title # => "First public playlist"
 {% include example.html object='videos' method='map <span class="ss">&amp;:id</span>' result='["gknzFj_0vvY", "oO6WawhsxTA"]' %}</pre>
   </div></dd>
 </dl>
+<p>
+  You can also use <code>size</code> to quickly obtain the estimated number of items or videos:
+</p>
+<dl>
+  <dd><a class="anchor" id="size"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#size" %}{% include example.html object='playlist.items' method='size' result='63' %}</pre>
+  </div></dd>
+</dl>

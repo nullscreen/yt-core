@@ -68,3 +68,11 @@ account.email # => "user@example.com"
 {% include example.html object='videos' method='map <span class="ss">&amp;:id</span>' result='["gknzFj_0vvY", "32Gc88CswnI"]' %}</pre>
   </div></dd>
 </dl>
+<p>
+  You can also use <code>size</code> to quickly obtain the estimated number of videos:
+</p>
+<dl>
+  <dd><a class="anchor" id="size"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#size" %}{% include example.html object='account.videos' method='size' result='427' %}</pre>
+  </div></dd>
+</dl>

@@ -143,6 +143,7 @@ module Yt
     def data_request(parts)
       part = parts.join ','
       query = {key: Yt.configuration.api_key, id: @id, part: part}.to_param
+      p "C DATA #{query}"
 
       Net::HTTP::Get.new("/youtube/v3/playlists?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
@@ -160,6 +161,8 @@ module Yt
     def items_request(options = {})
       part = options[:parts].join ','
       query = {key: Yt.configuration.api_key, playlistId: id, part: part, maxResults: 50, pageToken: options[:offset]}.to_param
+      p "C ITEMS #{query}"
+
       Net::HTTP::Get.new("/youtube/v3/playlistItems?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end
@@ -189,6 +192,8 @@ module Yt
       part = parts.join ','
       ids = video_ids.join ','
       query = {key: Yt.configuration.api_key, id: ids, part: part}.to_param
+      p "C LIST #{query}"
+
       Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
       end
