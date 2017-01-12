@@ -257,7 +257,7 @@ module Yt
     # /search only returns id and partial snippets. for any other part we
     # need a second call to /channels
     def videos_response(options = {})
-      search = videos_search_response(options[:limit], options[:offset])
+      search = videos_search_response(options[:offset])
 
       if options[:parts] == [:id]
         search.tap do |response|
@@ -270,13 +270,13 @@ module Yt
       end
     end
 
-    def videos_search_response(limit, offset)
+    def videos_search_response(offset)
       Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request videos_search_request(limit, offset)
+        http.request videos_search_request(offset)
       end.tap{|response| response.body = JSON response.body}
     end
 
-    def videos_search_request(limit, offset)
+    def videos_search_request(offset)
       query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: :id, maxResults: 50, pageToken: offset}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|
