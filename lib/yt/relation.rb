@@ -18,6 +18,7 @@ module Yt
         @items.each(&block)
       else
         @count = 0
+        @items = []
         @options[:offset] = nil
         loop do
           if @count >= @options[:limit]
@@ -26,15 +27,14 @@ module Yt
 
           @response = @item_block.call @options
 
-          @items = @response.body['items'].map do |hash|
-            @item_class.new(hash.transform_keys{|k| k.underscore.to_sym}.slice(*@options[:parts]))
-          end
-
-          @items.each do |video|
+          @response.body['items'].map do |hash|
             @count += 1
             break if @count > @options[:limit]
+            video = @item_class.new(hash.transform_keys{|k| k.underscore.to_sym}.slice(*@options[:parts]))
+            @items << video
             block.call video
           end
+
           if @response.body['nextPageToken'].nil?
             break
           end

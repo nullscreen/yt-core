@@ -1,33 +1,18 @@
 module Yt
   # Provides methods to interact with YouTube videos.
   # @see https://developers.google.com/youtube/v3/docs/videos
-  class Video
+  class Video < Resource
     # @param [Hash] options the options to initialize a Channel.
     # @option options [String] :id The unique ID of a YouTube channel.
     def initialize(options = {})
-      @id = options[:id]
+      super
       @auth = options[:auth]
-      @data = HashWithIndifferentAccess.new
-      if options[:snippet]
-        @data[:snippet] = options[:snippet]
-      end
-      if options[:status]
-        @data[:status] = options[:status]
-      end
-      if options[:statistics]
-        @data[:statistics] = options[:statistics]
-      end
-      if options[:content_details]
-        @data[:content_details] = options[:content_details]
-      end
     end
 
   ### ID
 
     # @return [String] the video’s ID.
-    def id
-      @id
-    end
+    attr_reader :id
 
     # @return [String] the canonical form of the video’s URL.
     def canonical_url
@@ -274,14 +259,14 @@ module Yt
       self
     end
 
-    # @return [String] a representation of the Yt::Video instance.
-    def inspect
-      "#<#{self.class} @id=#{@id}>"
-    end
-
   private
 
   ### DATA
+
+    # @return [Array<Symbol>] the parts that can be fetched for a video.
+    def valid_parts
+      %i(snippet status statistics content_details)
+    end
 
     def snippet
       data_part :snippet

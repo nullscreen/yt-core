@@ -1,25 +1,12 @@
 module Yt
   # Provides methods to interact with YouTube channels.
   # @see https://developers.google.com/youtube/v3/docs/channels
-  class Channel
+  class Channel < Resource
     # @param [Hash] options the options to initialize a Channel.
     # @option options [String] :id The unique ID of a YouTube channel.
     def initialize(options = {})
-      @id = options[:id]
+      super
       @auth = options[:auth]
-      @data = HashWithIndifferentAccess.new
-      if options[:snippet]
-        @data[:snippet] = options[:snippet]
-      end
-      if options[:statistics]
-        @data[:statistics] = options[:statistics]
-      end
-      if options[:status]
-        @data[:status] = options[:status]
-      end
-      if options[:branding_settings]
-        @data[:branding_settings] = options[:branding_settings]
-      end
     end
 
   ### COLLECTION
@@ -33,9 +20,7 @@ module Yt
   ### ID
 
     # @return [String] the channel’s ID.
-    def id
-      @id
-    end
+    attr_reader :id
 
     # @return [String] the canonical form of the channel’s URL.
     def canonical_url
@@ -194,14 +179,14 @@ module Yt
       self
     end
 
-    # @return [String] a representation of the Yt::Channel instance.
-    def inspect
-      "#<#{self.class} @id=#{@id}>"
-    end
-
   private
 
   ### DATA
+
+    # @return [Array<Symbol>] the parts that can be fetched for a channel.
+    def valid_parts
+      %i(snippet status statistics branding_settings)
+    end
 
     def snippet
       data_part 'snippet'
@@ -271,7 +256,7 @@ module Yt
     # /search only returns id and partial snippets. for any other part we
     # need a second call to /channels
     def videos_response(options = {})
-      search = videos_search_response(options[:limit], options[:offset])
+      search = videos_search_response(options[:offset])
 
       if options[:parts] == [:id]
         search.tap do |response|
@@ -284,13 +269,13 @@ module Yt
       end
     end
 
-    def videos_search_response(limit, offset)
+    def videos_search_response(offset)
       Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request videos_search_request(limit, offset)
+        http.request videos_search_request(offset)
       end.tap{|response| response.body = JSON response.body}
     end
 
-    def videos_search_request(limit, offset)
+    def videos_search_request(offset)
       query = {key: Yt.configuration.api_key, type: :video, channelId: @id, part: :id, maxResults: 50, pageToken: offset}.to_param
 
       Net::HTTP::Get.new("/youtube/v3/search?#{query}").tap do |request|

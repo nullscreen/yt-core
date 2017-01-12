@@ -1,26 +1,17 @@
 module Yt
   # Provides methods to interact with YouTube playlist items.
   # @see https://developers.google.com/youtube/v3/docs/playlistItems
-  class PlaylistItem
+  class PlaylistItem < Resource
     # @param [Hash] options the options to initialize a PlaylistItem.
     # @option options [String] :id The unique ID of a YouTube playlist item.
     def initialize(options = {})
-      @id = options[:id]
-      @data = HashWithIndifferentAccess.new
-      if options[:snippet]
-        @data[:snippet] = options[:snippet]
-      end
-      if options[:status]
-        @data[:status] = options[:status]
-      end
+      super
     end
 
   ### ID
 
     # @return [String] the item’s ID.
-    def id
-      @id
-    end
+    attr_reader :id
 
   ### SNIPPET
 
@@ -96,14 +87,14 @@ module Yt
       self
     end
 
-    # @return [String] a representation of the Yt::PlaylistItem instance.
-    def inspect
-      "#<#{self.class} @id=#{@id}>"
-    end
-
   private
 
   ### DATA
+
+    # @return [Array<Symbol>] the parts that can be fetched for a playlist item.
+    def valid_parts
+      %i(snippet status)
+    end
 
     def snippet
       data_part :snippet

@@ -39,6 +39,7 @@ describe 'Yt::ContentOwner#partnered_channels', :partner do
       expect(Net::HTTP).to receive(:start).once.and_call_original
 
       expect(content_owner.partnered_channels.limit(3).count).to be 3
+      expect(content_owner.partnered_channels.limit(3).count).to be 3
     end
   end
 end

@@ -1,29 +1,17 @@
 module Yt
   # Provides methods to interact with YouTube playlists.
   # @see https://developers.google.com/youtube/v3/docs/playlists
-  class Playlist
+  class Playlist < Resource
     # @param [Hash] options the options to initialize a Playlist.
     # @option options [String] :id The unique ID of a YouTube playlist.
     def initialize(options = {})
-      @id = options[:id]
-      @data = HashWithIndifferentAccess.new
-      if options[:snippet]
-        @data[:snippet] = options[:snippet]
-      end
-      if options[:status]
-        @data[:status] = options[:status]
-      end
-      if options[:content_details]
-        @data[:content_details] = options[:content_details]
-      end
+      super
     end
 
   ### ID
 
     # @return [String] the playlist’s ID.
-    def id
-      @id
-    end
+    attr_reader :id
 
     # @return [String] the canonical form of the playlist’s URL.
     def canonical_url
@@ -111,14 +99,14 @@ module Yt
       self
     end
 
-    # @return [String] a representation of the Yt::Playlist instance.
-    def inspect
-      "#<#{self.class} @id=#{@id}>"
-    end
-
   private
 
   ### DATA
+
+    # @return [Array<Symbol>] the parts that can be fetched for a playlist.
+    def valid_parts
+      %i(snippet status content_details)
+    end
 
     def snippet
       data_part :snippet

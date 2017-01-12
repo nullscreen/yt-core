@@ -62,11 +62,11 @@ module Yt
 
     def partnered_channels_response(options = {})
       Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request partnered_channels_request(options[:parts], options[:limit])
+        http.request partnered_channels_request(options[:parts])
       end.tap{|response| response.body = JSON response.body}
     end
 
-    def partnered_channels_request(parts, limit)
+    def partnered_channels_request(parts)
       part = parts.join ','
       query = {managedByMe: true, onBehalfOfContentOwner: @id, part: part, maxResults: 50}.to_param
 
