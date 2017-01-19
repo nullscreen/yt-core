@@ -111,6 +111,13 @@ module Yt
       branding_settings['channel'].fetch('keywords', '').split ' '
     end
 
+    # @return [<String, nil>] if specified, the ID of a public or unlisted video
+    # owned by the channel owner that should play in the featured video module
+    # in the channel page’s browse view for unsubscribed viewers.
+    def unsubscribed_trailer
+      branding_settings['channel']['unsubscribedTrailer']
+    end
+
   ### STATISTICS
 
     # @return [<Integer>] the number of times the channel has been viewed.

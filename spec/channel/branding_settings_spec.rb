@@ -11,6 +11,7 @@ describe 'Yt::Channel’s branding settings methods', :server do
 
       expect(channel.banner_image_url).to be_a String
       expect(channel.keywords).to match_array ['YouTube', 'channel', 'test']
+      expect(channel.unsubscribed_trailer).to eq 'gknzFj_0vvY'
     end
   end
 
