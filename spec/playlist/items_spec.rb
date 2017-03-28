@@ -11,17 +11,17 @@ describe 'Yt::Playlist#items', :server do
     end
 
     it 'does not make any HTTP requests unless iterated' do
-      expect(Net::HTTP).not_to receive(:start)
+      expect(Net::HTTP).to receive(:start).exactly(0).times.and_call_original
       playlist.items
     end
 
     it 'makes as many HTTP requests as the number of items divided by 50' do
-      expect(Net::HTTP).to receive(:start).twice.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(2).times.and_call_original
       playlist.items.map &:id
     end
 
     it 'reuses the previous HTTP response if the request is the same' do
-      expect(Net::HTTP).to receive(:start).twice.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(2).times.and_call_original
       playlist.items.map &:id
       playlist.items.map &:id
     end
@@ -45,7 +45,7 @@ describe 'Yt::Playlist#items', :server do
     end
 
     it 'accepts .select to fetch multiple parts with two HTTP calls' do
-      expect(Net::HTTP).to receive(:start).twice.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(2).times.and_call_original
 
       items = playlist.items.select :snippet, :status
       expect(items.map &:title).to be_present
@@ -53,7 +53,7 @@ describe 'Yt::Playlist#items', :server do
     end
 
     it 'accepts .limit to only fetch some items' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
       expect(playlist.items.select(:snippet).limit(2).count).to be 2
       expect(playlist.items.select(:snippet).limit(2).count).to be 2
     end

@@ -7,7 +7,7 @@ describe 'Yt::Channel’s status methods', :server do
     let(:attrs) { {id: $existing_channel_id} }
 
     specify 'return all status data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
 
       expect(channel.privacy_status).to eq 'public'
       expect(channel.is_linked).to be true

@@ -7,7 +7,7 @@ describe 'Yt::Video’s statistics methods', :server do
     let(:attrs) { {id: $existing_video_id} }
 
     specify 'return all statistics data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
 
       expect(video.view_count).to be > 0
       expect(video.like_count).to be > 0

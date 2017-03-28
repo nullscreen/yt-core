@@ -7,7 +7,7 @@ describe 'Yt::Channel’s statistics methods', :server do
     let(:attrs) { {id: $existing_channel_id} }
 
     specify 'return all statistics data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
 
       expect(channel.view_count).to be > 0
       expect(channel.comment_count).to be_an Integer # TODO: create a comment

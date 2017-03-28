@@ -7,7 +7,7 @@ describe 'Yt::PlaylistItem’s snippet methods', :server do
     let(:attrs) { {id: $existing_item_id} }
 
     specify 'return all snippet data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
 
       expect(item.title).to eq 'First public video'
       expect(item.description).to eq 'A YouTube video to test the yt gem.'

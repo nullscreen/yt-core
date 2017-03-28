@@ -7,7 +7,7 @@ describe 'Yt::Channel’s snippet methods', :server do
     let(:attrs) { {id: $existing_channel_id} }
 
     specify 'return all snippet data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
 
       expect(channel.title).to eq 'Yt Test'
       expect(channel.description).to eq 'A YouTube channel to test the yt gem.'

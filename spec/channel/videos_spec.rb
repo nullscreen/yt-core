@@ -16,17 +16,17 @@ describe 'Yt::Channel#videos', :server do
     end
 
     it 'does not make any HTTP requests unless iterated' do
-      expect(Net::HTTP).not_to receive(:start)
+      expect(Net::HTTP).to receive(:start).exactly(0).times.and_call_original
       channel.videos
     end
 
     it 'makes as many HTTP requests as the number of videos divided by 50' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
       channel.videos.map &:id
     end
 
     it 'reuses the previous HTTP response if the request is the same' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
       channel.videos.map &:id
       channel.videos.map &:id
     end
@@ -50,7 +50,7 @@ describe 'Yt::Channel#videos', :server do
     end
 
     it 'accepts .select to fetch multiple parts with two HTTP calls' do
-      expect(Net::HTTP).to receive(:start).twice.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(2).times.and_call_original
 
       videos = channel.videos.select :snippet, :status, :statistics, :content_details
       expect(videos.map &:title).to be_present
@@ -60,7 +60,7 @@ describe 'Yt::Channel#videos', :server do
     end
 
     it 'accepts .limit to only fetch some videos' do
-      expect(Net::HTTP).to receive(:start).twice.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(2).times.and_call_original
       expect(channel.videos.select(:snippet).limit(3).count).to be 3
       expect(channel.videos.select(:snippet).limit(3).count).to be 3
     end
@@ -74,7 +74,7 @@ describe 'Yt::Channel#videos', :server do
     end
 
     it 'returns the number of items with one HTTP request' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
       expect(channel.videos.select(:snippet).size).to eq 500
     end
   end
