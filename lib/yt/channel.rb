@@ -161,20 +161,6 @@ module Yt
       @playlists ||= Relation.new(Playlist) {|options| playlists_response options}
     end
 
-  ### CHANNEL ANALYTICS
-
-    # @return [Hash<Symbol, Integer>] the total channel’s views.
-    def views
-      @views ||= {total: views_response.body['rows'].first.first.to_i}
-    end
-
-  ### CONTENT OWNER ANALYTICS
-
-    # @return [Hash<Symbol, Integer>] the total channel’s impressions.
-    def ad_impressions
-      @ad_impressions ||= {total: ad_impressions_response.body['rows'].first.first.to_i}
-    end
-
   ### OTHERS
 
     # Specifies which parts of the channel to fetch when hitting the data API.
@@ -320,40 +306,6 @@ module Yt
       query = {key: Yt.configuration.api_key, channelId: id, part: part, maxResults: 50, pageToken: options[:offset]}.to_param
       Net::HTTP::Get.new("/youtube/v3/playlists?#{query}").tap do |request|
         request.initialize_http_header 'Content-Type' => 'application/json'
-      end
-    end
-
-  ### CHANNEL ANALYTICS
-
-    def views_response
-      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request views_request
-      end.tap{|response| response.body = JSON response.body}
-    end
-
-    def views_request
-      query = {'metrics' => 'views', 'end-date' => Date.today.to_s, 'start-date' => '2005-02-01', 'ids' => "channel==#{@id}"}.to_param
-
-      Net::HTTP::Get.new("/youtube/analytics/v1/reports?#{query}").tap do |request|
-        request.initialize_http_header 'Content-Type' => 'application/json'
-        request.add_field 'Authorization', "Bearer #{@auth.access_token}"
-      end
-    end
-
-  ### CONTENT OWNER ANALYTICS
-
-    def ad_impressions_response
-      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request ad_impressions_request
-      end.tap{|response| response.body = JSON response.body}
-    end
-
-    def ad_impressions_request
-      query = {'metrics' => 'adImpressions', 'end-date' => Date.today.to_s, 'start-date' => '2005-02-01', 'ids' => "contentOwner==#{@auth.id}", 'filters' => "channel==#{@id}"}.to_param
-
-      Net::HTTP::Get.new("/youtube/analytics/v1/reports?#{query}").tap do |request|
-        request.initialize_http_header 'Content-Type' => 'application/json'
-        request.add_field 'Authorization', "Bearer #{@auth.access_token}"
       end
     end
   end

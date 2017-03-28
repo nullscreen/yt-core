@@ -4,17 +4,12 @@ require 'active_support/core_ext/hash/transform_values' # for Hash#transform_val
 require 'active_support/core_ext/object/blank' # for Object#presence
 require 'active_support/core_ext/hash/indifferent_access' # for HashWithIndifferentAccess
 require 'active_support/core_ext/string/inflections.rb' # for camelize
-
-
 require 'json' # for JSON.parse
+require 'yt/config'
 
 require 'yt/resource'
 
-require 'yt/account'
-require 'yt/authentication'
 require 'yt/channel'
-require 'yt/configuration'
-require 'yt/content_owner'
 require 'yt/playlist'
 require 'yt/playlist_item'
 require 'yt/relation'

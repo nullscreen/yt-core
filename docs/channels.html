@@ -32,35 +32,6 @@ channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'         ## use any chan
 channel.title # => "Yt Test"
 {% endhighlight %}
 
-<p>
-  Other methods <strong>act on behalf of YouTube accounts</strong> (e.g.: access the analytics of a channel).<br />
-  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="{{ site.baseurl }}/#oauth_client">generate an OAuth client</a>, <a href="{{ site.baseurl }}/#refresh_token">obtain a refresh token</a> from the account you want to act as, and pass the account as the <code>:auth</code> parameter:
-</p>
-
-{% highlight ruby %}
-Yt.configuration.client_id = "<your ID>"            ## replace with your client ID
-Yt.configuration.client_secret = "<your secret>"    ## replace with your client secret
-auth = Yt::Account.new refresh_token: "<your refresh token>"
-
-channel = Yt::Channel.new id: "<your channel ID>", auth: auth
-channel.views # => {total: 345} (the total views of your channel)
-{% endhighlight %}
-
-
-<p>
-  Lastly, some methods <strong>act on behalf of YouTube content owners</strong> (e.g.: fetch the earnings of a channel).<br />
-  To use these methods (marked with  <span class="label label-danger">&nbsp;</span> below), you need to you need to <a href="{{ site.baseurl }}/#oauth_client">generate an OAuth client</a>, <a href="{{ site.baseurl }}/#refresh_token">obtain a refresh token</a> from the content owner, and pass the content owner as the <code>:auth</code> parameter:
-</p>
-
-{% highlight ruby %}
-Yt.configuration.client_id = "<your ID>"            ## replace with your client ID
-Yt.configuration.client_secret = "<your secret>"    ## replace with your client secret
-auth = Yt::ContentOwner.new id: "<your content owner ID>", refresh_token: "<token>"
-
-channel = Yt::Channel.new id: "<your channel ID>", auth: auth
-channel.ad_impressions # => {total: 123} (the total ad impressions of your channel)
-{% endhighlight %}
-
 <hr />
 <h4>List of <code>Yt::Channel</code> data methods</h4>
 <dl>
@@ -169,23 +140,3 @@ channel.ad_impressions # => {total: 123} (the total ad impressions of your chann
   The previous method returns existing channels that match the provided IDs, skipping any unrecognized ID.<br />
   As usual, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/channels/list#part">parts</a> of each channels’s data to load before iterating through the list.
 </p>
-
-<hr />
-<h4>List of <code>Yt::Channel</code> analytics methods</h4>
-<a class="anchor" id="analytics"></a>
-<p>
-  Analytics methods return the total value for the lifetime of a channel.
-</p>
-
-<dl>
-  {% include dt.html title="Channel’s Analytics" label="warning" auth="must authenticate as the channel’s account or content owner" %}
-  <dd>
-<div class="highlight"><pre>
-{% include doc.html instance="Channel#views" %}{% include example.html object='channel' method='views' result='{total: 345}' %}</pre>
-  </div></dd>
-
-  {% include dt.html title="Channel’s Monetization" label="danger" auth="must authenticate as the channel’s content owner" %}
-  <dd><a class="anchor" id="monetization"></a><div class="highlight"><pre>
-{% include doc.html instance="Channel#ad_impressions" %}{% include example.html object='channel' method='ad_impressions' result='{total: 123}' %}</pre>
-  </div></dd>
-</dl>
