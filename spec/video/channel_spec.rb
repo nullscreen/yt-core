@@ -10,9 +10,7 @@ describe 'Yt::Video#channel', :server do
       expect(video.channel).to be_a Yt::Channel
     end
 
-    it 'accepts .select to fetch multiple parts with two HTTP calls' do
-      expect(Net::HTTP).to receive(:start).twice.and_call_original
-
+    it 'accepts .select to fetch multiple parts with two HTTP calls', requests: 2 do
       channel = video.select(:snippet).channel.select(:snippet)
       expect(channel.id).to eq video.channel_id
       expect(channel.title).to eq video.channel_title

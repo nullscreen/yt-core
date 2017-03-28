@@ -6,9 +6,7 @@ describe 'Yt::Video’s content details methods', :server do
   context 'given an existing video ID' do
     let(:attrs) { {id: $existing_video_id} }
 
-    specify 'return all content details data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
-
+    specify 'return all content details data with one HTTP call', requests: 1 do
       expect(video.duration).to eq 'PT2S'
       expect(video.seconds).to be 2
       expect(video.length).to eq '00:00:02'

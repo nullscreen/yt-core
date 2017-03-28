@@ -223,7 +223,6 @@ module Yt
 
       if options[:parts] == [:id]
         search.tap do |response|
-          p response.body['items'].map{|item| item['id']['videoId']}
           response.body['items'].map{|item| item['id'] = item['id']['videoId']}
         end
       else

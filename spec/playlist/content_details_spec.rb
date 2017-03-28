@@ -6,9 +6,7 @@ describe 'Yt::Playlist’s content details methods', :server do
   context 'given an existing playlist ID' do
     let(:attrs) { {id: $existing_playlist_id} }
 
-    specify 'return all content details data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
-
+    specify 'return all content details data with one HTTP call', requests: 1 do
       expect(playlist.item_count).to be 52
     end
   end

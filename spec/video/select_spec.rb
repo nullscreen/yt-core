@@ -6,8 +6,7 @@ describe 'Yt::Video#select', :server do
   context 'given an existing video ID' do
     let(:attrs) { {id: $existing_video_id} }
 
-    specify 'lets multiple data parts be fetched with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
+    specify 'lets multiple data parts be fetched with one HTTP call', requests: 1 do
       video = subject.select :snippet, :status, :statistics, :content_details
 
       expect(video.id).to be

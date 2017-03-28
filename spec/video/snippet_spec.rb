@@ -6,9 +6,7 @@ describe 'Yt::Video’s snippet methods', :server do
   context 'given an existing video ID' do
     let(:attrs) { {id: $existing_video_id} }
 
-    specify 'return all snippet data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).once.and_call_original
-
+    specify 'return all snippet data with one HTTP call', requests: 1 do
       expect(video.published_at).to eq Time.parse('2016-10-20 02:19:05 UTC')
       expect(video.channel_id).to eq 'UCwCnUcLcb9-eSrHa_RQGkQQ'
       expect(video.title).to eq 'First public video'
