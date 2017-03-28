@@ -6,9 +6,7 @@ describe 'Yt::Channel’s branding settings methods', :server do
   context 'given an existing channel ID' do
     let(:attrs) { {id: $existing_channel_id} }
 
-    specify 'return all branding settings data with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
-
+    specify 'return all branding settings data with one HTTP call', requests: 1 do
       expect(channel.banner_image_url).to be_a String
       expect(channel.keywords).to match_array ['YouTube', 'channel', 'test']
       expect(channel.unsubscribed_trailer).to eq 'gknzFj_0vvY'

@@ -6,8 +6,7 @@ describe 'Yt::Channel#select', :server do
   context 'given an existing channel ID' do
     let(:attrs) { {id: $existing_channel_id} }
 
-    specify 'lets multiple data parts be fetched with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
+    specify 'lets multiple data parts be fetched with one HTTP call', requests: 1 do
       channel = subject.select :snippet, :status, :statistics
 
       expect(channel.id).to be

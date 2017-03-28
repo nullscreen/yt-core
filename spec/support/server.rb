@@ -19,4 +19,9 @@ RSpec.configure do |config|
 
   $existing_item_id      = 'UEwtTGVUdXRjOUdSS0QzeUJEaG5SRl95RThVVGFRSTVKZi4yODlGNEE0NkRGMEEzMEQy'
   $unknown_item_id       = 'invalid-id-'
+
+  config.before(:example, :requests) do |example|
+    count = example.metadata[:requests]
+    expect(Net::HTTP).to receive(:start).exactly(count).times.and_call_original
+  end
 end

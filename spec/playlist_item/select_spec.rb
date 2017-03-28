@@ -6,8 +6,7 @@ describe 'Yt::PlaylistItem#select', :server do
   context 'given an existing item ID' do
     let(:attrs) { {id: $existing_item_id} }
 
-    specify 'lets multiple data parts be fetched with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
+    specify 'lets multiple data parts be fetched with one HTTP call', requests: 1 do
       item = subject.select :snippet, :status
 
       expect(item.id).to be

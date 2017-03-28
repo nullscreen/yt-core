@@ -15,24 +15,20 @@ describe 'Yt::Channel#videos', :server do
       expect(dates).to eq dates.sort.reverse
     end
 
-    it 'does not make any HTTP requests unless iterated' do
-      expect(Net::HTTP).to receive(:start).exactly(0).times.and_call_original
+    it 'does not make any HTTP requests unless iterated', requests: 0 do
       channel.videos
     end
 
-    it 'makes as many HTTP requests as the number of videos divided by 50' do
-      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
+    it 'makes as many HTTP requests as the number of videos divided by 50', requests: 1 do
       channel.videos.map &:id
     end
 
-    it 'reuses the previous HTTP response if the request is the same' do
-      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
+    it 'reuses the previous HTTP response if the request is the same', requests: 1 do
       channel.videos.map &:id
       channel.videos.map &:id
     end
 
-    it 'makes a new HTTP request if the request has changed' do
-      expect(Net::HTTP).to receive(:start).exactly(3).times.and_call_original
+    it 'makes a new HTTP request if the request has changed', requests: 3 do
       channel.videos.map &:id
       channel.videos.select(:id, :snippet).map &:title
     end
@@ -49,9 +45,7 @@ describe 'Yt::Channel#videos', :server do
       expect{channel.videos.limit(4).map &:id}.not_to change{GC.start; ObjectSpace.each_object(Yt::Video).count}
     end
 
-    it 'accepts .select to fetch multiple parts with two HTTP calls' do
-      expect(Net::HTTP).to receive(:start).exactly(2).times.and_call_original
-
+    it 'accepts .select to fetch multiple parts with two HTTP calls', requests: 2 do
       videos = channel.videos.select :snippet, :status, :statistics, :content_details
       expect(videos.map &:title).to be_present
       expect(videos.map &:privacy_status).to be_present
@@ -59,8 +53,7 @@ describe 'Yt::Channel#videos', :server do
       expect(videos.map &:duration).to be_present
     end
 
-    it 'accepts .limit to only fetch some videos' do
-      expect(Net::HTTP).to receive(:start).exactly(2).times.and_call_original
+    it 'accepts .limit to only fetch some videos', requests: 2 do
       expect(channel.videos.select(:snippet).limit(3).count).to be 3
       expect(channel.videos.select(:snippet).limit(3).count).to be 3
     end
@@ -73,8 +66,7 @@ describe 'Yt::Channel#videos', :server do
       expect(channel.videos.count).to eq 500
     end
 
-    it 'returns the number of items with one HTTP request' do
-      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
+    it 'returns the number of items with one HTTP request', requests: 1 do
       expect(channel.videos.select(:snippet).size).to eq 500
     end
   end

@@ -6,8 +6,7 @@ describe 'Yt::Playlist#select', :server do
   context 'given an existing playlist ID' do
     let(:attrs) { {id: $existing_playlist_id} }
 
-    specify 'lets multiple data parts be fetched with one HTTP call' do
-      expect(Net::HTTP).to receive(:start).exactly(1).times.and_call_original
+    specify 'lets multiple data parts be fetched with one HTTP call', requests: 1 do
       playlist = subject.select :snippet, :status, :content_details
 
       expect(playlist.id).to be
