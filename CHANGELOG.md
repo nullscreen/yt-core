@@ -9,3 +9,4 @@
 * Change video.duration to video.seconds
 * Change Playlist#playlist_items to Playlist#items
 * Add Playlist#videos
+* Rename `Channel#long_upload_status` to `Channel#long_uploads_status`

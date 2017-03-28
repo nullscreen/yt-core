@@ -2,38 +2,44 @@ module Yt
   # Provides methods to interact with YouTube playlists.
   # @see https://developers.google.com/youtube/v3/docs/playlists
   class Playlist < Resource
-    # @param [Hash] options the options to initialize a Playlist.
-    # @option options [String] :id The unique ID of a YouTube playlist.
-    def initialize(options = {})
-      super
-    end
+    # @!attribute [r] title
+    #   @return [String] the playlist’s title.
+    has_attribute :title, in: :snippet
 
-  ### ID
+    # @!attribute [r] description
+      # @return [String] the playlist’s description.
+    has_attribute :description, in: :snippet
 
-    # @return [String] the playlist’s ID.
-    attr_reader :id
-
-    # @return [String] the canonical form of the playlist’s URL.
-    def canonical_url
-      "https://www.youtube.com/playlist?list=#{id}"
-    end
-
-  ### SNIPPET
-
-    # @return [String] the playlist’s title.
-    def title
-      snippet['title']
-    end
-
-    # @return [String] the playlist’s description.
-    def description
-      snippet['description']
-    end
-
+    # @!attribute [r] published_at
     # @return [Time] the date and time that the playlist was created.
-    def published_at
-      Time.parse snippet['publishedAt']
-    end
+    has_attribute :published_at, in: :snippet, type: Time
+
+    # @!attribute [r] thumbnails
+    # @return [Hash<String, Hash>] the thumbnails associated with the playlist.
+    has_attribute :thumbnails, in: :snippet
+
+    # @!attribute [r] channel_id
+    # @return [String] the ID of the channel that published the playlist.
+    has_attribute :channel_id, in: :snippet
+
+    # @!attribute [r] channel_title
+    # @return [String] the title of the channel that published the playlist.
+    has_attribute :channel_title, in: :snippet
+
+    # has_attribute :default_language, in: :snippet not sure how to set to test
+    # has_attribute :localized, in: :snippet not yet implemented
+    # has_attribute :tags, in: :snippet not sure how to set to test
+
+    # @!attribute [r] privacy_status
+    # @return [String] the playlist’s privacy status. Valid values are:
+    #   +"private"+, +"public"+, and +"unlisted"+.
+    has_attribute :privacy_status, in: :status
+
+    # @!attribute [r] item_count
+    # @return [<Integer>] the number of videos in the playlist.
+    has_attribute :item_count, in: :content_details, type: Integer
+
+  ### OTHER METHODS
 
     # Returns the URL of the playlist’s thumbnail.
     # @param [Symbol, String] size The size of the playlist’s thumbnail.
@@ -44,36 +50,12 @@ module Yt
     # @return [String] if +size+ is +:maxres+, the URL of a 1280x720px image.
     # @return [nil] if the +size+ is none of the above.
     def thumbnail_url(size = :default)
-      snippet['thumbnails'].fetch(size.to_s, {})['url']
+      thumbnails.fetch(size.to_s, {})['url']
     end
 
-    # @return [String] the ID of the channel that published the playlist.
-    def channel_id
-      snippet['channelId']
-    end
-
-    # @return [String] the title of the channel that published the playlist.
-    def channel_title
-      snippet['channelTitle']
-    end
-
-    # def tags # not yet implemented, not sure how to set to test
-    # def default_language # not yet implemented, not sure how to set to test
-    # def localized # not yet implemented
-
-  ### STATUS
-
-    # @return [String] the playlist’s privacy status. Valid values are:
-    #   +"private"+, +"public"+, and +"unlisted"+.
-    def privacy_status
-      status['privacyStatus']
-    end
-
-  ### CONTENT DETAILS
-
-    # @return [<Integer>] the number of videos in the playlist.
-    def item_count
-      content_details['itemCount']
+    # @return [String] the canonical form of the playlist’s URL.
+    def canonical_url
+      "https://www.youtube.com/playlist?list=#{id}"
     end
 
   ### ASSOCIATIONS

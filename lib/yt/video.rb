@@ -2,51 +2,134 @@ module Yt
   # Provides methods to interact with YouTube videos.
   # @see https://developers.google.com/youtube/v3/docs/videos
   class Video < Resource
-    # @param [Hash] options the options to initialize a Channel.
-    # @option options [String] :id The unique ID of a YouTube channel.
-    def initialize(options = {})
-      super
-      @auth = options[:auth]
-    end
+    # @!attribute [r] title
+    # @return [String] the video’s title. Has a maximum length of 100 characters
+    #   and may contain all valid UTF-8 characters except < and >.
+    has_attribute :title, in: :snippet
 
-  ### ID
+    # @!attribute [r] description
+    # @return [String] the video’s description. Has a maximum length of 5000
+    #   bytes and may contain all valid UTF-8 characters except < and >.
+    has_attribute :description, in: :snippet
 
-    # @return [String] the video’s ID.
-    attr_reader :id
-
-    # @return [String] the canonical form of the video’s URL.
-    def canonical_url
-      "https://www.youtube.com/watch?v=#{id}"
-    end
-
-  ### SNIPPET
-
+    # @!attribute [r] published_at
     # @return [Time] the date and time that the video was published. Note that
     #   this time might be different than the time that the video was uploaded.
     #   For example, if a video is uploaded as a private video and then made
     #   public at a later time, this property will specify the time that the
     #   video was made public.
-    def published_at
-      Time.parse snippet['publishedAt']
+    has_attribute :published_at, in: :snippet, type: Time
+
+    # @!attribute [r] thumbnails
+    # @return [Hash<String, Hash>] the thumbnails associated with the video.
+    has_attribute :thumbnails, in: :snippet
+
+    # @!attribute [r] channel_id
+    # @return [String] the ID of the channel that the video was uploaded to.
+    has_attribute :channel_id, in: :snippet
+
+    # @!attribute [r] channel_title
+    # @return [String] the title of the channel that the video was uploaded to.
+    has_attribute :channel_title, in: :snippet
+
+    # @!attribute [r] tags
+    # @return [Array<String>] the list of tags associated with the video.
+    has_attribute :tags, in: :snippet
+
+    # @!attribute [r] category_id
+    # @return [Integer] the ID of the associated YouTube video category.
+    # @see https://developers.google.com/youtube/v3/docs/videoCategories/list
+    has_attribute :category_id, in: :snippet, type: Integer
+
+    # @!attribute [r] live_broadcast_content
+    # @return [String] whether the video is an upcoming/active live broadcast.
+    #   Valid values are: +"live"+, +"none"+, +"upcoming"+.
+    has_attribute :live_broadcast_content, in: :snippet
+
+    # has_attribute :default_language, in: :snippet not sure how to set to test
+    # has_attribute :localized, in: :snippet not yet implemented
+    # has_attribute :default_audio_language, in: :snippet not sure how to test
+
+    # @!attribute [r] upload_status
+    # @return [String] the status of the uploaded video. Valid values are:
+    #   +"deleted"+, +"failed"+, +"processed"+, +"rejected"+, and +"unlisted"+.
+    has_attribute :upload_status, in: :status
+
+    # @!attribute [r] privacy_status
+    # @return [String] the video’s privacy status. Valid values are:
+    #   +"private"+, +"public"+, and +"unlisted"+.
+    has_attribute :privacy_status, in: :status
+
+    # @!attribute [r] license
+    # @return [String] the video’s license. Valid values are:
+    #   +"creative_common"+ and +"youtube"+.
+    has_attribute :license, in: :status
+
+    # @!attribute [r] embeddable
+    # @return [Boolean] whether the video can be embedded on another website.
+    has_attribute :embeddable, in: :status
+
+    # @!attribute [r] public_stats_viewable
+    # @return [Boolean] whether the extended video statistics on the video’s
+    #   watch page are publicly viewable.
+    has_attribute :public_stats_viewable, in: :status
+
+    # has_attribute :failure_reason, in: :status not yet implemented
+    # has_attribute :rejection_reason, in: :status not yet implemented
+    # has_attribute :publish_at, in: :status not yet implemented
+
+    # @!attribute [r] view_count
+    # @return [<Integer>] the number of times the video has been viewed.
+    has_attribute :view_count, in: :statistics, type: Integer
+
+    # @!attribute [r] like_count
+    # @return [<Integer>] the number of users who have liked the video.
+    has_attribute :like_count, in: :statistics, type: Integer
+
+    # @!attribute [r] dislike_count
+    # @return [<Integer>] the number of users who have disliked the video.
+    has_attribute :dislike_count, in: :statistics, type: Integer
+
+    # @!attribute [r] comment_count
+    # @return [<Integer>] the number of comments for the video.
+    has_attribute :comment_count, in: :statistics, type: Integer
+
+    # @!attribute [r] duration
+    # @return [<String>] the length of the video as an ISO 8601 duration.
+    # @see https://developers.google.com/youtube/v3/docs/videos#contentDetails.duration
+    has_attribute :duration, in: :content_details
+
+    # @!attribute [r] dimension
+    # @return [String] whether the video is available in 3D or in 2D.
+    #   Valid values are: +"2d"+ and +"3d".
+    has_attribute :dimension, in: :content_details
+
+    # @!attribute [r] definition
+    # @return [String] whether the video is available in high definition or only
+    #   in standard definition. Valid values are: +"sd"+ and +"hd".
+    has_attribute :definition, in: :content_details
+
+    # @!attribute [r] caption
+    # @return [Boolean] whether captions are available for the video.
+    has_attribute :caption, in: :content_details do |captioned|
+      captioned == 'true'
     end
 
-    # @return [String] the ID that YouTube uses to uniquely identify the channel
-    #   that the video was uploaded to.
-    def channel_id
-      snippet['channelId']
-    end
+    # @!attribute [r] licensed_content
+    # @return [Boolean] whether the video represents licensed content, which
+    #   means that the content was uploaded to a channel linked to a YouTube
+    #   content partner and then claimed by that partner.
+    has_attribute :licensed_content, in: :content_details
 
-    # @return [String] the video’s title. Has a maximum length of 100 characters
-    #   and may contain all valid UTF-8 characters except < and >.
-    def title
-      snippet['title']
-    end
+    # @!attribute [r] projection
+    # @return [String] the projection format of the video. Valid values are:
+    #   +"360"+ and +"rectangular".
+    has_attribute :projection, in: :content_details
 
-    # @return [String] the video’s description. Has a maximum length of 5000
-    #   bytes and may contain all valid UTF-8 characters except < and >.
-    def description
-      snippet['description']
-    end
+    # has_attribute :has_custom_thumbnail, in: :content_details to do
+    # has_attribute :content_rating, in: :content_details to do
+
+  ### OTHER METHODS
 
     # Returns the URL of the video’s thumbnail.
     # @param [Symbol, String] size The size of the video’s thumbnail.
@@ -60,25 +143,12 @@ module Yt
       snippet['thumbnails'].fetch(size.to_s, {})['url']
     end
 
-    # @return [String] the title of the channel that the video belongs to.
-    def channel_title
-      snippet['channelTitle']
+    # @return [String] the canonical form of the video’s URL.
+    def canonical_url
+      "https://www.youtube.com/watch?v=#{id}"
     end
 
-    # @return [Array<String>] the list of keyword tags associated with the
-    #   video.
-    def tags
-      snippet['tags']
-    end
-
-    # @return [Integer] the ID of the associated YouTube video category.
-    # @see https://developers.google.com/youtube/v3/docs/videoCategories/list
-    def category_id
-      snippet['categoryId'].to_i
-    end
-
-    # List of YouTube video categories.
-    # @see https://developers.google.com/youtube/v3/docs/videoCategories/list
+    # @return [Hash<Integer, String>] the list of YouTube video categories.
     CATEGORIES = {
        1 => 'Film & Animation',
        2 => 'Autos & Vehicles',
@@ -115,86 +185,8 @@ module Yt
     }
 
     # @return [String] the title of the associated YouTube video category.
-    # @see https://developers.google.com/youtube/v3/docs/videoCategories/list
     def category_title
       CATEGORIES[category_id]
-    end
-
-    # @return [String] whether the video is an upcoming/active live broadcast.
-    #   Valid values are: +"live"+, +"none"+, +"upcoming"+.
-    def live_broadcast_content
-      snippet['liveBroadcastContent']
-    end
-
-    # def default_language # not yet implemented, not sure how to set to test
-    # def localized # not yet implemented
-    # def default_audio_language # not yet implemented, not sure how to set to test
-
-  ### STATUS
-
-    # @return [String] the status of the uploaded video. Valid values are:
-    #   +"deleted"+, +"failed"+, +"processed"+, +"rejected"+, and +"unlisted"+.
-    def upload_status
-      status['uploadStatus']
-    end
-
-    # @return [String] the video’s privacy status. Valid values are:
-    #   +"private"+, +"public"+, and +"unlisted"+.
-    def privacy_status
-      status['privacyStatus']
-    end
-
-    # @return [String] the video’s license. Valid values are:
-    #   +"creative_common"+ and +"youtube"+.
-    def license
-      status['license']
-    end
-
-    # @return [Boolean] whether the video can be embedded on another website.
-    def embeddable
-      status['embeddable']
-    end
-
-    # @return [Boolean] whether the extended video statistics on the video’s
-    #   watch page are publicly viewable.
-    def public_stats_viewable
-      status['publicStatsViewable']
-    end
-
-    # def failure_reason # not yet implemented
-    # def rejection_reason # not yet implemented
-    # def publish_at # not yet implemented
-
-  ### STATISTICS
-
-    # @return [<Integer>] the number of times the video has been viewed.
-    def view_count
-      statistics['viewCount'].to_i
-    end
-
-    # @return [<Integer>] the number of users who have indicated that they
-    #   liked the video.
-    def like_count
-      statistics['likeCount'].to_i
-    end
-
-    # @return [<Integer>] the number of users who have indicated that they
-    #   disliked the video.
-    def dislike_count
-      statistics['dislikeCount'].to_i
-    end
-
-    # @return [<Integer>] the number of comments for the video.
-    def comment_count
-      statistics['commentCount'].to_i
-    end
-
-  ### CONTENT DETAILS
-
-    # @return [<String>] the length of the video as an ISO 8601 duration.
-    # @see https://developers.google.com/youtube/v3/docs/videos#contentDetails.duration
-    def duration
-      content_details['duration']
     end
 
     # @return [<Integer>] the length of the video in seconds.
@@ -208,44 +200,11 @@ module Yt
       [hh, mm, ss].map{|t| t.to_s.rjust(2,'0')}.join(':')
     end
 
-    # @return [String] whether the video is available in 3D or in 2D.
-    #   Valid values are: +"2d"+ and +"3d".
-    def dimension
-      content_details['dimension']
-    end
-
-    # @return [String] whether the video is available in high definition or only
-    #   in standard definition. Valid values are: +"sd"+ and +"hd".
-    def definition
-      content_details['definition']
-    end
-
-    # @return [Boolean] whether captions are available for the video.
-    def caption
-      content_details['caption'] == 'true'
-    end
-
-    # @return [Boolean] whether the video represents licensed content, which
-    #   means that the content was uploaded to a channel linked to a YouTube
-    #   content partner and then claimed by that partner.
-    def licensed_content
-      content_details['licensedContent']
-    end
-
-    # @return [String] the projection format of the video. Valid values are:
-    #   +"360"+ and +"rectangular".
-    def projection
-      content_details['projection']
-    end
-
-    # def has_custom_thumbnail # not yet implemented
-    # def content_rating # not yet implemented
-
   ### ASSOCIATIONS
 
     # @return [Yt::Channel] the channel the video belongs to.
     def channel
-      @channel ||= Channel.new id: channel_id, auth: @auth
+      @channel ||= Channel.new id: channel_id
     end
 
   ### OTHERS

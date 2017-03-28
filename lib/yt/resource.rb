@@ -12,12 +12,39 @@ module Yt
       end
     end
 
+  ### ID
+
+    # @return [String] the resource’s uniqueID.
+    attr_reader :id
 
   ### OTHERS
 
     # @return [String] a representation of the resource instance.
     def inspect
       "#<#{self.class} @id=#{@id}>"
+    end
+
+  private
+
+    def self.has_attribute(name, options = {}, &block)
+      define_method name do
+        keys = (Array(options[:in]) + [name]).map &:to_s
+        value = instance_eval keys.shift
+        keys.each{|key| value = value[key.camelize :lower]}
+        value = type_cast value, options[:type]
+        block_given? ? instance_exec(value, &block) : value
+      end
+    end
+
+    def type_cast(value, type)
+      case [type]
+      when [Time]
+        Time.parse value
+      when [Integer]
+        value.to_i
+      else
+        value
+      end
     end
   end
 end
