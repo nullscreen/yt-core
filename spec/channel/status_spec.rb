@@ -11,7 +11,7 @@ describe 'Yt::Channel’s status methods', :server do
 
       expect(channel.privacy_status).to eq 'public'
       expect(channel.is_linked).to be true
-      expect(channel.long_upload_status).to eq 'longUploadsUnspecified'
+      expect(channel.long_uploads_status).to eq 'longUploadsUnspecified'
     end
   end
 end
