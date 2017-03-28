@@ -26,6 +26,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport',  '>= 5', '< 6'
   spec.add_dependency 'yt-support'
 
+  spec.add_dependency 'yt-auth' # Don't commit.. should move Request and Error to support instead, just testing
+
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rspec', '~> 3.5'
   spec.add_development_dependency 'coveralls', '~> 0.8.15'

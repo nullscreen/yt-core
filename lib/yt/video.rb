@@ -249,30 +249,19 @@ module Yt
 
     def fetch_data(part)
       parts = @selected_data_parts || [part]
-      if (items = data_response(parts).body['items']).any?
+
+      request = AuthRequest.new({
+        path: "/youtube/v3/videos",
+        params: {key: Yt.configuration.api_key, id: @id, part: parts.join(',')}
+      })
+
+      if (items = request.run.body['items']).any?
         parts.each{|part| @data[part] = items.first[part.to_s.camelize :lower]}
         @data[part]
       else
         raise Errors::NoItems
       end
     end
-
-    def data_response(parts)
-      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request data_request(parts)
-      end.tap{|response| response.body = JSON response.body}
-    end
-
-    def data_request(parts)
-      part = parts.join ','
-      query = {key: Yt.configuration.api_key, id: @id, part: part}.to_param
-
-      Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
-        request.initialize_http_header 'Content-Type' => 'application/json'
-      end
-    end
-
-  # OTHERS
 
   private
 

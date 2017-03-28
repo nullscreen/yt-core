@@ -7,6 +7,10 @@ require 'active_support/core_ext/string/inflections.rb' # for camelize
 require 'json' # for JSON.parse
 require 'yt/config'
 
+require 'yt/auth_request'
+require 'yt/auth_error'
+
+
 require 'yt/resource'
 
 require 'yt/channel'
