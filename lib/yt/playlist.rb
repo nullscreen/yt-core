@@ -87,7 +87,7 @@ module Yt
     def videos_response(options = {})
       items = items_response options.merge(parts: [:content_details])
 
-      if options[:parts] == [:id]
+      if options[:parts] == %i(id)
         items.tap do |response|
           response.body['items'].map{|item| item['id'] = item['contentDetails']['videoId']}
         end
@@ -107,7 +107,7 @@ module Yt
   ### OTHERS
 
     # Specifies which parts of the video to fetch when hitting the data API.
-    # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
+    # @param [Array<Symbol>] parts The parts to fetch. Valid values
     #   are: +:snippet+, +:status+, and +:content_details+.
     # @return [Yt::Video] itself.
     def select(*parts)
@@ -140,11 +140,11 @@ module Yt
 
       request = AuthRequest.new({
         path: "/youtube/v3/playlists",
-        params: {key: Yt.configuration.api_key, id: @id, part: parts.join(',')}
+        params: {key: Yt.configuration.api_key, id: id, part: parts.join(',')}
       })
 
       if (items = request.run.body['items']).any?
-        parts.each{|part| @data[part] = items.first[part.to_s.camelize :lower]}
+        parts.each{|part| @data[part] = items.first[camelize part]}
         @data[part]
       else
         raise Errors::NoItems

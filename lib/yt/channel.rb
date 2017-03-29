@@ -120,7 +120,7 @@ module Yt
 
         # /search only returns id and partial snippets. for any other part we
         # need a second call to /channels
-        if options[:parts] == [:id]
+        if options[:parts] == %i(id)
           search.tap do |response|
             response.body['items'].map{|item| item['id'] = item['id']['videoId']}
           end
@@ -150,7 +150,7 @@ module Yt
   ### OTHERS
 
     # Specifies which parts of the channel to fetch when hitting the data API.
-    # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
+    # @param [Array<Symbol>] parts The parts to fetch. Valid values
     #   are: +:snippet+, +:status+, +:branding_settings+, and +:statistics+.
     # @return [Yt::Channel] itself.
     def select(*parts)
@@ -185,19 +185,19 @@ module Yt
   ### DATA
 
     def snippet
-      data_part 'snippet'
+      data_part :snippet
     end
 
     def status
-      data_part 'status'
+      data_part :status
     end
 
     def branding_settings
-      data_part 'branding_settings'
+      data_part :branding_settings
     end
 
     def statistics
-      data_part 'statistics'
+      data_part :statistics
     end
 
     def data_part(part)
@@ -209,11 +209,11 @@ module Yt
 
       request = AuthRequest.new({
         path: "/youtube/v3/channels",
-        params: {key: Yt.configuration.api_key, id: @id, part: parts.join(',')}
+        params: {key: Yt.configuration.api_key, id: id, part: parts.join(',')}
       })
 
       if (items = request.run.body['items']).any?
-        parts.each{|part| @data[part] = items.first[part.to_s.camelize :lower]}
+        parts.each{|part| @data[part] = items.first[camelize part]}
         @data[part]
       else
         raise Errors::NoItems

@@ -42,8 +42,8 @@ describe 'Yt::Playlist#items', :server do
 
     it 'accepts .select to fetch multiple parts with two HTTP calls', requests: 2 do
       items = playlist.items.select :snippet, :status
-      expect(items.map &:title).to be_present
-      expect(items.map &:privacy_status).to be_present
+      expect(items.map &:title).to be
+      expect(items.map &:privacy_status).to be
     end
 
     it 'accepts .limit to only fetch some items', requests: 1 do

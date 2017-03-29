@@ -210,7 +210,7 @@ module Yt
   ### OTHERS
 
     # Specifies which parts of the video to fetch when hitting the data API.
-    # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
+    # @param [Array<Symbol>] parts The parts to fetch. Valid values
     #   are: +:snippet+, +:status+, +:statistics+, and +:content_details+.
     # @return [Yt::Video] itself.
     def select(*parts)
@@ -247,11 +247,11 @@ module Yt
 
       request = AuthRequest.new({
         path: "/youtube/v3/videos",
-        params: {key: Yt.configuration.api_key, id: @id, part: parts.join(',')}
+        params: {key: Yt.configuration.api_key, id: id, part: parts.join(',')}
       })
 
       if (items = request.run.body['items']).any?
-        parts.each{|part| @data[part] = items.first[part.to_s.camelize :lower]}
+        parts.each{|part| @data[part] = items.first[camelize part]}
         @data[part]
       else
         raise Errors::NoItems

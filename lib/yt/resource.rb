@@ -5,20 +5,17 @@ module Yt
     # @param [Hash] options the options to initialize a resource.
     # @option options [String] :id The unique ID of a YouTube resource.
     def initialize(options = {})
-      @id = options[:id]
-      @data = HashWithIndifferentAccess.new options
+      @data = options
     end
 
-  ### ID
-
-    # @return [String] the resource’s uniqueID.
-    attr_reader :id
-
-  ### OTHERS
+    # @return [String] the resource’s unique ID.
+    def id
+      @data[:id]
+    end
 
     # @return [String] a representation of the resource instance.
     def inspect
-      "#<#{self.class} @id=#{@id}>"
+      "#<#{self.class} @id=#{id}>"
     end
 
   private
@@ -27,11 +24,15 @@ module Yt
       AuthRequest.new(path: path, params: params).run
     end
 
+    def camelize(part)
+      part.to_s.gsub(/(?:_|(\/))([a-z\d]*)/i) { "#{$1}#{$2.capitalize}" }
+    end
+
     def self.has_attribute(name, options = {}, &block)
       define_method name do
-        keys = (Array(options[:in]) + [name]).map &:to_s
-        value = instance_eval keys.shift
-        keys.each{|key| value = value[key.camelize :lower]}
+        keys = Array(options[:in]) + [name]
+        value = instance_eval keys.shift.to_s
+        keys.each{|key| value = value[camelize key]}
         value = type_cast value, options[:type]
         block_given? ? instance_exec(value, &block) : value
       end

@@ -9,7 +9,7 @@ module Yt
     def initialize(item_class, options = {}, &item_block)
       @item_class = item_class
       @item_block = item_block
-      @options = {parts: [:id], limit: Float::INFINITY}.merge options
+      @options = {parts: %i(id), limit: Float::INFINITY}.merge options
     end
 
     # Executes +item_block+ for each item of the collection.
@@ -30,7 +30,16 @@ module Yt
           @response.body['items'].map do |hash|
             @count += 1
             break if @count > @options[:limit]
-            video = @item_class.new(hash.transform_keys{|k| k.underscore.to_sym}.slice(*@options[:parts]))
+
+            underscored_hash = {}
+            hash.each_key do |key|
+              part = key.gsub(/([A-Z])/) { "_#{$1.downcase}" }.to_sym
+              if @options[:parts].include? part
+                underscored_hash[part] = hash[key]
+              end
+            end
+
+            video = @item_class.new underscored_hash
             @items << video
             block.call video
           end
@@ -46,15 +55,15 @@ module Yt
 
     # @return [Integer] the estimated number of items in the collection.
     def size
-      @response = @item_block.call parts: [:id], limit: 1
+      @response = @item_block.call parts: %i(id), limit: 1
       [@response.body['pageInfo']['totalResults'], @options[:limit]].min
     end
 
     # Specifies which parts of the resource to fetch when hitting the data API.
-    # @param [Array<Symbol, String>] parts The parts to fetch.
+    # @param [Array<Symbol>] parts The parts to fetch.
     # @return [Yt::Relation] itself.
     def select(*parts)
-      @options.merge! parts: (parts + [:id])
+      @options.merge! parts: (parts + %i(id))
       self
     end
 
