@@ -140,7 +140,7 @@ module Yt
     # @return [String] if +size+ is +:maxres+, the URL of a 1280x720px image.
     # @return [nil] if the +size+ is none of the above.
     def thumbnail_url(size = :default)
-      snippet['thumbnails'].fetch(size.to_s, {})['url']
+      thumbnails.fetch(size.to_s, {})['url']
     end
 
     # @return [String] the canonical form of the video’s URL.
@@ -210,69 +210,13 @@ module Yt
   ### OTHERS
 
     # Specifies which parts of the video to fetch when hitting the data API.
-    # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
+    # @param [Array<Symbol>] parts The parts to fetch. Valid values
     #   are: +:snippet+, +:status+, +:statistics+, and +:content_details+.
     # @return [Yt::Video] itself.
     def select(*parts)
       @selected_data_parts = parts
       self
     end
-
-  private
-
-  ### DATA
-
-    # @return [Array<Symbol>] the parts that can be fetched for a video.
-    def valid_parts
-      %i(snippet status statistics content_details)
-    end
-
-    def snippet
-      data_part :snippet
-    end
-
-    def status
-      data_part :status
-    end
-
-    def statistics
-      data_part :statistics
-    end
-
-    def content_details
-      data_part :content_details
-    end
-
-    def data_part(part)
-      @data[part] || fetch_data(part)
-    end
-
-    def fetch_data(part)
-      parts = @selected_data_parts || [part]
-      if (items = data_response(parts).body['items']).any?
-        parts.each{|part| @data[part] = items.first[part.to_s.camelize :lower]}
-        @data[part]
-      else
-        raise Errors::NoItems
-      end
-    end
-
-    def data_response(parts)
-      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request data_request(parts)
-      end.tap{|response| response.body = JSON response.body}
-    end
-
-    def data_request(parts)
-      part = parts.join ','
-      query = {key: Yt.configuration.api_key, id: @id, part: part}.to_param
-
-      Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
-        request.initialize_http_header 'Content-Type' => 'application/json'
-      end
-    end
-
-  # OTHERS
 
   private
 

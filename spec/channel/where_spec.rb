@@ -8,7 +8,7 @@ describe 'Yt::Channel.where', :server do
       $terminated_channel_id, $another_channel_id] }
 
     it 'returns the list of *existing* channels matching the conditions' do
-      expect(channels).to be_present
+      expect(channels).to be
       expect(channels).to all( be_a Yt::Channel )
       expect(channels.map &:id).to eq [$existing_channel_id, $another_channel_id]
     end
@@ -44,11 +44,11 @@ describe 'Yt::Channel.where', :server do
 
     it 'accepts .select to fetch multiple parts with one HTTP calls', requests: 1 do
       list = channels.select :snippet, :status, :statistics, :branding_settings
-      expect(list).to be_present
-      expect(list.map &:title).to be_present
-      expect(list.map &:privacy_status).to be_present
-      expect(list.map &:view_count).to be_present
-      expect(list.map &:banner_image_url).to be_present
+      expect(list).to be
+      expect(list.map &:title).to be
+      expect(list.map &:privacy_status).to be
+      expect(list.map &:view_count).to be
+      expect(list.map &:banner_image_url).to be
     end
   end
 end

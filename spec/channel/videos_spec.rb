@@ -47,10 +47,10 @@ describe 'Yt::Channel#videos', :server do
 
     it 'accepts .select to fetch multiple parts with two HTTP calls', requests: 2 do
       videos = channel.videos.select :snippet, :status, :statistics, :content_details
-      expect(videos.map &:title).to be_present
-      expect(videos.map &:privacy_status).to be_present
-      expect(videos.map &:view_count).to be_present
-      expect(videos.map &:duration).to be_present
+      expect(videos.map &:title).to be
+      expect(videos.map &:privacy_status).to be
+      expect(videos.map &:view_count).to be
+      expect(videos.map &:duration).to be
     end
 
     it 'accepts .limit to only fetch some videos', requests: 2 do

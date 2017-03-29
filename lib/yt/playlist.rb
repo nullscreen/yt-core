@@ -67,13 +67,13 @@ module Yt
 
     # @return [Yt::Relation<Yt::Video>] the videos of the playlist.
     def videos
-      @videos ||= Relation.new(Video) {|options| videos_response options}
+      @videos ||= Relation.new(Video) do |options|
+        videos_response options
+      end
     end
 
-  ### OTHERS
-
     # Specifies which parts of the video to fetch when hitting the data API.
-    # @param [Array<Symbol, String>] parts The parts to fetch. Valid values
+    # @param [Array<Symbol>] parts The parts to fetch. Valid values
     #   are: +:snippet+, +:status+, and +:content_details+.
     # @return [Yt::Video] itself.
     def select(*parts)
@@ -83,98 +83,35 @@ module Yt
 
   private
 
-  ### DATA
+    def items_response(options)
+      params = {
+        key: Yt.configuration.api_key,
+        playlist_id: id,
+        part: options[:parts].join(','),
+        max_results: 50,
+        page_token: options[:offset],
+      }
 
-    # @return [Array<Symbol>] the parts that can be fetched for a playlist.
-    def valid_parts
-      %i(snippet status content_details)
-    end
-
-    def snippet
-      data_part :snippet
-    end
-
-    def status
-      data_part :status
-    end
-
-    def content_details
-      data_part :content_details
-    end
-
-    def data_part(part)
-      @data[part] || fetch_data(part)
-    end
-
-    def fetch_data(part)
-      parts = @selected_data_parts || [part]
-      if (items = data_response(parts).body['items']).any?
-        parts.each{|part| @data[part] = items.first[part.to_s.camelize :lower]}
-        @data[part]
-      else
-        raise Errors::NoItems
-      end
-    end
-
-    def data_response(parts)
-      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request data_request(parts)
-      end.tap{|response| response.body = JSON response.body}
-    end
-
-    def data_request(parts)
-      part = parts.join ','
-      query = {key: Yt.configuration.api_key, id: @id, part: part}.to_param
-
-      Net::HTTP::Get.new("/youtube/v3/playlists?#{query}").tap do |request|
-        request.initialize_http_header 'Content-Type' => 'application/json'
-      end
-    end
-
-  ### ASSOCIATIONS (PLAYLIST ITEMS)
-
-    def items_response(options = {})
-      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request items_request(options)
-      end.tap{|response| response.body = JSON response.body}
-    end
-
-    def items_request(options = {})
-      part = options[:parts].join ','
-      query = {key: Yt.configuration.api_key, playlistId: id, part: part, maxResults: 50, pageToken: options[:offset]}.to_param
-
-      Net::HTTP::Get.new("/youtube/v3/playlistItems?#{query}").tap do |request|
-        request.initialize_http_header 'Content-Type' => 'application/json'
-      end
+      HTTPRequest.new(path: '/youtube/v3/playlistItems', params: params).run
     end
 
     def videos_response(options = {})
       items = items_response options.merge(parts: [:content_details])
 
-      if options[:parts] == [:id]
+      if options[:parts] == %i(id)
         items.tap do |response|
           response.body['items'].map{|item| item['id'] = item['contentDetails']['videoId']}
         end
       else
-        videos_list_response(options[:parts], items.body['items'].map{|item| item['contentDetails']['videoId']}).tap do |response|
+        video_ids = items.body['items'].map{|item| item['contentDetails']['videoId']}.join ','
+        part = options[:parts].join ','
+        request = HTTPRequest.new({
+          path: "/youtube/v3/videos",
+          params: {key: Yt.configuration.api_key, id: video_ids, part: part}
+        })
+        request.run.tap do |response|
           response.body['nextPageToken'] = items.body['nextPageToken']
         end
-      end
-    end
-
-    def videos_list_response(parts, video_ids)
-      Net::HTTP.start 'www.googleapis.com', 443, use_ssl: true do |http|
-        http.request videos_list_request(parts, video_ids)
-      end.tap{|response| response.body = JSON response.body}
-    end
-
-    def videos_list_request(parts, video_ids)
-      part = parts.join ','
-      ids = video_ids.join ','
-      query = {key: Yt.configuration.api_key, id: ids, part: part}.to_param
-
-      Net::HTTP::Get.new("/youtube/v3/videos?#{query}").tap do |request|
-        request.initialize_http_header 'Content-Type' => 'application/json'
       end
     end
   end
