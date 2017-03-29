@@ -65,6 +65,24 @@ module Yt
       @items ||= Relation.new(PlaylistItem) {|options| items_response options}
     end
 
+    # @return [Yt::Relation<Yt::Video>] the videos of the playlist.
+    def videos
+      @videos ||= Relation.new(Video) do |options|
+        videos_response options
+      end
+    end
+
+    # Specifies which parts of the video to fetch when hitting the data API.
+    # @param [Array<Symbol>] parts The parts to fetch. Valid values
+    #   are: +:snippet+, +:status+, and +:content_details+.
+    # @return [Yt::Video] itself.
+    def select(*parts)
+      @selected_data_parts = parts
+      self
+    end
+
+  private
+
     def items_response(options)
       params = {
         key: Yt.configuration.api_key,
@@ -74,14 +92,7 @@ module Yt
         page_token: options[:offset],
       }
 
-      AuthRequest.new(path: '/youtube/v3/playlistItems', params: params).run
-    end
-
-    # @return [Yt::Relation<Yt::Video>] the videos of the playlist.
-    def videos
-      @videos ||= Relation.new(Video) do |options|
-        videos_response options
-      end
+      HTTPRequest.new(path: '/youtube/v3/playlistItems', params: params).run
     end
 
     def videos_response(options = {})
@@ -94,7 +105,7 @@ module Yt
       else
         video_ids = items.body['items'].map{|item| item['contentDetails']['videoId']}.join ','
         part = options[:parts].join ','
-        request = AuthRequest.new({
+        request = HTTPRequest.new({
           path: "/youtube/v3/videos",
           params: {key: Yt.configuration.api_key, id: video_ids, part: part}
         })
@@ -102,15 +113,6 @@ module Yt
           response.body['nextPageToken'] = items.body['nextPageToken']
         end
       end
-    end
-
-    # Specifies which parts of the video to fetch when hitting the data API.
-    # @param [Array<Symbol>] parts The parts to fetch. Valid values
-    #   are: +:snippet+, +:status+, and +:content_details+.
-    # @return [Yt::Video] itself.
-    def select(*parts)
-      @selected_data_parts = parts
-      self
     end
   end
 end

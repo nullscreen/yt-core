@@ -127,7 +127,7 @@ module Yt
         else
           ids = search.body['items'].map{|item| item['id']['videoId']}.join ','
           part = options[:parts].join ','
-          request = AuthRequest.new({
+          request = HTTPRequest.new({
             path: "/youtube/v3/videos",
             params: {key: Yt.configuration.api_key, id: ids, part: part}
           })
@@ -190,7 +190,7 @@ module Yt
         id = options[:conditions].fetch(:id, []).join ','
         part = options[:parts].join ','
 
-        request = AuthRequest.new({
+        request = HTTPRequest.new({
           path: "/youtube/v3/channels",
           params: {key: Yt.configuration.api_key, id: id, part: part}
         })

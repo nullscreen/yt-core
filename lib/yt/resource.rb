@@ -21,7 +21,7 @@ module Yt
   private
 
     def fetch(path, params)
-      AuthRequest.new(path: path, params: params).run
+      HTTPRequest.new(path: path, params: params).run
     end
 
     def camelize(part)
@@ -41,7 +41,7 @@ module Yt
 
     def fetch_part(part)
       parts = @selected_data_parts || [part]
-      request = AuthRequest.new({
+      request = HTTPRequest.new({
         path: resources_path,
         params: {key: Yt.configuration.api_key, id: id, part: parts.join(',')}
       })
