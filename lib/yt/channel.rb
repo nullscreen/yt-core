@@ -184,11 +184,6 @@ module Yt
 
   ### DATA
 
-    # @return [Array<Symbol>] the parts that can be fetched for a channel.
-    def valid_parts
-      %i(snippet status statistics branding_settings)
-    end
-
     def snippet
       data_part 'snippet'
     end

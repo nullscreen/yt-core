@@ -222,11 +222,6 @@ module Yt
 
   ### DATA
 
-    # @return [Array<Symbol>] the parts that can be fetched for a video.
-    def valid_parts
-      %i(snippet status statistics content_details)
-    end
-
     def snippet
       data_part :snippet
     end

@@ -119,11 +119,6 @@ module Yt
 
   ### DATA
 
-    # @return [Array<Symbol>] the parts that can be fetched for a playlist.
-    def valid_parts
-      %i(snippet status content_details)
-    end
-
     def snippet
       data_part :snippet
     end

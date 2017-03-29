@@ -6,10 +6,7 @@ module Yt
     # @option options [String] :id The unique ID of a YouTube resource.
     def initialize(options = {})
       @id = options[:id]
-      @data = HashWithIndifferentAccess.new
-      valid_parts.each do |part|
-        @data[part] = options[part] if options[part]
-      end
+      @data = HashWithIndifferentAccess.new options
     end
 
   ### ID
