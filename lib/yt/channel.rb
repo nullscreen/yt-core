@@ -182,22 +182,6 @@ module Yt
       end
     end
 
-    def fetch_data(part)
-      parts = @selected_data_parts || [part]
-
-      request = AuthRequest.new({
-        path: "/youtube/v3/channels",
-        params: {key: Yt.configuration.api_key, id: id, part: parts.join(',')}
-      })
-
-      if (items = request.run.body['items']).any?
-        parts.each{|part| @data[part] = items.first[camelize part]}
-        @data[part]
-      else
-        raise Errors::NoItems
-      end
-    end
-
   ### COLLECTION
 
     # @return [Yt::Relation<Yt::Channel>] the channels matching the conditions.

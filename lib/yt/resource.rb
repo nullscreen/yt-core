@@ -31,17 +31,34 @@ module Yt
     def self.has_attribute(name, options = {}, &block)
       define_method name do
         keys = Array(options[:in]) + [name]
-        value = data_part keys.shift
+        part = keys.shift
+        value = @data[part] || fetch_part(part)
         keys.each{|key| value = value[camelize key]}
         value = type_cast value, options[:type]
         block_given? ? instance_exec(value, &block) : value
       end
     end
 
-    def data_part(part)
-      @data[part] || fetch_data(part)
+    def fetch_part(part)
+      parts = @selected_data_parts || [part]
+      request = AuthRequest.new({
+        path: resources_path,
+        params: {key: Yt.configuration.api_key, id: id, part: parts.join(',')}
+      })
+
+      if (items = request.run.body['items']).any?
+        parts.each{|part| @data[part] = items.first[camelize part]}
+        @data[part]
+      else
+        raise Errors::NoItems
+      end
     end
 
+    def resources_path
+      self.class.name.split('::').last.gsub /^(\w{1})(.*)/ do
+        "/youtube/v3/#{$1.downcase}#{$2}s"
+      end
+    end
 
     def type_cast(value, type)
       case [type]

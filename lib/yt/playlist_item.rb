@@ -66,23 +66,5 @@ module Yt
       @selected_data_parts = parts
       self
     end
-
-  private
-
-    def fetch_data(part)
-      parts = @selected_data_parts || [part]
-
-      request = AuthRequest.new({
-        path: "/youtube/v3/playlistItems",
-        params: {key: Yt.configuration.api_key, id: id, part: parts.join(',')}
-      })
-
-      if (items = request.run.body['items']).any?
-        parts.each{|part| @data[part] = items.first[camelize part]}
-        @data[part]
-      else
-        raise Errors::NoItems
-      end
-    end
   end
 end
