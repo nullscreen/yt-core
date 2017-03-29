@@ -116,15 +116,10 @@ module Yt
     # @see https://developers.google.com/youtube/v3/docs/search/list#channelId
     def videos
       @videos ||= Relation.new(Video, limit: 500) do |options|
-        request = AuthRequest.new({
-          path: "/youtube/v3/search",
-          params: {key: Yt.configuration.api_key, type: :video, channel_id: id, part: :id, max_results: 50, page_token: options[:offset], order: :date}
-        })
+        search = fetch '/youtube/v3/search', search_params(options)
 
         # /search only returns id and partial snippets. for any other part we
         # need a second call to /channels
-        search = request.run
-
         if options[:parts] == [:id]
           search.tap do |response|
             response.body['items'].map{|item| item['id'] = item['id']['videoId']}
@@ -143,17 +138,12 @@ module Yt
       end
     end
 
+
+
     # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
     def playlists
       @playlists ||= Relation.new(Playlist) do |options|
-        part = options[:parts].join ','
-
-        request = AuthRequest.new({
-          path: "/youtube/v3/playlists",
-          params: {key: Yt.configuration.api_key, channel_id: id, part: part, max_results: 50, page_token: options[:offset]}
-        })
-
-        request.run
+        fetch '/youtube/v3/playlists', playlists_params(options)
       end
     end
 
@@ -169,6 +159,28 @@ module Yt
     end
 
   private
+
+    def playlists_params(options)
+      {}.tap do |params|
+        params[:key] = Yt.configuration.api_key
+        params[:channel_id] = id
+        params[:part] = options[:parts].join ','
+        params[:max_results] = 50
+        params[:page_token] = options[:offset]
+      end
+    end
+
+    def search_params(options)
+      {}.tap do |params|
+        params[:key] = Yt.configuration.api_key
+        params[:type] = :video
+        params[:channel_id] = id
+        params[:part] = :id
+        params[:order] = :date
+        params[:max_results] = 50
+        params[:page_token] = options[:offset]
+      end
+    end
 
   ### DATA
 

@@ -26,6 +26,10 @@ module Yt
 
   private
 
+    def fetch(path, params)
+      AuthRequest.new(path: path, params: params).run
+    end
+
     def self.has_attribute(name, options = {}, &block)
       define_method name do
         keys = (Array(options[:in]) + [name]).map &:to_s
