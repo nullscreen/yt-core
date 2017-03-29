@@ -140,7 +140,7 @@ module Yt
     # @return [String] if +size+ is +:maxres+, the URL of a 1280x720px image.
     # @return [nil] if the +size+ is none of the above.
     def thumbnail_url(size = :default)
-      snippet['thumbnails'].fetch(size.to_s, {})['url']
+      thumbnails.fetch(size.to_s, {})['url']
     end
 
     # @return [String] the canonical form of the video’s URL.
@@ -219,28 +219,6 @@ module Yt
     end
 
   private
-
-  ### DATA
-
-    def snippet
-      data_part :snippet
-    end
-
-    def status
-      data_part :status
-    end
-
-    def statistics
-      data_part :statistics
-    end
-
-    def content_details
-      data_part :content_details
-    end
-
-    def data_part(part)
-      @data[part] || fetch_data(part)
-    end
 
     def fetch_data(part)
       parts = @selected_data_parts || [part]

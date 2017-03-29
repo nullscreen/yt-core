@@ -2,10 +2,10 @@ module Yt
   # Provides a base class for multiple YouTube resources (channel, video, ...).
   # This is an abstract class and should not be instantiated directly.
   class Resource
-    # @param [Hash] options the options to initialize a resource.
-    # @option options [String] :id The unique ID of a YouTube resource.
-    def initialize(options = {})
-      @data = options
+    # @param [Hash<Symbol, String>] data the options to initialize a resource.
+    # @option data [String] :id The unique ID of a YouTube resource.
+    def initialize(data = {})
+      @data = data
     end
 
     # @return [String] the resource’s unique ID.
@@ -31,12 +31,17 @@ module Yt
     def self.has_attribute(name, options = {}, &block)
       define_method name do
         keys = Array(options[:in]) + [name]
-        value = instance_eval keys.shift.to_s
+        value = data_part keys.shift
         keys.each{|key| value = value[camelize key]}
         value = type_cast value, options[:type]
         block_given? ? instance_exec(value, &block) : value
       end
     end
+
+    def data_part(part)
+      @data[part] || fetch_data(part)
+    end
+
 
     def type_cast(value, type)
       case [type]

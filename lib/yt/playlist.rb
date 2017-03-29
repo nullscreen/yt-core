@@ -117,24 +117,6 @@ module Yt
 
   private
 
-  ### DATA
-
-    def snippet
-      data_part :snippet
-    end
-
-    def status
-      data_part :status
-    end
-
-    def content_details
-      data_part :content_details
-    end
-
-    def data_part(part)
-      @data[part] || fetch_data(part)
-    end
-
     def fetch_data(part)
       parts = @selected_data_parts || [part]
 

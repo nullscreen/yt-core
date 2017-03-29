@@ -182,28 +182,6 @@ module Yt
       end
     end
 
-  ### DATA
-
-    def snippet
-      data_part :snippet
-    end
-
-    def status
-      data_part :status
-    end
-
-    def branding_settings
-      data_part :branding_settings
-    end
-
-    def statistics
-      data_part :statistics
-    end
-
-    def data_part(part)
-      @data[part] || fetch_data(part)
-    end
-
     def fetch_data(part)
       parts = @selected_data_parts || [part]
 
