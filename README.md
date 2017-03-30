@@ -89,5 +89,5 @@ methods need to be documented and listed in the guides. Remember:
 
 - to run all tests locally: `bundle exec rspec`
 - to generate the docs locally: `bundle exec yard`
-- to list undocumented methods: `bundle exec yard stats --no-doc`
+- to list undocumented methods: `bundle exec yard stats --list-undoc`
 - to launch the guides locally: `bundle exec jekyll s -s docs`

@@ -44,8 +44,6 @@ module Yt
     #   +"private"+, +"public"+, and +"unlisted"+.
     has_attribute :privacy_status, in: :status
 
-  ### OTHER METHODS
-
     # Returns the URL of the item’s thumbnail.
     # @param [Symbol, String] size The size of the item’s thumbnail.
     # @return [String] if +size+ is +:default+, the URL of a 120x90px image.
