@@ -81,8 +81,6 @@ module Yt
     #   in the channel page’s browse view for unsubscribed viewers.
     has_attribute :unsubscribed_trailer, in: %i(branding_settings channel)
 
-  ### OTHER METHODS
-
     # @return [String] the canonical form of the channel’s URL.
     def canonical_url
       "https://www.youtube.com/channel/#{id}"
@@ -108,37 +106,13 @@ module Yt
       thumbnails.fetch(size.to_s, {})['url']
     end
 
-  ### ASSOCIATIONS
-
-    # @return [Yt::Relation<Yt::Video>] the public videos of the channel.
-    # @note For unauthenticated channels, results are constrained to a maximum
-    # of 500 videos.
-    # @see https://developers.google.com/youtube/v3/docs/search/list#channelId
-    def videos
-      @videos ||= Relation.new(Video, limit: 500) do |options|
-        search = fetch '/youtube/v3/search', search_params(options)
-
-        # /search only returns id and partial snippets. for any other part we
-        # need a second call to /channels
-        if options[:parts] == %i(id)
-          search.tap do |response|
-            response.body['items'].map{|item| item['id'] = item['id']['videoId']}
-          end
-        else
-          ids = search.body['items'].map{|item| item['id']['videoId']}.join ','
-          part = options[:parts].join ','
-          request = HTTPRequest.new({
-            path: "/youtube/v3/videos",
-            params: {key: Yt.configuration.api_key, id: ids, part: part}
-          })
-          request.run.tap do |response|
-            response.body['nextPageToken'] = search.body['nextPageToken']
-          end
-        end
+    # @return [Yt::Relation<Yt::Channel>] the channels matching the conditions.
+    def self.where(conditions = {})
+      @where ||= Relation.new(Channel) do |options|
+        fetch '/youtube/v3/channels', channels_params(options)
       end
+      @where.where conditions
     end
-
-
 
     # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
     def playlists
@@ -147,7 +121,16 @@ module Yt
       end
     end
 
-  ### OTHERS
+    # @return [Yt::Relation<Yt::Video>] the public videos of the channel.
+    # @note For unauthenticated channels, results are constrained to a maximum
+    # of 500 videos.
+    # @see https://developers.google.com/youtube/v3/docs/search/list#channelId
+    def videos
+      @videos ||= Relation.new(Video, limit: 500) do |options|
+        items = fetch '/youtube/v3/search', search_params(options)
+        videos_for items, :id, options
+      end
+    end
 
     # Specifies which parts of the channel to fetch when hitting the data API.
     # @param [Array<Symbol>] parts The parts to fetch. Valid values
@@ -160,44 +143,29 @@ module Yt
 
   private
 
+    def self.channels_params(options)
+      {}.tap do |params|
+        params[:part] = options[:parts].join ','
+        params[:id] = options[:conditions].fetch(:id, []).join ','
+      end
+    end
+
     def playlists_params(options)
       {}.tap do |params|
-        params[:key] = Yt.configuration.api_key
         params[:channel_id] = id
         params[:part] = options[:parts].join ','
-        params[:max_results] = 50
         params[:page_token] = options[:offset]
       end
     end
 
     def search_params(options)
       {}.tap do |params|
-        params[:key] = Yt.configuration.api_key
         params[:type] = :video
         params[:channel_id] = id
         params[:part] = :id
         params[:order] = :date
-        params[:max_results] = 50
         params[:page_token] = options[:offset]
       end
-    end
-
-  ### COLLECTION
-
-    # @return [Yt::Relation<Yt::Channel>] the channels matching the conditions.
-    def self.where(conditions = {})
-      @where ||= Relation.new(Channel) do |options|
-        id = options[:conditions].fetch(:id, []).join ','
-        part = options[:parts].join ','
-
-        request = HTTPRequest.new({
-          path: "/youtube/v3/channels",
-          params: {key: Yt.configuration.api_key, id: id, part: part}
-        })
-
-        request.run
-      end
-      @where.where conditions
     end
   end
 end

@@ -20,8 +20,13 @@ module Yt
 
   private
 
-    def fetch(path, params)
+    def self.fetch(path, params)
+      params = params.merge(max_results: 50, key: Yt.configuration.api_key)
       HTTPRequest.new(path: path, params: params).run
+    end
+
+    def fetch(path, params)
+      self.class.fetch path, params
     end
 
     def camelize(part)
@@ -41,16 +46,35 @@ module Yt
 
     def fetch_part(part)
       parts = @selected_data_parts || [part]
-      request = HTTPRequest.new({
-        path: resources_path,
-        params: {key: Yt.configuration.api_key, id: id, part: parts.join(',')}
-      })
+      resource = fetch resources_path, id: id, part: parts.join(',')
 
-      if (items = request.run.body['items']).any?
+      if (items = resource.body['items']).any?
         parts.each{|part| @data[part] = items.first[camelize part]}
         @data[part]
       else
         raise Errors::NoItems
+      end
+    end
+
+    # Expands the resultset into a collection of videos by fetching missing
+    # parts, eventually with an additional HTTP request.
+    def videos_for(items, key, options)
+      items.body['items'].map{|item| item['id'] = item[camelize key]['videoId']}
+
+      if options[:parts] == %i(id)
+        items
+      else
+        options[:ids] = items.body['items'].map{|item| item['id']}
+        fetch('/youtube/v3/videos', videos_params(options)).tap do |response|
+          response.body['nextPageToken'] = items.body['nextPageToken']
+        end
+      end
+    end
+
+    def videos_params(options)
+      {}.tap do |params|
+        params[:part] = options[:parts].join ','
+        params[:id] = options[:ids].join ','
       end
     end
 

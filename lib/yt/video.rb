@@ -129,8 +129,6 @@ module Yt
     # has_attribute :has_custom_thumbnail, in: :content_details to do
     # has_attribute :content_rating, in: :content_details to do
 
-  ### OTHER METHODS
-
     # Returns the URL of the video’s thumbnail.
     # @param [Symbol, String] size The size of the video’s thumbnail.
     # @return [String] if +size+ is +:default+, the URL of a 120x90px image.
@@ -200,14 +198,10 @@ module Yt
       [hh, mm, ss].map{|t| t.to_s.rjust(2,'0')}.join(':')
     end
 
-  ### ASSOCIATIONS
-
     # @return [Yt::Channel] the channel the video belongs to.
     def channel
       @channel ||= Channel.new id: channel_id
     end
-
-  ### OTHERS
 
     # Specifies which parts of the video to fetch when hitting the data API.
     # @param [Array<Symbol>] parts The parts to fetch. Valid values

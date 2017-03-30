@@ -58,17 +58,19 @@ module Yt
       "https://www.youtube.com/playlist?list=#{id}"
     end
 
-  ### ASSOCIATIONS
-
     # @return [Yt::Relation<Yt::PlaylistItem>] the items of the playlist.
     def items
-      @items ||= Relation.new(PlaylistItem) {|options| items_response options}
+      @items ||= Relation.new(PlaylistItem) do |options|
+        fetch '/youtube/v3/playlistItems', items_params(options)
+      end
     end
 
     # @return [Yt::Relation<Yt::Video>] the videos of the playlist.
     def videos
       @videos ||= Relation.new(Video) do |options|
-        videos_response options
+        items_options = options.merge parts: [:content_details]
+        items = fetch '/youtube/v3/playlistItems', items_params(items_options)
+        videos_for items, :content_details, options
       end
     end
 
@@ -83,35 +85,11 @@ module Yt
 
   private
 
-    def items_response(options)
-      params = {
-        key: Yt.configuration.api_key,
-        playlist_id: id,
-        part: options[:parts].join(','),
-        max_results: 50,
-        page_token: options[:offset],
-      }
-
-      HTTPRequest.new(path: '/youtube/v3/playlistItems', params: params).run
-    end
-
-    def videos_response(options = {})
-      items = items_response options.merge(parts: [:content_details])
-
-      if options[:parts] == %i(id)
-        items.tap do |response|
-          response.body['items'].map{|item| item['id'] = item['contentDetails']['videoId']}
-        end
-      else
-        video_ids = items.body['items'].map{|item| item['contentDetails']['videoId']}.join ','
-        part = options[:parts].join ','
-        request = HTTPRequest.new({
-          path: "/youtube/v3/videos",
-          params: {key: Yt.configuration.api_key, id: video_ids, part: part}
-        })
-        request.run.tap do |response|
-          response.body['nextPageToken'] = items.body['nextPageToken']
-        end
+    def items_params(options)
+      {}.tap do |params|
+        params[:playlist_id] =  id
+        params[:part] =  options[:parts].join(',')
+        params[:page_token] =  options[:offset]
       end
     end
   end
