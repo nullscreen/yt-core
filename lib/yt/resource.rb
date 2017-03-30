@@ -44,13 +44,13 @@ module Yt
       end
     end
 
-    def fetch_part(part)
-      parts = @selected_data_parts || [part]
+    def fetch_part(required_part)
+      parts = @selected_data_parts || [required_part]
       resource = fetch resources_path, id: id, part: parts.join(',')
 
       if (items = resource.body['items']).any?
         parts.each{|part| @data[part] = items.first[camelize part]}
-        @data[part]
+        @data[required_part]
       else
         raise Errors::NoItems
       end
@@ -79,7 +79,7 @@ module Yt
     end
 
     def resources_path
-      self.class.name.split('::').last.gsub /^(\w{1})(.*)/ do
+      self.class.name.split('::').last.gsub(/^(\w{1})(.*)/) do
         "/youtube/v3/#{$1.downcase}#{$2}s"
       end
     end

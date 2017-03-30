@@ -152,9 +152,9 @@ module Yt
 
     def playlists_params(options)
       {}.tap do |params|
+        params[:page_token] = options[:offset]
         params[:channel_id] = id
         params[:part] = options[:parts].join ','
-        params[:page_token] = options[:offset]
       end
     end
 

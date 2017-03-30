@@ -14,7 +14,7 @@ dt                            {margin-top: 30px}
 dt                            {margin-bottom: 3px}
 
 .sidebar                      {padding-left: 20px}
-.navbar-brand img             {height: 39px; display: inline}
+.navbar-brand img             {display: inline}
 
 
 /* TYPOGRAPHY */
@@ -23,7 +23,6 @@ dt                            {margin-bottom: 3px}
 body                          {font-family: 'seconda_round_regular',Helvetica,Arial,sans-serif}
 h1, h2, .bold, .active        {font-family: 'seconda_round_bold',Helvetica,Arial,sans-serif; font-weight: normal; font-style: normal}
 pre, .sidebar                 {line-height: 1.8em}
-nav.navbar, h2, h1            {-webkit-font-smoothing: antialiased}
 
 .sidebar                      {font-size: 1.3em}
 dt                            {font-size: 1.1em}
