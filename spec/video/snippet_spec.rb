@@ -23,8 +23,8 @@ describe 'Yt::Video’s snippet methods', :server do
   context 'given an unknown video ID' do
     let(:attrs) { {id: $unknown_video_id} }
 
-    specify 'raise Yt::Errors::NoItems' do
-      expect{video.title}.to raise_error Yt::Errors::NoItems
+    specify 'raise Yt::NoItemsError' do
+      expect{video.title}.to raise_error Yt::NoItemsError
     end
   end
 end

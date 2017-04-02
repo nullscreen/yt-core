@@ -16,8 +16,8 @@ describe 'Yt::Channel’s branding settings methods', :server do
   context 'given an unknown channel ID' do
     let(:attrs) { {id: $unknown_channel_id} }
 
-    specify 'raise Yt::Errors::NoItems' do
-      expect{channel.title}.to raise_error Yt::Errors::NoItems
+    specify 'raise Yt::NoItemsError' do
+      expect{channel.title}.to raise_error Yt::NoItemsError
     end
   end
 end

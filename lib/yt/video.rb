@@ -96,7 +96,6 @@ module Yt
 
     # @!attribute [r] duration
     # @return [<String>] the length of the video as an ISO 8601 duration.
-    # @see https://developers.google.com/youtube/v3/docs/videos#contentDetails.duration
     has_attribute :duration, in: :content_details
 
     # @!attribute [r] dimension
@@ -148,38 +147,16 @@ module Yt
 
     # @return [Hash<Integer, String>] the list of YouTube video categories.
     CATEGORIES = {
-       1 => 'Film & Animation',
-       2 => 'Autos & Vehicles',
-      10 => 'Music',
-      15 => 'Pets & Animals',
-      17 => 'Sports',
-      18 => 'Short Movies',
-      19 => 'Travel & Events',
-      20 => 'Gaming',
-      21 => 'Videoblogging',
-      22 => 'People & Blogs',
-      23 => 'Comedy',
-      24 => 'Entertainment',
-      25 => 'News & Politics',
-      26 => 'Howto & Style',
-      27 => 'Education',
-      28 => 'Science & Technology',
-      29 => 'Nonprofits & Activism',
-      30 => 'Movies',
-      31 => 'Anime/Animation',
-      32 => 'Action/Adventure',
-      33 => 'Classics',
-      34 => 'Comedy',
-      35 => 'Documentary',
-      36 => 'Drama',
-      37 => 'Family',
-      38 => 'Foreign',
-      39 => 'Horror',
-      40 => 'Sci-Fi/Fantasy',
-      41 => 'Thriller',
-      42 => 'Shorts',
-      43 => 'Shows',
-      44 => 'Trailers',
+       1 => 'Film & Animation', 2 => 'Autos & Vehicles', 10 => 'Music',
+      15 => 'Pets & Animals', 17 => 'Sports', 18 => 'Short Movies',
+      19 => 'Travel & Events', 20 => 'Gaming', 21 => 'Videoblogging',
+      22 => 'People & Blogs', 23 => 'Comedy', 24 => 'Entertainment',
+      25 => 'News & Politics', 26 => 'Howto & Style', 27 => 'Education',
+      28 => 'Science & Technology', 29 => 'Nonprofits & Activism',
+      30 => 'Movies', 31 => 'Anime/Animation', 32 => 'Action/Adventure',
+      33 => 'Classics', 34 => 'Comedy', 35 => 'Documentary', 36 => 'Drama',
+      37 => 'Family', 38 => 'Foreign', 39 => 'Horror', 40 => 'Sci-Fi/Fantasy',
+      41 => 'Thriller', 42 => 'Shorts', 43 => 'Shows', 44 => 'Trailers',
     }
 
     # @return [String] the title of the associated YouTube video category.
@@ -201,15 +178,6 @@ module Yt
     # @return [Yt::Channel] the channel the video belongs to.
     def channel
       @channel ||= Channel.new id: channel_id
-    end
-
-    # Specifies which parts of the video to fetch when hitting the data API.
-    # @param [Array<Symbol>] parts The parts to fetch. Valid values
-    #   are: +:snippet+, +:status+, +:statistics+, and +:content_details+.
-    # @return [Yt::Video] itself.
-    def select(*parts)
-      @selected_data_parts = parts
-      self
     end
 
   private

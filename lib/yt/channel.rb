@@ -106,65 +106,21 @@ module Yt
       thumbnails.fetch(size.to_s, {})['url']
     end
 
-    # @return [Yt::Relation<Yt::Channel>] the channels matching the conditions.
-    def self.where(conditions = {})
-      @where ||= Relation.new(Channel) do |options|
-        fetch '/youtube/v3/channels', channels_params(options)
-      end
-      @where.where conditions
-    end
-
-    # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
-    def playlists
-      @playlists ||= Relation.new(Playlist) do |options|
-        fetch '/youtube/v3/playlists', playlists_params(options)
-      end
-    end
-
     # @return [Yt::Relation<Yt::Video>] the public videos of the channel.
     # @note For unauthenticated channels, results are constrained to a maximum
     # of 500 videos.
     # @see https://developers.google.com/youtube/v3/docs/search/list#channelId
     def videos
-      @videos ||= Relation.new(Video, limit: 500) do |options|
-        items = fetch '/youtube/v3/search', search_params(options)
-        videos_for items, :id, options
+      @videos ||= Relation.new(Video, channel_id: id, limit: 500) do |options|
+        items = fetch '/youtube/v3/search', channel_videos_params(options)
+        videos_for items, 'id', options
       end
     end
 
-    # Specifies which parts of the channel to fetch when hitting the data API.
-    # @param [Array<Symbol>] parts The parts to fetch. Valid values
-    #   are: +:snippet+, +:status+, +:branding_settings+, and +:statistics+.
-    # @return [Yt::Channel] itself.
-    def select(*parts)
-      @selected_data_parts = parts
-      self
-    end
-
-  private
-
-    def self.channels_params(options)
-      {}.tap do |params|
-        params[:part] = options[:parts].join ','
-        params[:id] = options[:conditions].fetch(:id, []).join ','
-      end
-    end
-
-    def playlists_params(options)
-      {}.tap do |params|
-        params[:page_token] = options[:offset]
-        params[:channel_id] = id
-        params[:part] = options[:parts].join ','
-      end
-    end
-
-    def search_params(options)
-      {}.tap do |params|
-        params[:type] = :video
-        params[:channel_id] = id
-        params[:part] = :id
-        params[:order] = :date
-        params[:page_token] = options[:offset]
+    # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
+    def playlists
+      @playlists ||= Relation.new(Playlist, channel_id: id) do |options|
+        fetch '/youtube/v3/playlists', channel_playlists_params(options)
       end
     end
   end

@@ -9,7 +9,7 @@ h2: "Errors"
 
 {% highlight ruby %}
 channel = Yt::Channel.new id: 'this-id-does-not-exist'
-channel.title # => raise Yt::Errors::NoItems
+channel.title # => raise Yt::NoItemsError
 {% endhighlight %}
 
 <hr />
@@ -18,11 +18,11 @@ channel.title # => raise Yt::Errors::NoItems
 
   {% include dt.html title="No Items" %}
   <p>
-    <code>Yt::Errors::NoItems</code> is raised when items are expected from YouTube but none are returned.
+    <code>Yt::NoItemsError</code> is raised when items are expected from YouTube but none are returned.
   </p>
 
 {% highlight ruby %}
 channel = Yt::Channel.new id: 'this-id-does-not-exist'
-channel.title # => raise Yt::Errors::NoItems
+channel.title # => raise Yt::NoItemsError
 {% endhighlight %}
 </dl>

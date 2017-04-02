@@ -22,8 +22,8 @@ describe 'Yt::PlaylistItem’s snippet methods', :server do
   context 'given an unknown item ID' do
     let(:attrs) { {id: $unknown_item_id} }
 
-    specify 'raise Yt::Errors::NoItems' do
-      expect{item.title}.to raise_error Yt::Errors::NoItems
+    specify 'raise Yt::NoItemsError' do
+      expect{item.title}.to raise_error Yt::NoItemsError
     end
   end
 end

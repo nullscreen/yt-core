@@ -1,5 +1,5 @@
 module Yt
-  # Provides a base class for multiple YouTube resources (channel, video, ...).
+  # Provides a base class for YouTube channels, videos, playlists and items.
   # This is an abstract class and should not be instantiated directly.
   class Resource
     # @param [Hash<Symbol, String>] data the options to initialize a resource.
@@ -13,21 +13,33 @@ module Yt
       @data[:id]
     end
 
+    # @return [Hash] the resource’s data.
+    attr_reader :data
+
     # @return [String] a representation of the resource instance.
     def inspect
       "#<#{self.class} @id=#{id}>"
     end
 
+    # Specifies which parts of the resource to fetch when hitting the data API.
+    # @param [Array<Symbol>] parts The parts to fetch.
+    # @return [Yt::Resource] itself.
+    def select(*parts)
+      @selected_data_parts = parts
+      self
+    end
+
+    # @return [Yt::Relation<Yt::Video>] the videos matching the conditions.
+    def self.where(conditions = {})
+      @where ||= Relation.new(self) do |options|
+        slicing_conditions_every(50) do |slice_options|
+          fetch resources_path, where_params(slice_options)
+        end
+      end
+      @where.where conditions
+    end
+
   private
-
-    def self.fetch(path, params)
-      params = params.merge(max_results: 50, key: Yt.configuration.api_key)
-      HTTPRequest.new(path: path, params: params).run
-    end
-
-    def fetch(path, params)
-      self.class.fetch path, params
-    end
 
     def camelize(part)
       part.to_s.gsub(/(?:_|(\/))([a-z\d]*)/i) { "#{$1}#{$2.capitalize}" }
@@ -45,42 +57,16 @@ module Yt
     end
 
     def fetch_part(required_part)
-      parts = @selected_data_parts || [required_part]
-      resource = fetch resources_path, id: id, part: parts.join(',')
+      resources = Relation.new(self.class, ids: [id]) do |options|
+        fetch resources_path, resource_params(options)
+      end
 
-      if (items = resource.body['items']).any?
-        parts.each{|part| @data[part] = items.first[camelize part]}
+      parts = @selected_data_parts || [required_part]
+      if (resource = resources.select(*parts).first)
+        parts.each{|part| @data[part] = resource.data[part]}
         @data[required_part]
       else
-        raise Errors::NoItems
-      end
-    end
-
-    # Expands the resultset into a collection of videos by fetching missing
-    # parts, eventually with an additional HTTP request.
-    def videos_for(items, key, options)
-      items.body['items'].map{|item| item['id'] = item[camelize key]['videoId']}
-
-      if options[:parts] == %i(id)
-        items
-      else
-        options[:ids] = items.body['items'].map{|item| item['id']}
-        fetch('/youtube/v3/videos', videos_params(options)).tap do |response|
-          response.body['nextPageToken'] = items.body['nextPageToken']
-        end
-      end
-    end
-
-    def videos_params(options)
-      {}.tap do |params|
-        params[:part] = options[:parts].join ','
-        params[:id] = options[:ids].join ','
-      end
-    end
-
-    def resources_path
-      self.class.name.split('::').last.gsub(/^(\w{1})(.*)/) do
-        "/youtube/v3/#{$1.downcase}#{$2}s"
+        raise NoItemsError
       end
     end
 

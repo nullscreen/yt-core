@@ -39,8 +39,6 @@ module Yt
     # @return [<Integer>] the number of videos in the playlist.
     has_attribute :item_count, in: :content_details, type: Integer
 
-  ### OTHER METHODS
-
     # Returns the URL of the playlist’s thumbnail.
     # @param [Symbol, String] size The size of the playlist’s thumbnail.
     # @return [String] if +size+ is +:default+, the URL of a 120x90px image.
@@ -60,36 +58,17 @@ module Yt
 
     # @return [Yt::Relation<Yt::PlaylistItem>] the items of the playlist.
     def items
-      @items ||= Relation.new(PlaylistItem) do |options|
-        fetch '/youtube/v3/playlistItems', items_params(options)
+      @items ||= Relation.new(PlaylistItem, playlist_id: id) do |options|
+        fetch '/youtube/v3/playlistItems', playlist_items_params(options)
       end
     end
 
     # @return [Yt::Relation<Yt::Video>] the videos of the playlist.
     def videos
-      @videos ||= Relation.new(Video) do |options|
-        items_options = options.merge parts: [:content_details]
-        items = fetch '/youtube/v3/playlistItems', items_params(items_options)
-        videos_for items, :content_details, options
-      end
-    end
-
-    # Specifies which parts of the video to fetch when hitting the data API.
-    # @param [Array<Symbol>] parts The parts to fetch. Valid values
-    #   are: +:snippet+, +:status+, and +:content_details+.
-    # @return [Yt::Video] itself.
-    def select(*parts)
-      @selected_data_parts = parts
-      self
-    end
-
-  private
-
-    def items_params(options)
-      {}.tap do |params|
-        params[:playlist_id] =  id
-        params[:part] =  options[:parts].join(',')
-        params[:page_token] =  options[:offset]
+      @videos ||= Relation.new(Video, playlist_id: id) do |options|
+        params = playlist_items_params(options.merge parts: [:content_details])
+        items = fetch '/youtube/v3/playlistItems', params
+        videos_for items, 'contentDetails', options
       end
     end
   end

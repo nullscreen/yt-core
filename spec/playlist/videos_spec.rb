@@ -11,17 +11,14 @@ describe 'Yt::Playlist#videos', :server do
     end
 
     it 'does not make any HTTP requests unless iterated', requests: 0 do
-
       playlist.videos
     end
 
     it 'makes as many HTTP requests as the number of items divided by 50', requests: 2 do
-
       playlist.videos.map &:id
     end
 
     it 'reuses the previous HTTP response if the request is the same', requests: 2 do
-
       playlist.videos.map &:id
       playlist.videos.map &:id
     end
@@ -44,7 +41,6 @@ describe 'Yt::Playlist#videos', :server do
     end
 
     it 'accepts .select to fetch multiple parts with two HTTP calls', requests: 4 do
-
       videos = playlist.videos.select :snippet, :status, :statistics, :content_details
       expect(videos.map &:title).to be
       expect(videos.map &:privacy_status).to be

@@ -55,14 +55,5 @@ module Yt
     def thumbnail_url(size = :default)
       thumbnails.fetch(size.to_s, {})['url']
     end
-
-    # Specifies which parts of the video to fetch when hitting the data API.
-    # @param [Array<Symbol>] parts The parts to fetch. Valid values
-    #   are: +:snippet+ and +:status+.
-    # @return [Yt::Video] itself.
-    def select(*parts)
-      @selected_data_parts = parts
-      self
-    end
   end
 end

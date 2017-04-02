@@ -1,5 +1,6 @@
 module Yt
   # Provides methods to iterate through collections of YouTube resources.
+  # @private
   class Relation
     include Enumerable
 
@@ -7,55 +8,52 @@ module Yt
     #   iterating through a collection of YouTube resources.
     # @yield [Hash] the options to change which items to iterate through.
     def initialize(item_class, options = {}, &item_block)
-      @item_class = item_class
+      @options = {parts: %i(id), limit: Float::INFINITY, item_class: item_class}
+      @options.merge! options
       @item_block = item_block
-      @options = {parts: %i(id), limit: Float::INFINITY}.merge options
     end
 
-    # Executes +item_block+ for each item of the collection.
-    def each(&block)
-      if @last_options == @options
-        @items.each(&block)
-      else
-        @last_options = @options
-        @count = 0
-        @items = []
-        @options[:offset] = nil
-        loop do
-          if @count >= @options[:limit]
-            break
-          end
+    # Let's start without memoizing
+    def each
+      @last_index = 0
+      while next_item = find_next
+        break if @last_index > @options[:limit]
+        yield next_item
+      end
+    end
 
-          @response = @item_block.call @options
-          @response.body['items'].map do |hash|
-            @count += 1
-            break if @count > @options[:limit]
-
-            underscored_hash = {}
-            hash.each_key do |key|
-              part = key.gsub(/([A-Z])/) { "_#{$1.downcase}" }.to_sym
-              if @options[:parts].include? part
-                underscored_hash[part] = hash[key]
-              end
-            end
-
-            video = @item_class.new underscored_hash
-            @items << video
-            block.call video
-          end
-
-          if @response.body['nextPageToken'].nil?
-            break
-          end
-          @options[:offset] = @response.body['nextPageToken']
+    def find_next
+      @items ||= []
+      if @items[@last_index].nil? && more_pages?
+        response = Response.new(@options, &@item_block).run
+        more_items = response.body['items'].map do |item|
+          @options[:item_class].new attributes_for_new_item(item)
         end
-        @last_options = @options.dup
+        @options.merge! offset: response.body['nextPageToken']
+        @items.concat more_items
+      end
+      @items[(@last_index +=1) -1]
+    end
+
+    def more_pages?
+      @last_index.zero? || !@options[:offset].nil?
+    end
+
+    def attributes_for_new_item(item)
+      {}.tap do |matching_parts|
+        item.each_key do |key|
+          part = key.gsub(/([A-Z])/) { "_#{$1.downcase}" }.to_sym
+          if @options[:parts].include? part
+            matching_parts[part] = item[key]
+          end
+        end
       end
     end
 
     # @return [Integer] the estimated number of items in the collection.
     def size
-      @response = @item_block.call parts: %i(id), limit: 1
+      size_options = @options.merge parts: %i(id), limit: 1
+      @response = Response.new(size_options, &@item_block).run
       [@response.body['pageInfo']['totalResults'], @options[:limit]].min
     end
 
@@ -63,7 +61,10 @@ module Yt
     # @param [Array<Symbol>] parts The parts to fetch.
     # @return [Yt::Relation] itself.
     def select(*parts)
-      @options.merge! parts: (parts + %i(id))
+      if @options[:parts] != parts + %i(id)
+        @items = nil
+        @options.merge! parts: (parts + %i(id))
+      end
       self
     end
 
@@ -71,7 +72,10 @@ module Yt
     # @param [Hash<Symbol, String>] conditions The conditions for the items.
     # @return [Yt::Relation] itself.
     def where(conditions = {})
-      @options.merge! conditions: conditions
+      if @options[:conditions] != conditions
+        @items = []
+        @options.merge! conditions: conditions
+      end
       self
     end
 

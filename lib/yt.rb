@@ -1,17 +1,16 @@
 require 'json' # for JSON.parse
+
 require 'yt/config'
-
+require 'yt/no_items_error'
 require 'yt/http_request'
-
+require 'yt/relation'
 require 'yt/resource'
+require 'yt/response'
 
 require 'yt/channel'
 require 'yt/playlist'
 require 'yt/playlist_item'
-require 'yt/relation'
 require 'yt/video'
-
-require 'yt/errors/no_items'
 
 # An object-oriented Ruby client for YouTube.
 # Helps creating applications that need to interact with YouTube objects.
