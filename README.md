@@ -9,7 +9,7 @@ The **source code** is available on [GitHub](https://github.com/fullscreen/yt-co
 [![Coverage Status](http://img.shields.io/coveralls/Fullscreen/yt-core/master.svg)](https://coveralls.io/r/Fullscreen/yt-core)
 [![Dependency Status](http://img.shields.io/gemnasium/Fullscreen/yt-core.svg)](https://gemnasium.com/Fullscreen/yt-core)
 [![Code Climate](http://img.shields.io/codeclimate/github/Fullscreen/yt-core.svg)](https://codeclimate.com/github/Fullscreen/yt-core)
-[![Online docs](http://img.shields.io/badge/docs-✓-green.svg)](http://www.rubydoc.info/gems/yt/frames)
+[![Online docs](http://img.shields.io/badge/docs-✓-green.svg)](http://www.rubydoc.info/gems/yt-core/frames)
 [![Gem Version](http://img.shields.io/gem/v/yt.svg)](http://rubygems.org/gems/yt-core)
 
 After [registering your app](https://fullscreen.github.io/yt-core/), you can run commands like:
@@ -19,7 +19,7 @@ channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
 channel.title #=> "Yt Test"
 ```
 
-The **full documentation** is available at [rubydoc.info](http://www.rubydoc.info/gems/yt/frames).
+The **full documentation** is available at [rubydoc.info](http://www.rubydoc.info/gems/yt-core/frames).
 
 
 A comprehensive guide to Yt
