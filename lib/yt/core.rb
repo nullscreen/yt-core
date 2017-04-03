@@ -11,3 +11,8 @@ require 'yt/channel'
 require 'yt/playlist'
 require 'yt/playlist_item'
 require 'yt/video'
+
+# An object-oriented Ruby client for YouTube.
+# @see http://www.rubydoc.info/gems/yt/
+module Yt
+end

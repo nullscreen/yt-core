@@ -15,10 +15,11 @@ describe 'Yt::Video.where', :server do
       qGeq5v7L3WM uaqSSMs3mEM QqVI_CHlFAI 2JAjC7BSqAA 6mV1H8e2CgM RExRs_5jM9c) }
 
     it 'returns the list of *existing* videos matching the conditions' do
+      videos = Yt::Video.where id: [$existing_video_id, $unknown_video_id]
       expect(videos).to be
       expect(videos.inspect).to be
       expect(videos).to all( be_a Yt::Video )
-      expect(videos.map &:id).to eq video_ids
+      expect(videos.map &:id).to eq [$existing_video_id]
     end
 
     it 'does not make any HTTP requests unless iterated', requests: 0 do

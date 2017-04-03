@@ -1,6 +1,6 @@
 markdown: kramdown
 permalink: none
-baseurl: /yt
+baseurl: /yt-core
 defaults:
   -
     scope:

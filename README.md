@@ -37,11 +37,11 @@ How to install
 
 To install on your system, run
 
-    gem install yt
+    gem install yt-core
 
 To use inside a bundled Ruby project, add this line to the Gemfile:
 
-    gem 'yt', '~> 0.0.0'
+    gem 'yt-core', '~> 0.1.0'
 
 Since the gem follows [Semantic Versioning](http://semver.org),
 indicating the full version in your Gemfile (~> *major*.*minor*.*patch*)
