@@ -14,9 +14,6 @@ module Yt
 
     def fetch(path, params)
       HTTPRequest.new(path: path, params: params).run
-    rescue HTTPError => e
-      p "Fetch #{path}?#{URI.encode_www_form params}"
-      require 'pry'; binding.pry; true;
     end
 
     def resources_path

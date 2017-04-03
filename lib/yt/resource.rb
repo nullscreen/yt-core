@@ -6,6 +6,7 @@ module Yt
     # @option data [String] :id The unique ID of a YouTube resource.
     def initialize(data = {})
       @data = data
+      @selected_data_parts = nil
     end
 
     # @return [String] the resource’s unique ID.

@@ -1,12 +1,11 @@
-* content_owner.partnered_channels does not default to include :snippet anymore, only :id
-* channel.videos does not default to include :snippet anymore, only :id
-* video.category_id is Integer, not String
-* removed subscribtion kind from Yt::URL
+# Changelog
 
-* Change auth: account to as: account
-* Change statistics_set to statistics
-* Removed Yt::URL
-* Change video.duration to video.seconds
-* Change Playlist#playlist_items to Playlist#items
-* Add Playlist#videos
-* Rename `Channel#long_upload_status` to `Channel#long_uploads_status`
+All notable changes to this project will be documented in this file.
+
+For more information about changelogs, check
+[Keep a Changelog](http://keepachangelog.com) and
+[Vandamme](http://tech-angels.github.io/vandamme).
+
+## 0.1.0 - 2017-04-03
+
+* [FEATURE] Extracted first classes from Yt

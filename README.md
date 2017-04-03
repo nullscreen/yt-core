@@ -3,16 +3,16 @@ Yt - a Ruby client for the YouTube API
 
 Yt helps you write apps that need to interact with YouTube.
 
-The **source code** is available on [GitHub](https://github.com/claudiob/yt) and the **documentation** on [RubyDoc](http://www.rubydoc.info/gems/yt/frames).
+The **source code** is available on [GitHub](https://github.com/fullscreen/yt-core) and the **documentation** on [RubyDoc](http://www.rubydoc.info/gems/yt-core/frames).
 
-[![Build Status](http://img.shields.io/travis/claudiob/yt/master.svg)](https://travis-ci.org/claudiob/yt)
-[![Coverage Status](http://img.shields.io/coveralls/claudiob/yt/master.svg)](https://coveralls.io/r/claudiob/yt)
-[![Dependency Status](http://img.shields.io/gemnasium/claudiob/yt.svg)](https://gemnasium.com/claudiob/yt)
-[![Code Climate](http://img.shields.io/codeclimate/github/claudiob/yt.svg)](https://codeclimate.com/github/claudiob/yt)
+[![Build Status](http://img.shields.io/travis/Fullscreen/yt-core/master.svg)](https://travis-ci.org/Fullscreen/yt-core)
+[![Coverage Status](http://img.shields.io/coveralls/Fullscreen/yt-core/master.svg)](https://coveralls.io/r/Fullscreen/yt-core)
+[![Dependency Status](http://img.shields.io/gemnasium/Fullscreen/yt-core.svg)](https://gemnasium.com/Fullscreen/yt-core)
+[![Code Climate](http://img.shields.io/codeclimate/github/Fullscreen/yt-core.svg)](https://codeclimate.com/github/Fullscreen/yt-core)
 [![Online docs](http://img.shields.io/badge/docs-✓-green.svg)](http://www.rubydoc.info/gems/yt/frames)
-[![Gem Version](http://img.shields.io/gem/v/yt.svg)](http://rubygems.org/gems/yt)
+[![Gem Version](http://img.shields.io/gem/v/yt.svg)](http://rubygems.org/gems/yt-core)
 
-After [registering your app](https://claudiob.github.io/yt), you can run commands like:
+After [registering your app](https://fullscreen.github.io/yt-core/), you can run commands like:
 
 ```ruby
 channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'
@@ -25,11 +25,11 @@ The **full documentation** is available at [rubydoc.info](http://www.rubydoc.inf
 A comprehensive guide to Yt
 ===========================
 
-All the classes and methods available are detailed on the [Yt homepage](https://claudiob.github.io/yt/):
+All the classes and methods available are detailed on the [Yt homepage](https://fullscreen.github.io/yt-core/):
 
-[![Yt homepage](https://cloud.githubusercontent.com/assets/10076/19788369/b61d7756-9c5c-11e6-8bd8-05f8d67aef4e.png)](https://claudiob.github.io/yt/)
+[![Yt homepage](https://cloud.githubusercontent.com/assets/10076/19788369/b61d7756-9c5c-11e6-8bd8-05f8d67aef4e.png)](https://fullscreen.github.io/yt-core/)
 
-Please proceed to [https://claudiob.github.io/yt/](https://claudiob.github.io/yt) for more details and examples.
+Please proceed to [https://fullscreen.github.io/yt-core](https://fullscreen.github.io/yt-core/) for more details and examples.
 
 
 How to install
@@ -69,7 +69,7 @@ How to release new versions
 If you are a manager of this project, remember to upgrade the [Yt gem](http://rubygems.org/gems/yt)
 whenever a new feature is added or a bug gets fixed.
 
-Make sure all the tests are passing on [Travis CI](https://travis-ci.org/claudiob/yt),
+Make sure all the tests are passing on [Travis CI](https://travis-ci.org/Fullscreen/yt-core),
 document the changes in HISTORY.md and README.md, bump the version, then run
 
     rake release

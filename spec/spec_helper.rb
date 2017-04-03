@@ -7,7 +7,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new [
 ]
 SimpleCov.start
 
-require 'yt'
+require 'yt/core'
 Dir['./spec/support/**/*.rb'].each {|f| require f}
 
 RSpec.configure do |config|
