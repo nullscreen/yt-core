@@ -52,6 +52,9 @@ module Yt
         part = keys.shift
         value = @data[part] || fetch_part(part)
         keys.each{|key| value = value[camelize key]}
+        if value.nil? && options[:default]
+          value = options[:default]
+        end
         value = type_cast value, options[:type]
         block_given? ? instance_exec(value, &block) : value
       end

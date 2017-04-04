@@ -34,7 +34,7 @@ module Yt
 
     # @!attribute [r] tags
     # @return [Array<String>] the list of tags associated with the video.
-    has_attribute :tags, in: :snippet
+    has_attribute :tags, in: :snippet, default: []
 
     # @!attribute [r] category_id
     # @return [Integer] the ID of the associated YouTube video category.
