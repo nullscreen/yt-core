@@ -20,6 +20,15 @@ describe 'Yt::Video’s snippet methods', :server do
     end
   end
 
+  context 'given an video without tags' do
+    let(:attrs) { {id: $untagged_video_id} }
+
+    specify 'return an empty array as the tags', requests: 1 do
+      expect(video.tags).to eq []
+    end
+  end
+
+
   context 'given an unknown video ID' do
     let(:attrs) { {id: $unknown_video_id} }
 
