@@ -14,6 +14,7 @@ RSpec.configure do |config|
   $existing_video_id     = 'gknzFj_0vvY'
   $another_video_id      = '9bZkp7q19f0'
   $unknown_video_id      = 'invalid-id-'
+  $untagged_video_id     = 'oO6WawhsxTA'
 
   $existing_playlist_id  = 'PL-LeTutc9GRKD3yBDhnRF_yE8UTaQI5Jf'
   $unknown_playlist_id   = 'invalid-id-'

@@ -6,7 +6,7 @@ module Yt
     # @option data [String] :id The unique ID of a YouTube resource.
     def initialize(data = {})
       @data = data
-      @selected_data_parts = nil
+      @selected_data_parts = []
     end
 
     # @return [String] the resource’s unique ID.
@@ -65,7 +65,7 @@ module Yt
         fetch resources_path, resource_params(options)
       end
 
-      parts = @selected_data_parts || [required_part]
+      parts = (@selected_data_parts + [required_part]).uniq
       if (resource = resources.select(*parts).first)
         parts.each{|part| @data[part] = resource.data[part]}
         @data[required_part]
