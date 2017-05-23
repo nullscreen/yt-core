@@ -12,6 +12,9 @@ require 'yt/playlist'
 require 'yt/playlist_item'
 require 'yt/video'
 
+require 'yt/comment'
+require 'yt/comment_thread'
+
 # An object-oriented Ruby client for YouTube.
 # @see http://www.rubydoc.info/gems/yt/
 module Yt

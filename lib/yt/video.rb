@@ -180,6 +180,13 @@ module Yt
       @channel ||= Channel.new id: channel_id
     end
 
+    # @return [Yt::Relation<Yt::CommentThread>] the threads of the video.
+    def threads
+      @threads ||= Relation.new(CommentThread, video_id: id) do |options|
+        fetch '/youtube/v3/commentThreads', video_threads_params(options)
+      end
+    end
+
   private
 
     # @return [Integer] the duration of the resource as reported by YouTube.
