@@ -10,7 +10,7 @@ The **source code** is available on [GitHub](https://github.com/fullscreen/yt-co
 [![Dependency Status](http://img.shields.io/gemnasium/Fullscreen/yt-core.svg)](https://gemnasium.com/Fullscreen/yt-core)
 [![Code Climate](http://img.shields.io/codeclimate/github/Fullscreen/yt-core.svg)](https://codeclimate.com/github/Fullscreen/yt-core)
 [![Online docs](http://img.shields.io/badge/docs-✓-green.svg)](http://www.rubydoc.info/gems/yt-core/frames)
-[![Gem Version](http://img.shields.io/gem/v/yt.svg)](http://rubygems.org/gems/yt-core)
+[![Gem Version](http://img.shields.io/gem/v/yt-core.svg)](http://rubygems.org/gems/yt-core)
 
 After [registering your app](https://fullscreen.github.io/yt-core/), you can run commands like:
 
