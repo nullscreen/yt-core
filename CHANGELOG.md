@@ -9,6 +9,7 @@ For more information about changelogs, check
 ## 0.1.3 - 2017-05-23
 
 * [FEATURE] Add Comment and CommentThread
+* [FEATURE] Add Channel#featured_channels_title and Channel#featured_channels_urls
 
 ## 0.1.2 - 2017-04-06
 
