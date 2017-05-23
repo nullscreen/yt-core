@@ -80,6 +80,8 @@ module Yt
         Time.parse value
       when [Integer]
         value.to_i
+      when [Comment]
+        Comment.new id: value['id'], snippet: value['snippet']
       else
         value
       end

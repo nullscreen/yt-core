@@ -102,3 +102,39 @@ video.title # => "First public video"
 {% include example.html result='#&lt;Yt::Channel @id=UCwCnUcLcb9-eSrHa_RQGkQQ&gt;' %}</pre>
   </div></dd>
 </dl>
+
+
+<dl>
+  {% include dt.html title="Video’s comment threads" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="threads"></a><div class="highlight"><pre>
+{% include doc.html instance="Video#threads" %}{% include example.html object='video' method='threads' %}
+{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Thread @id=z119d45&gt;, #&lt;Yt::Thread @id=z120d734&gt;, ...]&gt;' %}</pre>
+  </div></dd>
+</dl>
+<p>
+  Before iterating through threads, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/commentThreads/list#part">parts</a> to load:
+</p>
+<dl>
+  <dd><a class="anchor" id="select"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#select" %}{% include example.html object='threads = video.threads' method='select' params=' <span class="ss">:id</span>, <span class="ss">:snippet</span>' %}
+{% include example.html object='threads' method='map <span class="ss">&amp;:id</span>' result='["z119d45", ...]' %}
+{% include example.html object='threads' method='map <span class="ss">&amp;:top_level_comment</span>' result='[#&lt;Yt::Comment @id=z119d45&gt;, ...]' %}</pre>
+  </div></dd>
+</dl>
+<p>
+  You can also use <code>limit</code> to only fetch a certain number of threads:
+</p>
+<dl>
+  <dd><a class="anchor" id="limit"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#limit" %}{% include example.html object='threads = video.threads' method='limit' params=' <span class="mi">2</span>' %}
+{% include example.html object='threads' method='map <span class="ss">&amp;:id</span>' result='["z119d45", "z120d734"]' %}</pre>
+  </div></dd>
+</dl>
+<p>
+  You can also use <code>size</code> to quickly obtain the estimated number of threads:
+</p>
+<dl>
+  <dd><a class="anchor" id="size"></a><div class="highlight"><pre>
+{% include doc.html instance="Relation#size" %}{% include example.html object='video.threads' method='size' result='63' %}</pre>
+  </div></dd>
+</dl>

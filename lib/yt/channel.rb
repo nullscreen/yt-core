@@ -81,6 +81,16 @@ module Yt
     #   in the channel page’s browse view for unsubscribed viewers.
     has_attribute :unsubscribed_trailer, in: %i(branding_settings channel)
 
+    # @!attribute [r] featured_channels_title
+    # @return [<String, nil>] the title that displays above the featured
+    #   channels module. The title has a maximum length of 30 characters.
+    has_attribute :featured_channels_title, in: %i(branding_settings channel)
+
+    # @!attribute [r] featured_channels_title
+    # @return [Array<String>] the IDs of the channels linked in the featured
+    #   channels module.
+    has_attribute :featured_channels_urls, in: %i(branding_settings channel), default: []
+
     # @return [String] the canonical form of the channel’s URL.
     def canonical_url
       "https://www.youtube.com/channel/#{id}"

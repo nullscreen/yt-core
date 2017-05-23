@@ -1,0 +1,57 @@
+---
+title:  "Yt::CommentThread and Yt::Comment"
+h2: "Comments"
+---
+
+<p>
+  <code>Yt::CommentThread</code> represents a <a href="https://developers.google.com/youtube/v3/docs/commentThread">YouTube comment thread</a>.
+  Initialize using its YouTube ID:
+</p>
+
+<dl>
+  <dd><a class="anchor" id="new"></a><div class="highlight"><pre>
+{% include doc.html instance="CommentThread#initialize" %}{% include example.html object='thread = <span class="no">Yt</span><span class="o">::</span><span class="no">CommentThread</span>' method='new' params=' <span class="ss">id:</span> <span class="s1">"z121srzx5oqiyrbce23nevcwrpqfenix004"</span>' %}
+{% include example.html result='#&lt;Yt::CommentThread @id=z121srzx5oqiyrbce23nevcwrpqfenix004&gt;' %}
+{% include doc.html instance="CommentThread#canonical_url" %}{% include example.html object='thread' method='top_level_comment.text_display' %}
+{% include example.html result='"A public comment"' %}</pre>
+  </div></dd>
+</dl>
+
+<hr />
+<h4>Authentication</h4>
+
+<p>
+  Most methods of <code>Yt::CommentThread</code> <strong>retrieve public data</strong> from YouTube (e.g.: the top level comment).<br />
+  To use these methods (marked with <span class="label label-success">&nbsp;</span> below), you only need to <a href="{{ site.baseurl }}/#api_key">generate an API key</a> and configure:
+</p>
+
+{% highlight ruby %}
+Yt.configuration.api_key = "<your api key>"                        ## use your API key
+
+thread = Yt::CommentThread.new id: 'z121srzx5oqiyrbce23nevcwrpqfenix004' ## use any ID
+thread.top_level_comment.text_display # => "A public comment"
+{% endhighlight %}
+
+<hr />
+<h4>List of <code>Yt::CommentThread</code> data methods</h4>
+<dl>
+  {% include dt.html title="CommentThread’s snippet" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html instance="CommentThread#id" %}{% include example.html object='thread' method='id' result='"z121srzx5oqiyrbce23nevcwrpqfenix004"' %}
+{% include doc.html instance="CommentThread#channel_id" %}{% include example.html object='thread' method='channel_id' result='nil' %}
+{% include doc.html instance="CommentThread#video_id" %}{% include example.html object='thread' method='video_id' result='"gknzFj_0vvY"' %}
+{% include doc.html instance="CommentThread#top_level_comment" %}{% include example.html object='thread' method='top_level_comment' result='&lt;Yt::Comment @id=z121srzx5...&gt;' %}</pre>
+  </div></dd>
+
+<hr />
+<h4>List of <code>Yt::Comment</code> data methods</h4>
+<dl>
+  {% include dt.html title="Comment’s snippet" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="snippet"></a><div class="highlight"><pre>
+{% include doc.html instance="Comment#id" %}{% include example.html object='comment' method='id' result='"z121srzx5oqiyrbce23nevcwrpqfenix004"' %}
+{% include doc.html instance="Comment#text_display" %}{% include example.html object='comment' method='text_display' result='"A public comment"' %}
+{% include doc.html instance="Comment#author_display_name" %}{% include example.html object='comment' method='author_display_name' result='"Yt Test"' %}
+{% include doc.html instance="Comment#author_profile_image_url" %}{% include example.html object='comment' method='author_profile_image_url' result='"https://yt3.ggpht.com/-lC#w"' %}
+{% include doc.html instance="Comment#author_channel_url" %}{% include example.html object='comment' method='author_channel_url' result='"http://www.youtube.com/channel/UCwCnUcLc..."' %}
+{% include doc.html instance="Comment#author_channel_id" %}{% include example.html object='comment' method='author_channel_id' result='"UCwCnUcLcb9-eSrHa_RQGkQQ"' %}</pre>
+  </div></dd>
