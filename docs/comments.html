@@ -43,6 +43,15 @@ thread.top_level_comment.text_display # => "A public comment"
 {% include doc.html instance="CommentThread#top_level_comment" %}{% include example.html object='thread' method='top_level_comment' result='&lt;Yt::Comment @id=z121srzx5...&gt;' %}</pre>
   </div></dd>
 
+<dl>
+  {% include dt.html title="CommentThread’s comments" label="success" auth="any authentication works" %}
+  <dd><a class="anchor" id="items"></a><div class="highlight"><pre>
+{% include doc.html instance="CommentThread#comments" %}{% include example.html object='thread' method='comments' %}
+{% include example.html result='#&lt;Yt::Relation [#&lt;Yt::Comment @id=z1...&gt;, #&lt;Yt::Comment @id=z2...&gt;, ...]&gt;' %}</pre>
+  </div></dd>
+</dl>
+
+
 <hr />
 <h4>List of <code>Yt::Comment</code> data methods</h4>
 <dl>

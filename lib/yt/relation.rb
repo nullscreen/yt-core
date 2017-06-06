@@ -8,7 +8,8 @@ module Yt
     #   iterating through a collection of YouTube resources.
     # @yield [Hash] the options to change which items to iterate through.
     def initialize(item_class, options = {}, &item_block)
-      @options = {parts: %i(id), limit: Float::INFINITY, item_class: item_class}
+      @options = {parts: %i(id), limit: Float::INFINITY, item_class: item_class,
+        initial_items: -> {[]}}
       @options.merge! options
       @item_block = item_block
     end
@@ -23,7 +24,7 @@ module Yt
     end
 
     def find_next
-      @items ||= []
+      @items ||= initial_items.dup
       if @items[@last_index].nil? && more_pages?
         response = Response.new(@options, &@item_block).run
         more_items = response.body['items'].map do |item|
@@ -36,7 +37,11 @@ module Yt
     end
 
     def more_pages?
-      @last_index.zero? || !@options[:offset].nil?
+      (@last_index == initial_items.size) || !@options[:offset].nil?
+    end
+
+    def initial_items
+      @initial_items ||= @options[:initial_items].call
     end
 
     def attributes_for_new_item(item)

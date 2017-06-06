@@ -15,5 +15,13 @@ module Yt
     # @!attribute [r] top_level_comment
     # @return [Comment] the thread's top-level comment.
     has_attribute :top_level_comment, in: :snippet, type: Comment
+
+    # @return [Yt::Relation<Yt::Comment>] the comments of a thread.
+    def comments
+      @comments ||= Relation.new(Comment, parent_id: id,
+        initial_items: -> {[top_level_comment]}) do |options|
+        fetch '/youtube/v3/comments', thread_comments_params(options)
+      end
+    end
   end
 end

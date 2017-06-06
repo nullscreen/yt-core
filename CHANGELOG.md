@@ -6,6 +6,10 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
+## 0.1.4 - 2017-06-02
+
+* [FEATURE] Add CommentThread#comments
+
 ## 0.1.3 - 2017-05-23
 
 * [FEATURE] Add Comment and CommentThread
