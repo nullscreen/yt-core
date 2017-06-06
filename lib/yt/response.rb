@@ -44,6 +44,10 @@ module Yt
       default_params(options).merge video_id: options[:video_id]
     end
 
+    def thread_comments_params(options)
+      default_params(options).merge parent_id: options[:parent_id]
+    end
+
     def resource_params(options)
       default_params(options).merge id: options[:ids].join(',')
     end
