@@ -8,6 +8,7 @@ For more information about changelogs, check
 
 ## 0.1.5 - 2017-08-24
 
+* [FEATURE] Add `Yt::PlaylistItem.insert` and `Yt::PlaylistItem#delete`
 * [FEATURE] Add `Channel#related_playlists` and `Channel#like_playlists`
 * [FEATURE] Add Channel.mine
 

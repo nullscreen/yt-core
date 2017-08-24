@@ -55,5 +55,27 @@ module Yt
     def thumbnail_url(size = :default)
       thumbnails.fetch(size.to_s, {})['url']
     end
+
+    # @return [Yt::PlaylistItem] the item created by appending the given
+    #   video to the given playlist.
+    def self.insert(playlist_id:, video_id:)
+      parts = %i(id snippet)
+      items = -> (body) { [body] } # the response body only includes one item
+      resource_id = {kind: 'youtube#video', videoId: video_id}
+      snippet = {playlistId: playlist_id, resourceId: resource_id}
+
+      Relation.new(self, parts: parts, extract_items: items) do |options|
+        post '/youtube/v3/playlistItems', {part: 'snippet'}, {snippet: snippet}
+      end.first
+    end
+
+    # @return [Boolean] whether the item was removed from the playlist.
+    def delete
+      items = -> (body) { [{}] } # the response body is empty
+
+      Relation.new(PlaylistItem, id: id, extract_items: items) do |options|
+        delete '/youtube/v3/playlistItems', id: options[:id]
+      end.any?
+    end
   end
 end

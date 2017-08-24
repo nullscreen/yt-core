@@ -16,6 +16,14 @@ module Yt
       request :get, path: path, params: params
     end
 
+    def post(path, params = {}, body = {})
+      request :post, path: path, params: params, body: body
+    end
+
+    def delete(path, params = {})
+      request :delete, path: path, params: params
+    end
+
     def request(method, options = {})
       HTTPRequest.new(request_options options.merge method: method).run
     rescue HTTPError => error

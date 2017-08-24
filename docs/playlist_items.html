@@ -27,6 +27,20 @@ item = Yt::PlaylistItem.new id: 'UEwtTGVUdXRjOUdSS0Qze' ## use any playlist item
 item.position # => 0
 {% endhighlight %}
 
+<p>
+  Other methods <strong>acts on behalf of YouTube accounts</strong> (e.g.: add an item to a playlist).<br />
+  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="{{ site.baseurl }}/#api_client">get an API Client ID/Secret from Google</a>, then <a href="{{ site.baseurl }}/#tokens">obtain a refresh token</a> from the account you want to act as, and finally configure the values:
+</p>
+
+{% highlight ruby %}
+Yt.configuration.client_id = "<your ID>"           ## replace with your client ID
+Yt.configuration.client_secret = "<your secret>"   ## replace with your client secret
+Yt.configuration.refresh_token = "<token>"         ## use the account’s refresh token
+
+Yt::PlaylistItem.insert playlist_id: 'PL-LeTutc9GRKD3DhnRF_y', video_id: 'gknzFj_0vvY'
+# => #<Yt::PlaylistItem:0x... @id=UEwtTGVUdXRjOUdSS0Qze>
+{% endhighlight %}
+
 <hr />
 <h4>List of <code>Yt::PlaylistItem</code> data methods</h4>
 <dl>
@@ -61,5 +75,12 @@ item.position # => 0
 {% include doc.html instance="PlaylistItem#select" %}{% include example.html object='fast = item' method='select' params=' <span class="ss">:snippet</span><span class="p">,</span> <span class="ss">:status</span>' result='with select: 1 HTTP request' %}
 {% include example.html object='fast' method='title' result='one HTTP request to fetch both the item’s snippet and status' %}
 {% include example.html object='fast' method='privacy_status' result='=> no extra HTTP requests' %}</pre>
+  </div></dd>
+</dl>
+<dl>
+  {% include dt.html title="Adding and removing a playlist item" label="warning" auth="must authenticate as the channel’s account" %}
+  <dd><a class="anchor" id="insert_remove"></a><div class="highlight"><pre>
+{% include doc.html class="PlaylistItem#insert" %}{% include example.html object='item = <span class="no">Yt</span><span class="o">::</span><span class="no">PlaylistItem</span>' method='insert' params=' <span class="ss">playlist_id:</span> <span class="s1">"PL-..."</span>, <span class="ss">video_id:</span> <span class="s1">"gknzFj_0vvY"</span>' %}
+{% include doc.html instance="PlaylistItem#delete" %}{% include example.html object='item' method='delete' result='true' %}</pre>
   </div></dd>
 </dl>
