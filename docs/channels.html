@@ -85,6 +85,12 @@ channel = Yt::Channel.mine
 {% include doc.html instance="Channel#featured_channels_title" %}{% include example.html object='channel' method='featured_channels_title' result='"Featured channels"' %}
 {% include doc.html instance="Channel#featured_channels_urls" %}{% include example.html object='channel' method='featured_channels_urls' result='["UCxO1tY8h1AhOz0T4ENwmpow"]' %}</pre>
   </div></dd>
+
+  {% include dt.html title="Channel’s content details" label="warning" auth="must authenticate as the channel’s account" %}
+  <dd><a class="anchor" id="content_details"></a><div class="highlight"><pre>
+{% include doc.html instance="Channel#related_playlists" %}{% include example.html object='channel' method='related_playlists' result='{"likes"=>"LLwCncb9-e", "watchHistory"=>"HL"}' %}
+{% include doc.html instance="Channel#like_playlists" %}{% include example.html object='channel' method='like_playlists' result='#&lt;Yt::Relation [#&lt;Yt::Playlist @id=LLWCncb...&gt;]&gt;' %}</pre>
+  </div></dd>
 </dl>
 <p>
   To limit the number of HTTP requests, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/channels/list#part">parts</a> of the channel’s data to load:
