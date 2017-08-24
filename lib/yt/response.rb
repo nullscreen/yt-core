@@ -13,7 +13,38 @@ module Yt
   private
 
     def get(path, params = {})
-      HTTPRequest.new(path: path, params: params).run
+      request :get, path: path, params: params
+    end
+
+    def request(method, options = {})
+      HTTPRequest.new(request_options options.merge method: method).run
+    rescue HTTPError => error
+      if unauthorized?(error) && refresh_access_token
+        retry
+      else
+        raise
+      end
+    end
+
+    def request_options(options)
+      options[:error_message] = ->(body) {JSON(body)['error']['message']}
+      if access_token = Yt.configuration.access_token || refresh_access_token
+        options[:headers] = {'Authorization' => "Bearer #{access_token}"}
+      else
+        options[:params] = options[:params].merge key: Yt.configuration.api_key
+      end
+      options
+    end
+
+    def unauthorized?(error)
+      error.response.is_a? Net::HTTPUnauthorized
+    end
+
+    def refresh_access_token
+      if Yt.configuration.refresh_token
+        auth = Auth.new refresh_token: Yt.configuration.refresh_token
+        Yt.configuration.access_token = auth.access_token
+      end
     end
 
     def resources_path
@@ -55,7 +86,6 @@ module Yt
     def default_params(options)
       {}.tap do |params|
         params[:max_results] = 50
-        params[:key] = Yt.configuration.api_key
         params[:part] = options[:parts].join ','
         params[:page_token] = options[:offset]
       end

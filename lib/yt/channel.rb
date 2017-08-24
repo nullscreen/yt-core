@@ -133,5 +133,13 @@ module Yt
         get '/youtube/v3/playlists', channel_playlists_params(options)
       end
     end
+
+    # @return [Yt::Channel] the channel associated with the YouTube account
+    #   that provided the authentication token.
+    def self.mine
+      Relation.new(self) do |options|
+        get '/youtube/v3/channels', mine: true, part: 'id'
+      end.first
+    end
   end
 end
