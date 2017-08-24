@@ -34,7 +34,7 @@ module Yt
     def self.where(conditions = {})
       @where ||= Relation.new(self) do |options|
         slicing_conditions_every(50) do |slice_options|
-          fetch resources_path, where_params(slice_options)
+          get resources_path, where_params(slice_options)
         end
       end
       @where.where conditions
@@ -50,7 +50,7 @@ module Yt
       define_method name do
         keys = Array(options[:in]) + [name]
         part = keys.shift
-        value = @data[part] || fetch_part(part)
+        value = @data[part] || get_part(part)
         keys.each{|key| value = value[camelize key]}
         if value.nil? && options[:default]
           value = options[:default]
@@ -60,9 +60,9 @@ module Yt
       end
     end
 
-    def fetch_part(required_part)
+    def get_part(required_part)
       resources = Relation.new(self.class, ids: [id]) do |options|
-        fetch resources_path, resource_params(options)
+        get resources_path, resource_params(options)
       end
 
       parts = (@selected_data_parts + [required_part]).uniq

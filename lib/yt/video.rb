@@ -183,7 +183,7 @@ module Yt
     # @return [Yt::Relation<Yt::CommentThread>] the threads of the video.
     def threads
       @threads ||= Relation.new(CommentThread, video_id: id) do |options|
-        fetch '/youtube/v3/commentThreads', video_threads_params(options)
+        get '/youtube/v3/commentThreads', video_threads_params(options)
       end
     end
 

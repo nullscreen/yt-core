@@ -122,7 +122,7 @@ module Yt
     # @see https://developers.google.com/youtube/v3/docs/search/list#channelId
     def videos
       @videos ||= Relation.new(Video, channel_id: id, limit: 500) do |options|
-        items = fetch '/youtube/v3/search', channel_videos_params(options)
+        items = get '/youtube/v3/search', channel_videos_params(options)
         videos_for items, 'id', options
       end
     end
@@ -130,7 +130,7 @@ module Yt
     # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
     def playlists
       @playlists ||= Relation.new(Playlist, channel_id: id) do |options|
-        fetch '/youtube/v3/playlists', channel_playlists_params(options)
+        get '/youtube/v3/playlists', channel_playlists_params(options)
       end
     end
   end

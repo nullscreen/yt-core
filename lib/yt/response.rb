@@ -12,7 +12,7 @@ module Yt
 
   private
 
-    def fetch(path, params)
+    def get(path, params = {})
       HTTPRequest.new(path: path, params: params).run
     end
 
@@ -90,7 +90,7 @@ module Yt
       else
         options[:ids] = items.body['items'].map{|item| item['id']}
         options[:offset] = nil
-        fetch('/youtube/v3/videos', resource_params(options)).tap do |response|
+        get('/youtube/v3/videos', resource_params(options)).tap do |response|
           response.body['nextPageToken'] = items.body['nextPageToken']
         end
       end
