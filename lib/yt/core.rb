@@ -1,6 +1,7 @@
 require 'json' # for JSON.parse
 
 require 'yt/config'
+require 'yt/auth'
 require 'yt/no_items_error'
 require 'yt/http_request'
 require 'yt/relation'

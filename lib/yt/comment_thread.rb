@@ -20,7 +20,7 @@ module Yt
     def comments
       @comments ||= Relation.new(Comment, parent_id: id,
         initial_items: -> {[top_level_comment]}) do |options|
-        fetch '/youtube/v3/comments', thread_comments_params(options)
+        get '/youtube/v3/comments', thread_comments_params(options)
       end
     end
   end

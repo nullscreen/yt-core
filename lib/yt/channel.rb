@@ -91,6 +91,11 @@ module Yt
     #   channels module.
     has_attribute :featured_channels_urls, in: %i(branding_settings channel), default: []
 
+    # @!attribute [r] related_playlists
+    # @return [Hash] the playlists associated with the channel, such as the
+    #   channel's uploaded videos, liked videos, and watch history.
+    has_attribute :related_playlists, in: :content_details
+
     # @return [String] the canonical form of the channel’s URL.
     def canonical_url
       "https://www.youtube.com/channel/#{id}"
@@ -122,7 +127,7 @@ module Yt
     # @see https://developers.google.com/youtube/v3/docs/search/list#channelId
     def videos
       @videos ||= Relation.new(Video, channel_id: id, limit: 500) do |options|
-        items = fetch '/youtube/v3/search', channel_videos_params(options)
+        items = get '/youtube/v3/search', channel_videos_params(options)
         videos_for items, 'id', options
       end
     end
@@ -130,8 +135,31 @@ module Yt
     # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
     def playlists
       @playlists ||= Relation.new(Playlist, channel_id: id) do |options|
-        fetch '/youtube/v3/playlists', channel_playlists_params(options)
+        get '/youtube/v3/playlists', channel_playlists_params(options)
       end
+    end
+
+    # @return [Yt::Relation<Yt::Playlist>] the playlists associated with
+    #   liked videos. Includes the deprecated favorites if still present.
+    def like_playlists
+      @like_lists ||= Relation.new(Playlist, ids: like_list_ids) do |options|
+        get '/youtube/v3/playlists', resource_params(options)
+      end
+    end
+
+    # @return [Yt::Channel] the channel associated with the YouTube account
+    #   that provided the authentication token.
+    def self.mine
+      Relation.new(self) do |options|
+        get '/youtube/v3/channels', mine: true, part: 'id'
+      end.first
+    end
+
+  private
+
+    def like_list_ids
+      names = %w(likes favorites)
+      related_playlists.select{|name,_| names.include? name}.values
     end
   end
 end

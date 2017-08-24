@@ -9,7 +9,7 @@ module Yt
     # @yield [Hash] the options to change which items to iterate through.
     def initialize(item_class, options = {}, &item_block)
       @options = {parts: %i(id), limit: Float::INFINITY, item_class: item_class,
-        initial_items: -> {[]}}
+        initial_items: -> {[]}, extract_items: -> (body) {body['items']}}
       @options.merge! options
       @item_block = item_block
     end
@@ -27,10 +27,10 @@ module Yt
       @items ||= initial_items.dup
       if @items[@last_index].nil? && more_pages?
         response = Response.new(@options, &@item_block).run
-        more_items = response.body['items'].map do |item|
+        more_items = @options[:extract_items].call(response.body).map do |item|
           @options[:item_class].new attributes_for_new_item(item)
         end
-        @options.merge! offset: response.body['nextPageToken']
+        @options.merge! offset: response.body['nextPageToken'] if response.body
         @items.concat more_items
       end
       @items[(@last_index +=1) -1]

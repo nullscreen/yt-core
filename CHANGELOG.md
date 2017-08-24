@@ -6,6 +6,12 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
+## 0.1.5 - 2017-08-24
+
+* [FEATURE] Add `Yt::PlaylistItem.insert` and `Yt::PlaylistItem#delete`
+* [FEATURE] Add `Channel#related_playlists` and `Channel#like_playlists`
+* [FEATURE] Add Channel.mine
+
 ## 0.1.4 - 2017-06-02
 
 * [FEATURE] Add CommentThread#comments

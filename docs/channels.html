@@ -32,6 +32,21 @@ channel = Yt::Channel.new id: 'UCwCnUcLcb9-eSrHa_RQGkQQ'         ## use any chan
 channel.title # => "Yt Test"
 {% endhighlight %}
 
+
+<p>
+  Other methods <strong>acts on behalf of YouTube accounts</strong> (e.g.: subscribe to a channel, delete playlists).<br />
+  To use these methods (marked with  <span class="label label-warning">&nbsp;</span> below), you need to <a href="{{ site.baseurl }}/#api_client">get an API Client ID/Secret from Google</a>, then <a href="{{ site.baseurl }}/#tokens">obtain a refresh token</a> from the account you want to act as, and finally configure the values:
+</p>
+
+{% highlight ruby %}
+Yt.configuration.client_id = "<your ID>"           ## replace with your client ID
+Yt.configuration.client_secret = "<your secret>"   ## replace with your client secret
+Yt.configuration.refresh_token = "<token>"         ## use the account’s refresh token
+
+channel = Yt::Channel.mine
+# => #<Yt::Channel @id=UCwCnUcLcb9-eSrHa_RQGkQQ>
+{% endhighlight %}
+
 <hr />
 <h4>List of <code>Yt::Channel</code> data methods</h4>
 <dl>
@@ -69,6 +84,12 @@ channel.title # => "Yt Test"
 {% include doc.html instance="Channel#unsubscribed_trailer" %}{% include example.html object='channel' method='unsubscribed_trailer' result='"gknzFj_0vvY"' %}
 {% include doc.html instance="Channel#featured_channels_title" %}{% include example.html object='channel' method='featured_channels_title' result='"Featured channels"' %}
 {% include doc.html instance="Channel#featured_channels_urls" %}{% include example.html object='channel' method='featured_channels_urls' result='["UCxO1tY8h1AhOz0T4ENwmpow"]' %}</pre>
+  </div></dd>
+
+  {% include dt.html title="Channel’s content details" label="warning" auth="must authenticate as the channel’s account" %}
+  <dd><a class="anchor" id="content_details"></a><div class="highlight"><pre>
+{% include doc.html instance="Channel#related_playlists" %}{% include example.html object='channel' method='related_playlists' result='{"likes"=>"LLwCncb9-e", "watchHistory"=>"HL"}' %}
+{% include doc.html instance="Channel#like_playlists" %}{% include example.html object='channel' method='like_playlists' result='#&lt;Yt::Relation [#&lt;Yt::Playlist @id=LLWCncb...&gt;]&gt;' %}</pre>
   </div></dd>
 </dl>
 <p>
@@ -142,3 +163,11 @@ channel.title # => "Yt Test"
   The previous method returns existing channels that match the provided IDs, skipping any unrecognized ID.<br />
   As usual, use <code>select</code> to specify which <a href="https://developers.google.com/youtube/v3/docs/channels/list#part">parts</a> of each channels’s data to load before iterating through the list.
 </p>
+
+<dl>
+  {% include dt.html title="Authenticated account’s channel" label="warning" auth="must authenticate as the channel’s account" %}
+  <dd><a class="anchor" id="mine"></a><div class="highlight"><pre>
+{% include doc.html class="Channel#mine" %}{% include example.html object='<span class="no">Yt</span><span class="o">::</span><span class="no">Channel</span>' method='mine' %}
+{% include example.html result='#&lt;Yt::Channel @id=UCwCnUcLcb9-eSrHa_RQGkQQ&gt;' %}</pre>
+  </div></dd>
+</dl>

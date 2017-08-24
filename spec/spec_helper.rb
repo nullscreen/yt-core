@@ -5,7 +5,9 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new [
   SimpleCov::Formatter::HTMLFormatter,
   Coveralls::SimpleCov::Formatter
 ]
-SimpleCov.start
+SimpleCov.start do
+  add_filter 'spec/support/'
+end
 
 require 'yt/core'
 Dir['./spec/support/**/*.rb'].each {|f| require f}

@@ -59,7 +59,7 @@ module Yt
     # @return [Yt::Relation<Yt::PlaylistItem>] the items of the playlist.
     def items
       @items ||= Relation.new(PlaylistItem, playlist_id: id) do |options|
-        fetch '/youtube/v3/playlistItems', playlist_items_params(options)
+        get '/youtube/v3/playlistItems', playlist_items_params(options)
       end
     end
 
@@ -67,7 +67,7 @@ module Yt
     def videos
       @videos ||= Relation.new(Video, playlist_id: id) do |options|
         params = playlist_items_params(options.merge parts: [:content_details])
-        items = fetch '/youtube/v3/playlistItems', params
+        items = get '/youtube/v3/playlistItems', params
         videos_for items, 'contentDetails', options
       end
     end

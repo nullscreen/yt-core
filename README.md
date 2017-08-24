@@ -57,11 +57,21 @@ To run live-tests against the YouTube API, type:
 rspec
 ```
 
-This will fail unless you have set up a test YouTube application with access to
-the YouTube Data API v3 and an environment variable:
+Note that some tests actually hit the YouTube API, and therefore require
+either an API key or authentication credentials.
 
-- `YT_SERVER_API_KEY`: API Key of a Google app with access to the YouTube Data API v3 and the YouTube Analytics API
+In order to run tests marked as :server you need to set up a test YouTube
+application with access to the YouTube Data API v3 and an environment variable:
 
+- `YT_SERVER_API_KEY`: API Key of a Google app with access to the YouTube Data API v3
+
+In order to run tests marked as :account you als need to create a client ID
+and secret and then generate a refresh token for the account you want to use
+as test. Make sure this account has a channel with at least one playlist:
+
+- `YT_ACCOUNT_CLIENT_ID`: Client ID of a Google app with access to the YouTube Data API v3
+- `YT_ACCOUNT_CLIENT_SECRET`: Client Secret of a Google app with access to the YouTube Data API v3
+- `YT_ACCOUNT_REFRESH_TOKEN`: Refresh token of a YouTube account for the app above
 
 How to release new versions
 ===========================

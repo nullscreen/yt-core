@@ -1,8 +1,17 @@
 RSpec.configure do |config|
-  config.before :all, server: true do
-    Yt.configuration.api_key = ENV['YT_SERVER_API_KEY']
-    Yt.configuration.client_id = ''
-    Yt.configuration.client_secret = ''
+  keys = %w(API_KEY)
+
+  if keys.all?{|key| ENV["YT_SERVER_#{key}"]}
+    config.before :all, server: true do
+      Yt.configuration.client_id = nil
+      Yt.configuration.client_secret = nil
+      Yt.configuration.api_key = ENV['YT_SERVER_API_KEY']
+      Yt.configuration.refresh_token = nil
+      Yt.configuration.access_token = nil
+    end
+  else
+    puts "Skipping :server tests"
+    config.filter_run_excluding server: true
   end
 
   $existing_channel_id   = 'UCwCnUcLcb9-eSrHa_RQGkQQ'
