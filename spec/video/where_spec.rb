@@ -27,7 +27,7 @@ describe 'Yt::Video.where', :server do
     end
 
     it 'makes as many HTTP requests as the number of videos divided by 50', requests: 2 do
-      Yt::Video.where(id: video_ids).map &:id
+      Yt::Video.where(id: video_ids.drop(1)).map &:id
     end
 
     it 'makes as many HTTP requests as the number of videos divided by 50 to calculate the size', requests: 2 do
