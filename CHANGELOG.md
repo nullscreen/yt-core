@@ -6,6 +6,10 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
+## 0.1.7 - unrelesed
+
+* [ENHANCEMENT] Call `Yt#Auth.access_token_was_refreshed` after refreshing a token.
+
 ## 0.1.6 - 2017-08-26
 
 * [ENHANCEMENT] Compatibility with yt-auth 0.3.0.

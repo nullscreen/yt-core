@@ -51,6 +51,7 @@ module Yt
     def refresh_access_token
       if Yt.configuration.refresh_token
         auth = Auth.find_by refresh_token: Yt.configuration.refresh_token
+        auth.access_token_was_refreshed
         Yt.configuration.access_token = auth.access_token
       end
     end
