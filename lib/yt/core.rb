@@ -9,6 +9,7 @@ require 'yt/resource'
 require 'yt/response'
 
 require 'yt/channel'
+require 'yt/group'
 require 'yt/playlist'
 require 'yt/playlist_item'
 require 'yt/video'
