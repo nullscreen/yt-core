@@ -61,7 +61,7 @@ module Yt
     end
 
     def get_part(required_part)
-      resources = Relation.new(self.class, ids: [id]) do |options|
+      resources = Relation.new(self.class, part_params) do |options|
         get resources_path, resource_params(options)
       end
 
@@ -72,6 +72,10 @@ module Yt
       else
         raise NoItemsError
       end
+    end
+
+    def part_params
+      {ids: [id]}
     end
 
     def type_cast(value, type)
