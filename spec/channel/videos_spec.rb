@@ -21,7 +21,7 @@ describe 'Yt::Channel#videos', :server do
       publishedAfter = Date.today - 2.weeks
 
       dates = channel.videos.where(publishedAfter: publishedAfter.rfc3339(), publishedBefore: publishedBefore.rfc3339()).map &:published_at
-      expect(dates).to satisfy { |date| date >= publishedAfter.rfc3339() And date <= publishedBefore.rfc3339() }
+      expect(dates).to satisfy { |date| date >= publishedAfter.rfc3339() && date <= publishedBefore.rfc3339() }
     end
 
     it 'does not make any HTTP requests unless iterated', requests: 0 do
