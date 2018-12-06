@@ -42,7 +42,6 @@ module Yt
     # @!attribute [r] privacy_status
     # @return [String] the item’s privacy status. Valid values are:
     #   +"private"+, +"public"+, and +"unlisted"+.
-    # @return [nil] if the item does not have status (removed video).
     has_attribute :privacy_status, in: :status
 
     # Returns the URL of the item’s thumbnail.

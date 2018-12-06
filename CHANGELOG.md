@@ -6,18 +6,6 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
-## O.2.0 - 2018-12-06
-
-**How to upgrade**
-
-If your code expects an error when calling an attribute nested under
-non-existing JSON object (for example when calling privacy_status from a
-playlist item when the video is removed and the item does not return `status`
-object) then you must change code to expect `nil` return instead.
-
-* [BUGFIX] Avoid error when calling `PlaylistItem#privacy_status`, instead
-return `nil`
-
 ## 0.1.7 - 2017-08-27
 
 * [FEATURE] Add `Channel#groups` and `Yt::Group`
