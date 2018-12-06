@@ -6,6 +6,11 @@ For more information about changelogs, check
 [Keep a Changelog](http://keepachangelog.com) and
 [Vandamme](http://tech-angels.github.io/vandamme).
 
+## Unreleased
+
+* [BUGFIX] Avoid error when calling `PlaylistItem#privacy_status` for an item
+of removed video, instead return `nil`.
+
 ## 0.1.7 - 2017-08-27
 
 * [FEATURE] Add `Channel#groups` and `Yt::Group`
