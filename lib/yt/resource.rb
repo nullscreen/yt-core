@@ -51,9 +51,7 @@ module Yt
         keys = Array(options[:in]) + [name]
         part = keys.shift
         value = @data[part] || get_part(part)
-        keys.each do |key|
-          value = value[camelize key] if value
-        end
+        keys.each{|key| value = value[camelize key]}
         if value.nil? && options[:default]
           value = options[:default]
         end

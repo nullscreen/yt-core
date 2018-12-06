@@ -30,7 +30,6 @@ RSpec.configure do |config|
 
   $existing_item_id      = 'UEwtTGVUdXRjOUdSS0QzeUJEaG5SRl95RThVVGFRSTVKZi4yODlGNEE0NkRGMEEzMEQy'
   $unknown_item_id       = 'invalid-id-'
-  $removed_item_id       = 'UExJQk5UR3NjRS1jaDlOV1dSdFZFLU5oT1UtT2pLTFhyby41MjE1MkI0OTQ2QzJGNzNG'
 
   $existing_thread_id    =  'z121srzx5oqiyrbce23nevcwrpqfenix004'
   $unknown_thread_id     =  'z121srzx5oqiyrbce23nevcwrpqfe'
