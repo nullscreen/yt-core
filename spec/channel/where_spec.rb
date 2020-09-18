@@ -48,7 +48,7 @@ describe 'Yt::Channel.where', :server do
       expect(list.map &:title).to be
       expect(list.map &:privacy_status).to be
       expect(list.map &:view_count).to be
-      expect(list.map &:banner_image_url).to be
+      expect(list.map &:keywords).to be
     end
   end
 end
