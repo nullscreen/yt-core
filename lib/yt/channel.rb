@@ -132,14 +132,6 @@ module Yt
       end
     end
 
-    # @return [Yt::Relation<Yt::Group>] the analytics groups of the channel.
-    # @see https://developers.google.com/youtube/analytics/v1/reference/groups
-    def groups
-      @groups ||= Relation.new(Group) do |options|
-        get '/youtube/analytics/v1/groups', mine: true
-      end
-    end
-
     # @return [Yt::Relation<Yt::Playlist>] the public playlists of the channel.
     def playlists
       @playlists ||= Relation.new(Playlist, channel_id: id) do |options|

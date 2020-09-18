@@ -10,6 +10,7 @@ For more information about changelogs, check
 
 * [BUGFIX] Avoid error when calling `PlaylistItem#privacy_status` for an item
 of removed video, instead return `nil`.
+* [REMOVAL] Remove `Channel#groups` and `Yt::Group`
 
 ## 0.1.7 - 2017-08-27
 

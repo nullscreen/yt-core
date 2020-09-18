@@ -25,11 +25,11 @@ describe 'Yt::Channel’s snippet methods', :server do
   end
 
   context 'given a channel ID with a custom URL' do
-    let(:attrs) { {id: $gigantic_channel_id} }
+    let(:attrs) { {id: $custom_url_channel_id} }
 
     specify 'uses the custom URL as the vanity URL' do
-      expect(channel.custom_url).to eq 'Univision'
-      expect(channel.vanity_url).to eq 'https://www.youtube.com/Univision'
+      expect(channel.custom_url).to eq 'nbc'
+      expect(channel.vanity_url).to eq 'https://www.youtube.com/nbc'
     end
   end
 

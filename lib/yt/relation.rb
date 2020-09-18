@@ -9,7 +9,7 @@ module Yt
     # @yield [Hash] the options to change which items to iterate through.
     def initialize(item_class, options = {}, &item_block)
       @options = {parts: %i(id), limit: Float::INFINITY, item_class: item_class,
-        initial_items: -> {[]}, extract_items: -> (body) {body['items']}}
+        initial_items: -> {[]}, extract_items: -> (body) {body['items'] || []}}
       @options.merge! options
       @item_block = item_block
     end

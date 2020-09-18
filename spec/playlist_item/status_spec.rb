@@ -14,8 +14,8 @@ describe 'Yt::PlaylistItem’s status methods', :server do
   context 'given an item ID for a removed video' do
     let(:attrs) { {id: $removed_item_id} }
 
-    specify 'return nil with one HTTP call', requests: 1 do
-      expect(item.privacy_status).to be_nil
+    specify 'raise Yt::NoItemsError' do
+      expect{item.privacy_status}.to raise_error Yt::NoItemsError
     end
   end
 end

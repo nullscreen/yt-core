@@ -58,7 +58,7 @@ module Yt
 
     def resources_path
       @options[:item_class].name.split('::').last.gsub(/^(\w{1})(.*)/) do
-        "/#{@options.fetch(:api, 'youtube/v3')}/#{$1.downcase}#{$2}s"
+        "/youtube/v3/#{$1.downcase}#{$2}s"
       end
     end
 
