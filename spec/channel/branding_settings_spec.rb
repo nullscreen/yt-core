@@ -7,7 +7,6 @@ describe 'Yt::Channel’s branding settings methods', :server do
     let(:attrs) { {id: $existing_channel_id} }
 
     specify 'return all branding settings data with one HTTP call', requests: 1 do
-      expect(channel.banner_image_url).to be_a String
       expect(channel.keywords).to match_array ['YouTube', 'channel', 'test']
       expect(channel.unsubscribed_trailer).to eq 'gknzFj_0vvY'
       expect(channel.featured_channels_title).to eq 'Public featured channels'

@@ -64,11 +64,6 @@ module Yt
     # @return [<Integer>] the number of videos uploaded to the channel.
     has_attribute :video_count, in: :statistics, type: Integer
 
-    # @!attribute [r] banner_image_url
-    # @return [String] the URL for the banner image shown on the channel page
-    #   on the YouTube website. The image is 1060px by 175px.
-    has_attribute :banner_image_url, in: %i(branding_settings image)
-
     # @!attribute [r] keywords
     # @return [Array<String>] the keywords associated with the channel.
     has_attribute :keywords, in: %i(branding_settings channel) do |keywords|
