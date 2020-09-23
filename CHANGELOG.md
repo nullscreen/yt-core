@@ -11,6 +11,9 @@ For more information about changelogs, check
 * [BUGFIX] Avoid error when calling `PlaylistItem#privacy_status` for an item
 of removed video, instead return `nil`.
 * [REMOVAL] Remove `Channel#groups` and `Yt::Group`
+* [REMOVAL] Remove `Channel#banner_image_url`
+
+YouTube deprecated the endpoint for brandingSettings.image as of [September 9, 2020](https://developers.google.com/youtube/v3/revision_history#september-9,-2020)
 
 ## 0.1.7 - 2017-08-27
 
